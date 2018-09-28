@@ -42,7 +42,7 @@ while [ "$progress" != "100" ]; do
     echo "$status1"
   else
     echo -n "$progress%...";
-    sleep 1
+    sleep 3
   fi
 done
 

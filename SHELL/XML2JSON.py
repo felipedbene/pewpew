@@ -20,5 +20,5 @@ total = a['logs']['@count']
 reform = a['logs']['entry']
 df = pd.DataFrame(reform)
 #df = df.drop_duplicates(subset=['threatid','src']).reset_index(drop=True)
-df.to_json('{}/NorsePiXML/LastHour.json'.format(home),orient='index')
+df.to_json('{}/NorsePi/XML/LastHour.json'.format(home),orient='index')
 

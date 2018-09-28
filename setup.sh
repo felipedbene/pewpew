@@ -48,7 +48,7 @@ sed -i "0,/firewall/{s/'.*'/'$1'/g}" main.sh
 
 # Creación del script que mueve mouse e inicia chromium en fullscreen
 cd $HOME
-cat >> start.sh << EOF
+cat > start.sh << EOF
 #!/bin/bash
 ###############################################################################
 # El siguiente programa hace con que se ejecute la descarga de logs a cada 10 #
@@ -73,4 +73,3 @@ sudo sh -c "echo 'bash $HOME/start.sh' >> $HOME/.config/lxsession/Lubuntu/autost
 
 
 #cp $HOME/NorsePi/downloader.sh $HOME/
-

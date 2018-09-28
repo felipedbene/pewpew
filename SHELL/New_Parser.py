@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[59]:
 
 
 import xmltodict
@@ -15,7 +15,7 @@ import os
 """
 
 
-# In[2]:
+# In[106]:
 
 
 home = os.path.expanduser('~')
@@ -28,7 +28,7 @@ color_code = {'critical':'red',
 default_country = 'MX'
 
 
-# In[3]:
+# In[107]:
 
 
 with open('{}/NorsePi/XML/LastHour.xml'.format(home)) as fd:
@@ -44,27 +44,27 @@ df = pd.DataFrame(reform)
 #df = df.drop_duplicates(subset=['threatid','src']).reset_index(drop=True)
 
 
-# In[4]:
+# In[108]:
 
 
 df = df[['direction','device_name','time_generated',"src",'srcloc','dst','dstloc','subtype','threatid','severity']]
 df1 = df['device_name'].map(lambda x : x.split('-')[1])
 
 
-# In[5]:
+# In[109]:
 
 
 countries = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/all_countries.csv'),sep='\t',index_col=0)
-countries['country'] = countries['country'].map(lambda x: x.strip())
+# countries['country'] = countries['country'].map(lambda x: x.strip())
 
 
-# In[6]:
+# In[110]:
 
 
 Tec = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
 
-# In[7]:
+# In[111]:
 
 
 df['srcname'] = ''
@@ -104,27 +104,40 @@ for idx in range(a):
     """
     Cambia el nombre del pais de acuerdo al codigo alpha-2
     """
-    df['srcname'][idx] = str(countries[countries['country'] == df['srcloc'][idx]]['name']).split()[1]
-    
-    tmp = str(Tec[Tec['Campus'] == df['dstloc'][idx]]['Nombre']).split()[1] #!!!!!!!!!!!!!!!!!
-    
-    if tmp != 'Name:':
-        df['dstname'][idx] = tmp
+    try:
+        df['srcname'][idx] = countries[countries['country'] == df['srcloc'][idx]]['name'].reset_index(drop=True)[0]
+    except:
+        print('Pais no encontrado: alpha2={}, indice={}'.format(df['srcloc'][idx],idx))
+        df['srcloc'][idx] = default_country
+        df['srcname'][idx] = 'INTERNO'
+        
+    """Ideia: Botar uma flag em caso de que nao seja pais atacado! :D"""
+    tmp = Tec[Tec['Campus'] == df['dstloc'][idx]]['Nombre'] #!!!!!!!!!!!!!!!!!
+    if len(tmp) == 0:
+        print('Campus no encontrado: {}, indice={}'.format(df['dstloc'][idx],idx))
+        df['dstname'][idx] = countries[countries['country3'] == df1.iloc[idx]]['name'].reset_index(drop=True)[0]
     else:
-        df['dstname'][idx] = str(countries[countries['country'] == df['dstloc'][idx]]['name']).split()[1]
+        tmp = tmp.reset_index(drop=True)[0]
+    df['dstname'][idx] = tmp
     
 
     """
     TODO
     Cambia cordinadas de destino de acuerdo al nombre del dispositivo
     """
-    tmp = str(Tec[Tec['Campus'] == df1.iloc[idx]]['longitud']).split()[1]
-    if tmp == 'Name:':
-        tmp = str(countries[countries['country'] == df['dstloc'][idx]]['longitude']).split()[1]
+    tmp = Tec[Tec['Campus'] == df1.iloc[idx]]['longitud']
+    if len(tmp) == 0:
+        tmp = countries[countries['country3'] == df['dstloc'][idx]]['longitude'].reset_index(drop=True)[0]
+    else:
+        tmp = tmp.reset_index(drop=True)[0]
+    
     df['dstlong'][idx] = tmp
-    tmp = str(Tec[Tec['Campus'] == df1.iloc[idx]]['latitud']).split()[1]
-    if tmp == 'Name:':
-        tmp = str(countries[countries['country'] == df['dstloc'][idx]]['latitude']).split()[1]
+    ################# consertar os splits########################l
+    tmp = Tec[Tec['Campus'] == df1.iloc[idx]]['latitud']
+    if len(tmp) != 0:
+        tmp = tmp.reset_index(drop=True)[0]
+    else:
+        tmp = countries[countries['country3'] == df['dstloc'][idx]]['latitude'].reset_index(drop=True)[0]
     df['dstlat'][idx] = tmp    
     
     """
@@ -137,7 +150,7 @@ for idx in range(a):
     
 
 
-# In[8]:
+# In[112]:
 
 
 a = ['device_name',
@@ -158,19 +171,25 @@ a = ['device_name',
  'time_generated']
 
 
-# In[9]:
+# In[113]:
 
 
 df = df[a]
 
 
-# In[10]:
+# In[114]:
 
 
-df
+df = df.sort_values('time_generated')
 
 
-# In[12]:
+# In[115]:
+
+
+df.reset_index(drop=True,inplace=True)
+
+
+# In[118]:
 
 
 df.to_json(os.path.expanduser('~/NorsePi/XML/_LastHour.json'),orient='index')

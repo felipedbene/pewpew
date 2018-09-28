@@ -6,7 +6,7 @@ var def_cnt = 'Mexico';
 var log = [];
 var count = 0;
 var len = 0;
-var time = 500;
+var time = 100;
 var precision = 1;
 var maxLength = 20;
 var debug = true;
@@ -183,7 +183,7 @@ var attacks = {
 		 if(debug)
 			var t = timer("Loop "+count);
 		 //<Parte Gabo>
-		var a = log[len - count - 1];
+		var a = log[count];
 		 $('#container2').html('<h1>'+a['time_generated']+'</h1>');
 		
 		var IP1 = a["src"], IP2 = a["dst"];
@@ -226,7 +226,7 @@ var attacks = {
 		$('#attackdiv').append("<b>"+srccountry + "</b> (" + IP1 + ") " +
 						" <span style='color:#FF7474'>attacks</span><br/> <b>" +
 						attackdiv_slatlong+  "</b> (" + IP2 + ") <br>" +
-						" <span style='color:"+strokeColor+"'> w/ " + atkname + 
+						" <span style='color:"+strokeColor+"'> " + atkname + 
 						"("+ which_attack + ")</span> " + "<br/>"+ "<br/>");
 		
 		$('#attackdiv').animate({scrollTop: $('#attackdiv').prop("scrollHeight")}, time);
