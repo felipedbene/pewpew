@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[59]:
+# In[1]:
 
 
 import xmltodict
 import pandas as pd
 import os
+import numpy as np
 """
 	El código toma el archivo recibido de palo alto como xml y lo 
 	convierte a un archivo JSON que puede ser leído de manera más 
@@ -15,7 +16,7 @@ import os
 """
 
 
-# In[106]:
+# In[2]:
 
 
 home = os.path.expanduser('~')
@@ -28,7 +29,7 @@ color_code = {'critical':'red',
 default_country = 'MX'
 
 
-# In[107]:
+# In[3]:
 
 
 with open('{}/NorsePi/XML/LastHour.xml'.format(home)) as fd:
@@ -44,27 +45,27 @@ df = pd.DataFrame(reform)
 #df = df.drop_duplicates(subset=['threatid','src']).reset_index(drop=True)
 
 
-# In[108]:
+# In[4]:
 
 
 df = df[['direction','device_name','time_generated',"src",'srcloc','dst','dstloc','subtype','threatid','severity']]
 df1 = df['device_name'].map(lambda x : x.split('-')[1])
 
 
-# In[109]:
+# In[5]:
 
 
 countries = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/all_countries.csv'),sep='\t',index_col=0)
 # countries['country'] = countries['country'].map(lambda x: x.strip())
 
 
-# In[110]:
+# In[6]:
 
 
 Tec = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
 
-# In[111]:
+# In[7]:
 
 
 df['srcname'] = ''
@@ -150,7 +151,7 @@ for idx in range(a):
     
 
 
-# In[112]:
+# In[8]:
 
 
 a = ['device_name',
@@ -171,26 +172,148 @@ a = ['device_name',
  'time_generated']
 
 
-# In[113]:
+# In[9]:
 
 
 df = df[a]
 
 
-# In[114]:
+# In[10]:
 
 
-df = df.sort_values('time_generated')
+df = df.sort_values('time_generated',ascending=False)
 
 
-# In[115]:
+# In[11]:
 
 
 df.reset_index(drop=True,inplace=True)
 
 
-# In[118]:
+# In[12]:
 
 
-df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+df
+
+
+# In[13]:
+
+
+df.to_json(os.path.expanduser('~/NorsePi/XML/_LastHour.json'),orient='index')
+
+
+# In[14]:
+
+
+atacantes = df['srcname']
+
+
+# # Top 10 Atacantes
+
+# In[15]:
+
+
+a = dict()
+for i in df.srcname.unique():
+    a[i] = df[df.srcname == i].count()[0]
+
+a = pd.DataFrame.from_dict(a,orient='index').sort_values([0],ascending=False).head(9)
+
+a.reset_index(inplace=True)
+
+a.rename(index=str, columns={"index": "Country", 0: "Count"},inplace=True)
+
+def perc(i):
+    i = int(i)
+    return str(int(i*10000/len(df))/100)+'%'
+
+a['Perc']=a['Count'].map(perc)
+
+
+# In[16]:
+
+
+tmp = len(df) - a['Count'].sum()
+
+a = a.append({'Country':'Otros','Count':tmp,'Perc':perc(tmp)},ignore_index=True)
+
+
+# In[17]:
+
+
+a
+
+
+# In[18]:
+
+
+a.to_json(os.path.expanduser('~/NorsePi/XML/TopAttackers.json'),orient='index')
+
+
+# # Top 10 Atacados
+
+# In[19]:
+
+
+a = pd.DataFrame(df.dstname.value_counts().head(9)).reset_index().rename(index=str, columns={"index": "Campus", 'dstname': "Count"})
+
+
+# In[20]:
+
+
+a['Perc']=a['Count'].map(perc)
+
+
+# In[21]:
+
+
+tmp = len(df) - a['Count'].sum()
+
+a = a.append({'Campus':'Otros','Count':tmp,'Perc':perc(tmp)},ignore_index=True)
+
+
+# In[22]:
+
+
+a
+
+
+# In[23]:
+
+
+a.to_json(os.path.expanduser('~/NorsePi/XML/TopAttacked.json'),orient='index')
+
+
+# # Top 10 Tipos de Ataques
+
+# In[24]:
+
+
+a = pd.DataFrame(df.threatid.value_counts().head(9)).reset_index().rename(index=str, columns={"index": "Attack", 'threatid': "Count"})
+
+
+# In[25]:
+
+
+a['Perc']=a['Count'].map(perc)
+
+
+# In[26]:
+
+
+tmp = len(df) - a['Count'].sum()
+
+a = a.append({'Attack':'Otros','Count':tmp,'Perc':perc(tmp)},ignore_index=True)
+
+
+# In[27]:
+
+
+a
+
+
+# In[28]:
+
+
+a.to_json(os.path.expanduser('/home/gabriel/NorsePi/XML/TopAttacks.json'),orient='index')
 

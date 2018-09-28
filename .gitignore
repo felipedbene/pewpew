@@ -1,8 +1,8 @@
 *.xlsx
 *.ini
 *.tmp
-*.json
 *.xml
 2
 *.swp
 *$
+*LastHour.json
