@@ -25,7 +25,7 @@ sudo apt install chromium-browser git curl xdotool -y
 
 cd $HOME/
 
-#wget https://raw.githubusercontent.com/gogvale/raspberrypi-remove-apps/master/remove-apps.sh
+#wget https://raw.githubusercontent.com/MicroplusOfficial/raspberrypi-remove-apps/master/remove-apps.sh
 #/usr/bin/yes | remove-apps.sh
 
 #Instalación administrador paquetes python
@@ -34,9 +34,9 @@ echo "Instalación administrador paquetes python"
 
 #Descarga de programa de mapa de ataques
 echo "Descarga de programa de mapa de ataques"
-git clone http://github.com/gogvale/pewpew
+git clone http://github.com/MicroplusOfficial/NorsePi
 
-cd pewpew/SHELL
+cd NorsePi/SHELL
 
 #Generación de token
 echo "Generación de token"
@@ -58,10 +58,10 @@ cat >> start.sh << EOF
 ###############################################################################
 
 #Downloading logs
-watch -n 600 bash \$HOME/pewpew/SHELL/main.sh & #downloads every 5 minutes
+watch -n 600 bash \$HOME/NorsePi/SHELL/main.sh & #downloads every 5 minutes
 
 #Starting server
-cd \$HOME/pewpew
+cd \$HOME/NorsePi
 python3 -m http.server 3245 &
 #Moves mouse and start browser
 xdotool mousemove \$(xdpyinfo | awk '/dimensions/{print \$2}' | sed -e 's/x/ /g') && chromium-browser --kiosk --anonymous --app=http://localhost:3245
@@ -72,5 +72,5 @@ sudo sh -c "echo 'xscreensaver -no-splash &' > $HOME/.config/lxsession/Lubuntu/a
 sudo sh -c "echo 'bash $HOME/start.sh' >> $HOME/.config/lxsession/Lubuntu/autostart"
 
 
-#cp $HOME/pewpew/downloader.sh $HOME/
+#cp $HOME/NorsePi/downloader.sh $HOME/
 

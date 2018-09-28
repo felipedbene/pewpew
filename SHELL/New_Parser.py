@@ -31,7 +31,7 @@ default_country = 'MX'
 # In[3]:
 
 
-with open('{}/pewpew/XML/LastHour.xml'.format(home)) as fd:
+with open('{}/NorsePi/XML/LastHour.xml'.format(home)) as fd:
 	doc = xmltodict.parse(fd.read())
 
 reform = {(outerKey, innerKey): values for outerKey, innerDict in doc.items() for innerKey, values in innerDict.items()}
@@ -54,14 +54,14 @@ df1 = df['device_name'].map(lambda x : x.split('-')[1])
 # In[5]:
 
 
-countries = pd.read_csv(os.path.expanduser('~/pewpew/CSV/all_countries.csv'),sep='\t',index_col=0)
+countries = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/all_countries.csv'),sep='\t',index_col=0)
 countries['country'] = countries['country'].map(lambda x: x.strip())
 
 
 # In[6]:
 
 
-Tec = pd.read_csv(os.path.expanduser('~/pewpew/CSV/GPSTec.csv'))
+Tec = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
 
 # In[7]:
@@ -173,5 +173,5 @@ df
 # In[12]:
 
 
-df.to_json(os.path.expanduser('~/pewpew/XML/_LastHour.json'),orient='index')
+df.to_json(os.path.expanduser('~/NorsePi/XML/_LastHour.json'),orient='index')
 

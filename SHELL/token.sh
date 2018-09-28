@@ -18,4 +18,4 @@ token=$( wget --no-check-certificate --quiet \
   - 'https://'$firewall'/api/?type=keygen&user='$user'&password='$pw\
   | grep -Po '<key>(.*)</key>' | cut -d'>' -f 2 | cut -d'<' -f 1);
 
-echo $token > $HOME/pewpew/SHELL/.tok.tmp;
+echo $token > $HOME/NorsePi/SHELL/.tok.tmp;

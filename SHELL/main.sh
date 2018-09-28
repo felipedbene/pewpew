@@ -8,8 +8,8 @@
 
 maxcalls=1000;
 firewall='10.2.8.121';
-mkdir $HOME/pewpew/XML &>2
-token=$(cat $HOME/pewpew/SHELL/.tok.tmp);
+mkdir $HOME/NorsePi/XML &>2
+token=$(cat $HOME/NorsePi/SHELL/.tok.tmp);
 
 lasth=$(date -d '15 minutes ago' '+%Y/%m/%d %H:%M:%S');
 query="(receive_time geq '"$lasth"')";
@@ -51,13 +51,13 @@ done
 curl -skX GET \
   'https://'$firewall'/api/?type=log&action=get&job-id='$job'&nlogs='$maxcalls'&key='$token \
   -H 'Cache-Control: no-cache' \
-  -H 'Postman-Token: e3d6a799-1580-48a5-b6aa-e1db3972226a' > $HOME/pewpew/XML/LastHour.xml;
+  -H 'Postman-Token: e3d6a799-1580-48a5-b6aa-e1db3972226a' > $HOME/NorsePi/XML/LastHour.xml;
 
 # Convert xml into json
-python3 ~/pewpew/SHELL/New_Parser.py
-#rm $HOME/pewpew/XML/LastHour.xml
+python3 ~/NorsePi/SHELL/New_Parser.py
+#rm $HOME/NorsePi/XML/LastHour.xml
 
 # Prettify Json with python
-cp $HOME/pewpew/XML/_LastHour.json $HOME/pewpew/XML/LastHour
-cat $HOME/pewpew/XML/LastHour | python -m json.tool > $HOME/pewpew/XML/LastHour.json
-rm $HOME/pewpew/XML/LastHour
+cp $HOME/NorsePi/XML/_LastHour.json $HOME/NorsePi/XML/LastHour
+cat $HOME/NorsePi/XML/LastHour | python -m json.tool > $HOME/NorsePi/XML/LastHour.json
+rm $HOME/NorsePi/XML/LastHour

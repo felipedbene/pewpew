@@ -9,7 +9,7 @@ import os
 """
 
 home = os.path.expanduser('~')
-with open('{}/pewpew/XML/LastHour.xml'.format(home)) as fd:
+with open('{}/NorsePi/XML/LastHour.xml'.format(home)) as fd:
 	doc = xmltodict.parse(fd.read())
 
 reform = {(outerKey, innerKey): values for outerKey, innerDict in doc.items() for innerKey, values in innerDict.items()}
@@ -20,5 +20,5 @@ total = a['logs']['@count']
 reform = a['logs']['entry']
 df = pd.DataFrame(reform)
 #df = df.drop_duplicates(subset=['threatid','src']).reset_index(drop=True)
-df.to_json('{}/pewpewXML/LastHour.json'.format(home),orient='index')
+df.to_json('{}/NorsePiXML/LastHour.json'.format(home),orient='index')
 
