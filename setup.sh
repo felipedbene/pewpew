@@ -21,7 +21,7 @@ if [ -z "$3"]
 fi
 
 sudo apt update
-sudo apt install chromium-browser git curl xdotool -y
+sudo apt install chromium-browser git curl xdotool xscreensaver -y
 
 cd $HOME/
 
