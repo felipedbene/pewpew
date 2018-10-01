@@ -24,7 +24,7 @@ maxcalls=1000
 # In[17]:
 
 
-with open(os.path.expanduser('/home/gabriel/NorsePi/SHELL/.tok.tmp'),'r') as file:
+with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'r') as file:
     token = file.read()
 
 
