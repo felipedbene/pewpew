@@ -7,7 +7,7 @@
 ########################################################################
 
 maxcalls=1000;
-firewall='10.2.8.121';
+firewall='10.4.29.121';
 mkdir $HOME/NorsePi/XML &>2
 token=$(cat $HOME/NorsePi/SHELL/.tok.tmp);
 
