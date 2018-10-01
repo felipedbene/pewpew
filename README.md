@@ -1,12 +1,8 @@
 # NorsePi (Mapa de ataques de Palo Alto)
-Copiar setup.sh al directorio principal y ejecutarlo con los argumentos
+Copiar setup.sh al directorio principal y ejecutarlo. Te va pedir:
 - IP Palo Alto
 - Usuario Palo Alto
-- (Opcional) Contraseña de Palo Alto
-
-
-
-(En caso de que no se de la contraseña como argumento, se va pedir dentro del mismo programa, eso evita tener registrada la contraseña en el historial de comandos)
+- Contraseña de Palo Alto
 
 En seguida, iniciar xscreensaver y desactivar bloqueo de pantalla
 
