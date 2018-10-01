@@ -9,9 +9,7 @@ import numpy as np
 import os
 import pandas as pd
 import requests
-import time
 import xmltodict
-import urllib3
 
 
 # # Captura de Job
@@ -77,16 +75,20 @@ def waitXML(firewall, token, job, maxlogs):
         'Cache-Control': "no-cache",
         'Postman-Token': "073a8ee1-8d6f-4e46-b051-f14eaca30de2"
         }
-    status = ''
-    while status != 'FIN':
+
+    while progress < 100:
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
+
         xml = response.text
-        status = xml.split('<status>')[1].split('</status>')[0]
+        status = xml.split('<status>')[1].split('</status>')[0]    
         progress = int(xml.split('progress="')[1].split('"')[0])
         print('Status:{}%\t{}'.format(progress,status),end='\r')
-        time.sleep(3)
-    print('Status:{}%\t{}'.format(progress,status))
     print('Done!')
+
+
+# # Get XML
+
+# In[51]:
 
 
 def getXML(firewall, token, job, maxlogs):
@@ -116,7 +118,7 @@ def getXML(firewall, token, job, maxlogs):
 
 # # New_Parser.py
 
-# In[56]:
+# In[58]:
 
 
 def xmlParser():
@@ -142,6 +144,10 @@ def xmlParser():
     reform = a['logs']['entry']
     df = pd.DataFrame(reform)
     df = df[['direction','device_name','time_generated',"src",'srcloc','dst','dstloc','subtype','threatid','severity']]
+    print('Generating First JSON...')
+    df.to_json('LastHour_1.json',orient='index')
+    print('Finished. Moving on...')
+    
     df1 = df['device_name'].map(lambda x : x.split('-')[1])
     countries = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/all_countries.csv'),sep='\t',index_col=0)
     Tec = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
@@ -275,9 +281,7 @@ def xmlParser():
 
 
 if __name__ == '__main__':
-
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
+    
     firewall='10.4.29.121'
 
     maxlogs=1000
@@ -290,6 +294,6 @@ if __name__ == '__main__':
     waitXML(firewall,token,job,maxlogs)
 
     getXML(firewall,token,job,maxlogs)
-
+    
     xmlParser()
 

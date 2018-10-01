@@ -6,56 +6,8 @@
 # xml, convierte el xml a JSON y arregla la sintaxis                   #
 ########################################################################
 
-maxcalls=1000;
-firewall='10.4.29.121';
-mkdir $HOME/NorsePi/XML &>2
-token=$(cat $HOME/NorsePi/SHELL/.tok.tmp);
-
-lasth=$(date -d '15 minutes ago' '+%Y/%m/%d %H:%M:%S');
-query="(receive_time geq '"$lasth"')";
-echo $query
-query=$(echo $query | sed 's/(/%28/g ; s/)/%29/g ; s/ /%20/g');
-job=$(curl -skX GET \
-  'https://'$firewall'/api/?type=log&log-type=threat&query='$query'&nlogs='$maxcalls'&key='$token \
-  -H 'Cache-Control: no-cache' \
-  -H 'Postman-Token: 8551531d-7d00-42d9-933a-79063c6efacd' | \
-  grep -Po '<line>.*</line>' | cut -d'>' -f 2 | cut -d'<' -f 1 | \
-  awk '{print $6}');
-echo 'job #'$job' processing...';
-
-#Espera a que haya terminado el  trabajo
-status1="Loading..."
-echo $status1
-
-while [ "$progress" != "100" ]; do
-  status2=$(curl -skX GET \
-    'https://'$firewall'/api/?type=log&action=get&job-id='$job'&nlogs='$maxcalls'&key='$token \
-    -H 'Cache-Control: no-cache' \
-    -H 'Postman-Token: e3d6a799-1580-48a5-b6aa-e1db3972226a');
-
-  status1=$(echo $status2| grep -Po "<status>.*</status>" | grep -Po '[A-Z]+')
-
-  progress=$(echo $status2 | grep -Po 'progress="\d+"' | grep  -Po '\d+')
-
-  if [ "$progress" -eq "100" ]; then
-    echo "Finished!"
-    echo "$status1"
-  else
-    echo -n "$progress%...";
-    sleep 3
-  fi
-done
-
-
 # Get xml file
-curl -skX GET \
-  'https://'$firewall'/api/?type=log&action=get&job-id='$job'&nlogs='$maxcalls'&key='$token \
-  -H 'Cache-Control: no-cache' \
-  -H 'Postman-Token: e3d6a799-1580-48a5-b6aa-e1db3972226a' > $HOME/NorsePi/XML/LastHour.xml;
-
-# Convert xml into json
-python3 ~/NorsePi/SHELL/New_Parser.py
-#rm $HOME/NorsePi/XML/LastHour.xml
+python3 ~/NorsePi/SHELL/PaloAltoXML.py
 
 # Prettify Json with python
 cp $HOME/NorsePi/XML/_LastHour.json $HOME/NorsePi/XML/LastHour
