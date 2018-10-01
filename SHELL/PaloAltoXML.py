@@ -86,17 +86,6 @@ def waitXML(firewall, token, job, maxlogs):
     print('Done!')
 
 
-# In[33]:
-
-
-xml
-
-
-# # Get XML
-
-# In[51]:
-
-
 def getXML(firewall, token, job, maxlogs):
     print('Getting XML...',end='')
     url = "https://{}/api/".format(firewall)
