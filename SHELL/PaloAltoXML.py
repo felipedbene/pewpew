@@ -57,7 +57,7 @@ def getJob(firewall, token, maxlogs, N=15):
 #     Espera a que se termine de generar el log y despliega status en pantalla
 # 
 
-# In[60]:
+# In[62]:
 
 
 def waitXML(firewall, token, job, maxlogs):
@@ -79,9 +79,7 @@ def waitXML(firewall, token, job, maxlogs):
         }
 
     status = ''
-    while progress < 100:
-        if status == 'FIN':
-            continue
+    while progress < 100 or status == 'FIN':
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
         xml = response.text
         status = xml.split('<status>')[1].split('</status>')[0]    
@@ -90,6 +88,12 @@ def waitXML(firewall, token, job, maxlogs):
         time.sleep(3)
     print('Status:{}%\t{}'.format(progress,status))
     print('Done!')
+
+
+# In[ ]:
+
+
+
 
 
 # # Get XML
