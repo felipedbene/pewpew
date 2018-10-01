@@ -5,6 +5,7 @@
 
 
 from datetime import datetime, timedelta
+import urllib3
 import numpy as np
 import os
 import pandas as pd
