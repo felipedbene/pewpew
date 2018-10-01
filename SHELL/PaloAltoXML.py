@@ -79,7 +79,7 @@ def waitXML(firewall, token, job, maxlogs):
         }
 
     status = ''
-    while progress < 100 or status == 'FIN':
+    while progress < 100 and status != 'FIN':
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
         xml = response.text
         status = xml.split('<status>')[1].split('</status>')[0]    
