@@ -76,7 +76,7 @@ def waitXML(firewall, token, job, maxlogs):
         'Cache-Control': "no-cache",
         'Postman-Token': "073a8ee1-8d6f-4e46-b051-f14eaca30de2"
         }
-
+    status = ''
     while status != 'FIN':
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
         xml = response.text
