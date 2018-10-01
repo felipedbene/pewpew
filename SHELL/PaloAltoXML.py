@@ -78,6 +78,7 @@ def waitXML(firewall, token, job, maxlogs):
         'Postman-Token': "073a8ee1-8d6f-4e46-b051-f14eaca30de2"
         }
 
+    status = ''
     while progress < 100:
         if status == 'FIN':
             continue
