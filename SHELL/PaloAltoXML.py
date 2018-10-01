@@ -11,6 +11,7 @@ import pandas as pd
 import requests
 import time
 import xmltodict
+import urllib3
 
 
 # # Captura de Job
@@ -274,7 +275,9 @@ def xmlParser():
 
 
 if __name__ == '__main__':
-    
+
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
     firewall='10.4.29.121'
 
     maxlogs=1000
@@ -287,6 +290,6 @@ if __name__ == '__main__':
     waitXML(firewall,token,job,maxlogs)
 
     getXML(firewall,token,job,maxlogs)
-    
+
     xmlParser()
 
