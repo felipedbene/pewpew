@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[49]:
+# In[59]:
 
 
 from datetime import datetime, timedelta
@@ -10,6 +10,7 @@ import os
 import pandas as pd
 import requests
 import xmltodict
+import time
 
 
 # # Captura de Job
@@ -55,7 +56,7 @@ def getJob(firewall, token, maxlogs, N=15):
 #     Espera a que se termine de generar el log y despliega status en pantalla
 # 
 
-# In[52]:
+# In[60]:
 
 
 def waitXML(firewall, token, job, maxlogs):
@@ -78,11 +79,12 @@ def waitXML(firewall, token, job, maxlogs):
 
     while progress < 100:
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
-
         xml = response.text
         status = xml.split('<status>')[1].split('</status>')[0]    
         progress = int(xml.split('progress="')[1].split('"')[0])
         print('Status:{}%\t{}'.format(progress,status),end='\r')
+        time.sleep(3)
+    print('Status:{}%\t{}'.format(progress,status))
     print('Done!')
 
 
@@ -277,10 +279,12 @@ def xmlParser():
 
 # # Main program
 
-# In[57]:
+# In[61]:
 
 
 if __name__ == '__main__':
+    
+    from urllib3.exceptions import InsecureRequestWarning
     
     firewall='10.4.29.121'
 
