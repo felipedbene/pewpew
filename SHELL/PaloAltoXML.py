@@ -284,7 +284,7 @@ def xmlParser():
 
 if __name__ == '__main__':
     
-    from urllib3.exceptions import InsecureRequestWarning
+    urllib3.disable_warnings()
     
     firewall='10.4.29.121'
 
