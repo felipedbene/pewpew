@@ -9,6 +9,7 @@ import numpy as np
 import os
 import pandas as pd
 import requests
+import time
 import xmltodict
 
 
@@ -76,13 +77,14 @@ def waitXML(firewall, token, job, maxlogs):
         'Postman-Token': "073a8ee1-8d6f-4e46-b051-f14eaca30de2"
         }
 
-    while progress < 100:
+    while status != 'FIN':
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
-
         xml = response.text
-        status = xml.split('<status>')[1].split('</status>')[0]    
+        status = xml.split('<status>')[1].split('</status>')[0]
         progress = int(xml.split('progress="')[1].split('"')[0])
         print('Status:{}%\t{}'.format(progress,status),end='\r')
+        time.sleep(3)
+    print('Status:{}%\t{}'.format(progress,status))
     print('Done!')
 
 
