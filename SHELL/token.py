@@ -9,12 +9,12 @@ import os
 import getpass
 
 
-# In[49]:
+# In[50]:
 
 
 if __name__ == '__main__':
     """
-    Programa utilizado para generar tokens de palo alto.
+    Programa utilizado para generar Tokens de palo alto.
     Generado por Postman
     """
     ip = input('IP de palo alto (e.g. 8.8.8.8):')
@@ -34,9 +34,9 @@ if __name__ == '__main__':
     
     if 'key' in xml:
         print('Key found! Printing to hidden file...')
-        token = xml.split('key')[1].split('>')[1].split('<')[0]
+        Token = xml.split('key')[1].split('>')[1].split('<')[0]
         with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'w') as file:
-            file.write(token)
+            file.write(Token)
     else:
         print('key not found. Check if username and password are correct and try again')
         print('response:\n{}'.format(xml))
