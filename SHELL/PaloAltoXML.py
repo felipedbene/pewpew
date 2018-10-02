@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[59]:
+# In[8]:
 
 
 from datetime import datetime, timedelta
@@ -16,7 +16,7 @@ import time
 
 # # Captura de Job
 
-# In[54]:
+# In[9]:
 
 
 def getJob(firewall, token, maxlogs, N=15):
@@ -57,7 +57,7 @@ def getJob(firewall, token, maxlogs, N=15):
 #     Espera a que se termine de generar el log y despliega status en pantalla
 # 
 
-# In[62]:
+# In[10]:
 
 
 def waitXML(firewall, token, job, maxlogs):
@@ -90,15 +90,9 @@ def waitXML(firewall, token, job, maxlogs):
     print('Done!')
 
 
-# In[ ]:
-
-
-
-
-
 # # Get XML
 
-# In[51]:
+# In[11]:
 
 
 def getXML(firewall, token, job, maxlogs):
@@ -127,11 +121,12 @@ def getXML(firewall, token, job, maxlogs):
 
 
 # # New_Parser.py
+# 
 
-# In[58]:
+# In[39]:
 
 
-def xmlParser():
+def xmlParser(file=''):
     """
         El código toma el archivo recibido de palo alto como xml y lo 
         convierte a un archivo JSON que puede ser leído de manera más 
@@ -144,8 +139,12 @@ def xmlParser():
                  'low':'green',
                  'informational':'blue'}
     default_country = 'MX'
-    with open(os.path.expanduser('~/NorsePi/XML/LastHour.xml'),'r') as fd:
-        doc = xmltodict.parse(fd.read())
+    if file == '':
+        with open(os.path.expanduser('~/NorsePi/XML/LastHour.xml'),'r') as fd:
+            doc = xmltodict.parse(fd.read())
+    else:
+        with open(os.path.expanduser(file),'r') as fd:
+            doc = xmltodict.parse(fd.read())
     reform = {(outerKey, innerKey): values for outerKey, innerDict in doc.items() for innerKey, values in innerDict.items()}
     a = pd.DataFrame(reform)
     reform = a['response']['result']['log']
@@ -169,74 +168,81 @@ def xmlParser():
     df['dstlong'] = ''
     a = len(df)
     for idx in range(a):
-        print('{}/{}'.format(idx+1,a),end='\r')
-
-        """
-        Pone el codigo alpha-2 como identificador de source y destiny
-        """
-        df['dstloc'][idx] = df['device_name'][idx].split('-')[1]
-        df['srcloc'][idx] = df['srcloc'][idx]['@cc']
-
-        """
-        Si viene como rango de IP, cambia por el default ('MX')
-
-        Checar aqui las ubicaciones del TEC!!!!
-
-        """
-        if len(df['srcloc'][idx]) > 2:
-            #print('{}->"MX"'.format(df['srcloc'][idx]))
-            df['srcloc'][idx] = default_country ######################################3
-
-        """
-        Cambia severidad por codigo de colores
-        """
-        df['severity'][idx] = color_code[df['severity'][idx]]
-
-        """
-        Cambia el nombre del pais de acuerdo al codigo alpha-2
-        """
         try:
-            df['srcname'][idx] = countries[countries['country'] == df['srcloc'][idx]]['name'].reset_index(drop=True)[0]
-        except:
-            print('Pais no encontrado: alpha2={}, indice={}'.format(df['srcloc'][idx],idx))
-            df['srcloc'][idx] = default_country
-            df['srcname'][idx] = 'INTERNO'
+            print('{}/{}'.format(idx+1,a),end='\r')
 
-        """Ideia: Botar uma flag em caso de que nao seja pais atacado! :D"""
-        tmp = Tec[Tec['Campus'] == df['dstloc'][idx]]['Nombre'] #!!!!!!!!!!!!!!!!!
-        if len(tmp) == 0:
-            print('Campus no encontrado: {}, indice={}'.format(df['dstloc'][idx],idx))
-            df['dstname'][idx] = countries[countries['country3'] == df1.iloc[idx]]['name'].reset_index(drop=True)[0]
-        else:
-            tmp = tmp.reset_index(drop=True)[0]
-        df['dstname'][idx] = tmp
+            """
+            Pone el codigo alpha-2 como identificador de source y destiny
+            """
+            df['dstloc'][idx] = df['device_name'][idx].split('-')[1]
+            df['srcloc'][idx] = df['srcloc'][idx]['@cc']
 
-        """
-        TODO
-        Cambia cordinadas de destino de acuerdo al nombre del dispositivo
-        """
-        tmp = Tec[Tec['Campus'] == df1.iloc[idx]]['longitud']
-        if len(tmp) == 0:
-            tmp = countries[countries['country3'] == df['dstloc'][idx]]['longitude'].reset_index(drop=True)[0]
-        else:
-            tmp = tmp.reset_index(drop=True)[0]
+            """
+            Si viene como rango de IP, cambia por el default ('MX')
 
-        df['dstlong'][idx] = tmp
-        ################# consertar os splits########################l
-        tmp = Tec[Tec['Campus'] == df1.iloc[idx]]['latitud']
-        if len(tmp) != 0:
-            tmp = tmp.reset_index(drop=True)[0]
-        else:
-            tmp = countries[countries['country3'] == df['dstloc'][idx]]['latitude'].reset_index(drop=True)[0]
-        df['dstlat'][idx] = tmp    
+            Checar aqui las ubicaciones del TEC!!!!
 
-        """
-        Cambia cordinadas de fuente 
-        """
-        tmp = str(countries[countries['country'] == df['srcloc'][idx]]['longitude']).split()[1]
-        df['srclong'][idx] = tmp
-        tmp = str(countries[countries['country'] == df['srcloc'][idx]]['latitude']).split()[1]
-        df['srclat'][idx] = tmp    
+            """
+            if len(df['srcloc'][idx]) > 2:
+                #print('{}->"MX"'.format(df['srcloc'][idx]))
+                df['srcloc'][idx] = default_country ######################################3
+
+            """
+            Cambia severidad por codigo de colores
+            """
+            df['severity'][idx] = color_code[df['severity'][idx]]
+
+            """
+            Cambia el nombre del pais de acuerdo al codigo alpha-2
+            """
+            try:
+                df['srcname'][idx] = countries[countries['country'] == df['srcloc'][idx]]['name'].reset_index(drop=True)[0]
+            except:
+                print('Pais no encontrado: alpha2={}, indice={}'.format(df['srcloc'][idx],idx))
+                df['srcloc'][idx] = default_country
+                df['srcname'][idx] = 'INTERNO'
+
+            """Ideia: Botar uma flag em caso de que nao seja pais atacado! :D"""
+            tmp = Tec[Tec['Campus'] == df['dstloc'][idx]]['Nombre'] #!!!!!!!!!!!!!!!!!
+            if len(tmp) == 0:
+                print('Campus no encontrado: {}, indice={}'.format(df['dstloc'][idx],idx))
+                try:
+                    df['dstname'][idx] = countries[countries['country3'] == df1.iloc[idx]]['name'].reset_index(drop=True)[0]
+                except:
+                    df['dstname'][idx] = default_country
+            else:
+                tmp = tmp.reset_index(drop=True)[0]
+            df['dstname'][idx] = tmp
+
+            """
+            TODO
+            Cambia cordinadas de destino de acuerdo al nombre del dispositivo
+            """
+            tmp = Tec[Tec['Campus'] == df1.iloc[idx]]['longitud']
+            if len(tmp) == 0:
+                tmp = countries[countries['country3'] == df['dstloc'][idx]]['longitude'].reset_index(drop=True)[0]
+            else:
+                tmp = tmp.reset_index(drop=True)[0]
+
+            df['dstlong'][idx] = tmp
+            ################# consertar os splits########################l
+            tmp = Tec[Tec['Campus'] == df1.iloc[idx]]['latitud']
+            if len(tmp) != 0:
+                tmp = tmp.reset_index(drop=True)[0]
+            else:
+                tmp = countries[countries['country3'] == df['dstloc'][idx]]['latitude'].reset_index(drop=True)[0]
+            df['dstlat'][idx] = tmp    
+
+            """
+            Cambia cordinadas de fuente 
+            """
+            tmp = str(countries[countries['country'] == df['srcloc'][idx]]['longitude']).split()[1]
+            df['srclong'][idx] = tmp
+            tmp = str(countries[countries['country'] == df['srcloc'][idx]]['latitude']).split()[1]
+            df['srclat'][idx] = tmp    
+        except Exception as e:
+            with open('log.tmp','a+') as f:
+                f.write(e)
 
     a = ['device_name',
      'direction',
@@ -258,7 +264,7 @@ def xmlParser():
     df = df.sort_values('time_generated',ascending=False)
     df.reset_index(drop=True,inplace=True)
     df
-    df.to_json(os.path.expanduser('~/NorsePi/XML/_LastHour.json'),orient='index')
+    df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
     atacantes = df['srcname']
     a = dict()
     for i in df.srcname.unique():
@@ -287,7 +293,7 @@ def xmlParser():
 
 # # Main program
 
-# In[61]:
+# In[13]:
 
 
 if __name__ == '__main__':
