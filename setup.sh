@@ -34,6 +34,7 @@ cat > start.sh << EOF
 ###############################################################################
 
 #Downloading logs
+bash \$HOME/NorsePi/SHELL/main.sh
 watch -n 900 bash \$HOME/NorsePi/SHELL/main.sh & #downloads every 5 minutes
 
 #Starting server
