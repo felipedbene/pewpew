@@ -9,7 +9,7 @@ var len = 0;
 var time = 100;
 var precision = 1;
 var maxLength = 20;
-var debug = true;
+var debug = false;
 var tamano = document.getElementById("attackdiv").innerText;
 var queue = 50;
 //~ Timer
