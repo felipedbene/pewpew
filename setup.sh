@@ -10,41 +10,17 @@
 # fondo de daemon de no-sleep y la ejecución de la app en fullscreen          #
 ###############################################################################
 
-#Argumentos: IP User (Pw)
-
-if [ -z "$3"]
-  then
-    echo -n Password:
-    read -s pw
-  else
-    pw=$3
-fi
-
 sudo apt update
-sudo apt install chromium-browser git curl xdotool xscreensaver -y
-
-cd $HOME/
-
-#wget https://raw.githubusercontent.com/MicroplusOfficial/raspberrypi-remove-apps/master/remove-apps.sh
-#/usr/bin/yes | remove-apps.sh
+sudo apt install chromium-browser git curl xdotool -y
 
 #Instalación administrador paquetes python
 echo "Instalación administrador paquetes python"
-/usr/bin/yes | sudo apt install python3-pip python3-pandas python3-xmltodict
+/usr/bin/yes | sudo apt install python3-pip python3-pandas python3-xmltodict python3-requests
 
-#Descarga de programa de mapa de ataques
-echo "Descarga de programa de mapa de ataques"
-git clone http://github.com/MicroplusOfficial/NorsePi
-
-cd NorsePi/SHELL
 
 #Generación de token
 echo "Generación de token"
-bash token.sh $1 $2 $pw
-
-#Reemplazando IP en los documentos necesarios
-echo "Reemplazando IP en los documentos necesarios"
-sed -i "0,/firewall/{s/'.*'/'$1'/g}" main.sh
+python3 $HOME/NorsePi/SHELL/Token.py
 
 # Creación del script que mueve mouse e inicia chromium en fullscreen
 cd $HOME
@@ -58,7 +34,7 @@ cat > start.sh << EOF
 ###############################################################################
 
 #Downloading logs
-watch -n 600 bash \$HOME/NorsePi/SHELL/main.sh & #downloads every 5 minutes
+watch -n 900 bash \$HOME/NorsePi/SHELL/main.sh & #downloads every 5 minutes
 
 #Starting server
 cd \$HOME/NorsePi
@@ -68,8 +44,6 @@ xdotool mousemove \$(xdpyinfo | awk '/dimensions/{print \$2}' | sed -e 's/x/ /g'
 EOF
 
 chmod +x start.sh
-sudo sh -c "echo 'xscreensaver -no-splash &' > $HOME/.config/lxsession/Lubuntu/autostart"
-sudo sh -c "echo 'bash $HOME/start.sh' >> $HOME/.config/lxsession/Lubuntu/autostart"
-
-
-#cp $HOME/NorsePi/downloader.sh $HOME/
+# echo "@xset s off" > $HOME/.config/lxsession/Lubuntu/autostart
+echo "Hacer configuración de screensaver manualmente"
+echo "@bash $HOME/start.sh" >> $HOME/.config/lxsession/Lubuntu/autostart

@@ -18,6 +18,19 @@ if __name__ == '__main__':
     Generado por Postman
     """
     ip = input('IP de palo alto (e.g. 8.8.8.8):')
+    
+    # Reemplazando IP en los documentos necesarios
+    result = ""
+    with open(os.path.expanduser('~/NorsePi/SHELL/PaloAltoXML.py')) as f:
+        for line in f:
+            if 'firewall=' in line:
+                aaa = line.split("'")
+                aaa[1] = ip
+                line = "'".join(aaa)
+            result += line + '\n'
+    f = open(os.path.expanduser('~/NorsePi/SHELL/PaloAltoXML.py'),'w')
+    f.write(result)
+    f.close()
 
     url = "https://{}/api/".format(ip)
 
