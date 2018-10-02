@@ -241,9 +241,7 @@ def xmlParser(file=''):
             tmp = str(countries[countries['country'] == df['srcloc'][idx]]['latitude']).split()[1]
             df['srclat'][idx] = tmp    
         except Exception as e:
-            with open('log.tmp','a+') as f:
-                f.write(e)
-
+            pass
     a = ['device_name',
      'direction',
      'src',
