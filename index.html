@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Microplus Attack Map</title>
-		<link rel="stylesheet" type="text/css" href="CSS/main.css">
-		<link rel="shortcut icon" href="img/tab_icon.jpg">
-		<script src="JS/d3.v3.min.js"></script>
-		<script src="JS/d3.geo.projection.v0.min.js"></script>
-		<script src="JS/topojson.v1.min.js"></script>
-		<script src="JS/datamaps.world.min.js"></script>
-		<script src="JS/jquery-2.1.1.min.js"></script>
-		<script src="JS/jquery.simplemodal-1.4.4.js"></script>
-	</head>
-	<body>
-		<div id="container1">
-			
+
+<head>
+	<meta charset="utf-8">
+	<title>Microplus Attack Map</title>
+	<link rel="stylesheet" type="text/css" href="CSS/main.css">
+	<link rel="shortcut icon" href="img/tab_icon.jpg">
+	<script src="JS/d3.v3.min.js"></script>
+	<script src="JS/d3.geo.projection.v0.min.js"></script>
+	<script src="JS/topojson.v1.min.js"></script>
+	<script src="JS/datamaps.world.min.js"></script>
+	<script src="JS/jquery-2.1.1.min.js"></script>
+	<script src="JS/jquery.simplemodal-1.4.4.js"></script>
+</head>
+
+<body>
+	<div class="wrapper">
+		<img class="cliente" src="img/tec-de-monterrey-logo.png" alt="logo" />
+		<div class="global_map" id="container1"></div>
+		<div class="name">
+			<div class="header">
+				<h1><strong>Ciberseguridad</strong></h1>
+			</div>
+			<div class="subheader">
+				<h2>Mapa de Ataques<br>Tecnológico de Monterrey</h2>
+			</div>
 		</div>
-		<div id="header">
-<!--
-			<img class="mp" src="img/LogoMicroplus.png" alt="logo" />
---><br><br>
-			<h1>Ciberseguridad</h1>
-			<h1>Mapa de Ataques al Tecnológico de Monterrey</h1>
-			<img class="cliente" src="img/tec-de-monterrey-logo.png" alt="logo" />
-		</div>
-		<div id="container2">
+		<div class="timer" id="container2">
 			<h1>----/--/-- --:--:--</h1>
 		</div>
-		<div id="attackdiv"></div>
-		<div id="attack_console"></div>
-		<script src="JS/main.js"></script>
-	</body>
+		<div class="attack_console" id="attackdiv"></div>
+
+	</div>
+	<script src="JS/main.js"></script>
+</body>
+
 </html>
