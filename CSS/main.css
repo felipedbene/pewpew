@@ -1,159 +1,77 @@
-html { overflow-y: hidden; }
-
-body {
-  margin: 0;
-  padding: 0;
-  background: black;
-}
-
-#attackdiv {
-  font-family: monospace;
-  font-size:1.5em;
-  position:fixed;
-  width:25%;
-  height:30%;
-  color:white;
-  
-  padding:5px;
-  bottom:0px;
-  overflow-y: auto;
-  overflow: hidden;
-  margin-bottom: auto;
-  margin-left: 1em;
-  z-index:5;
-  border-style: solid;
-  border-color: green;
-  border-width: thin;
-}
-
-#container1 {
-	z-index: 0;
-	position: absolute;
-	bottom: 0;
-	width: 100vw;
-	height: 90vh;
-	max-width:100%;
-	max-height:100%
-}
-
-#about {
-  display: hidden;
-}
-
-#aboutdiv {
-  text-align:right;
-  width:100px;
-  height:100px;
-  top:0px;
-  right:0px;
-  position:fixed;
-  padding:10px;
-  color: white;
-}
-
-#ccdiv {
-  visibility:hidden;
-  text-align:right;
-  width:100px;
-  height:20px;
-  bottom:0px;
-  right:0px;
-  position:fixed;
-  padding:5px;
-  color: white;
-}
-
-#about {display:none;}
-
-/* Overlay */
-#simplemodal-overlay {background-color:#000;}
-
-/* Container */
-#simplemodal-container {height:460px; width:600px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px;}
-#simplemodal-container .simplemodal-data {padding:8px;}
-#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
-#simplemodal-container a {color:#ddd;}
-#simplemodal-container a.modalCloseImg {background:url(../img/basic/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
-#simplemodal-container h3 {color:#84b8d9;}
-#simplemodal-container a.modalCloseImg {
-  background:url(img/x.png) no-repeat; /* adjust url as required */
-  width:25px;
-  height:29px;
-  display:inline;
-  z-index:3200;
-  position:absolute;
-  top:-15px;
-  right:-18px;
-  cursor:pointer;
-}
-
-#container1 img {
+.wrapper {
+  position: absolute;
   width: auto;
-  height: auto;
-  background: white;
+  height: 100%;
+  background-color: black;
 }
 
-#header {
-	position: absolute;
-	top: 0;
-	text-align: right;
-	font-family: monospace;
-	font-size:30px;
-	height:54px;
-	width:100%;
-	color:white;
-	background-color:black;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: auto;
+img.cliente {
+  /* background-color: pink; */
+  width: 20%;
 }
 
-#header h1 {
-	margin: 0;
-	text-align: center;
-	font-family: monospace;
-	font-size:50px;
-	height:54px;
-	width:80%;
-	color:white;
-	background-color:black;
-	overflow-y: auto;
-	overflow: hidden;
-	margin-left: auto;
-    margin-right: auto;
- 
-}
-#container2 h1 {
-	position: fixed;
-	text-align: right;
-	font-family: monospace;
-	font-size:4em;
-	height:auto;
-	width: auto;
-	color:white;
-	background-color:black;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: auto;
-	bottom: 0;
-	right: 0;
-	
-}
-#header img.cliente{
-	  position: absolute;
-	  top: 5px;
-	  left: 20px;
-	  background-color: transparent;
-	  width: 20%;
+.global_map {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  z-index: 1;
+  /* background-color: red; */
 }
 
-#header img.mp{
-	  position: absolute;
-	  right: 0px;
-	  background-color: transparent;
-	  width: 15%;
-/*
-	  margin-bottom = "0px";
-*/
+.datamap {
+  all: unset;
+}
 
+.name {
+  color: white;
+}
+
+.header {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  padding-top: 0;
+  /* background-color: orange; */
+}
+
+.subheader {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  right: 30%;
+  z-index: 2;
+  width: auto;
+  text-align: center;
+  font-size: 2em;
+  /* background-color: blue; */
+}
+
+.timer {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: auto;
+  /* background-color: green; */
+  font-size: 2em;
+  z-index: 3;
+}
+
+.attack_console {
+  position: absolute;
+  background-color: black;
+  height: 35%;
+  width: 30%;
+  bottom: 0;
+  left: 3px;
+  z-index: 3;
+  font-size: 1.5em;
+  color: white;
+  overflow-y: auto;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
