@@ -133,11 +133,11 @@ def xmlParser(file=''):
         sencilla por el programa de mapa de ataques o cualquier otro que
         consuma la info por JS
     """
-    color_code = {'critical':'red',
-                  'high':'orange',
-                 'medium':'yellow',
-                 'low':'green',
-                 'informational':'blue'}
+    color_code = {'critical':'#ff4660', #red
+                  'high':'#f48154'  #orange,
+                 'medium':'#d9ff7f', #yellow
+                 'low':'#42ff58', #green
+                 'informational':'#54ba8a'} #blue
     default_country = 'MX'
     if file == '':
         with open(os.path.expanduser('~/NorsePi/XML/LastHour.xml'),'r') as fd:
