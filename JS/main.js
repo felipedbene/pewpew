@@ -102,7 +102,7 @@ var map = new Datamap({
   geographyConfig: {
     dataUrl: null,
     hideAntarctica: false,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: '#079a9a',
     popupTemplate: function(geography, data) {
       return '<div class="hoverinfo" style="color:white;background:black">' +
