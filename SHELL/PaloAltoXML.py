@@ -133,6 +133,7 @@ def xmlParser(file=''):
         sencilla por el programa de mapa de ataques o cualquier otro que
         consuma la info por JS
     """
+    drop_values = set()
     color_code = {'critical':'#ff4660', #red
                   'high':'#f48154',  #orange
                  'medium':'#d9ff7f', #yellow
@@ -153,8 +154,6 @@ def xmlParser(file=''):
     reform = a['logs']['entry']
     df = pd.DataFrame(reform)
     df = df[['direction','device_name','time_generated',"src",'srcloc','dst','dstloc','subtype','threatid','severity']]
-    print('Generating First JSON...')
-    df.to_json('LastHour_1.json',orient='index')
     print('Finished. Moving on...')
 
     df1 = df['device_name'].map(lambda x : x.split('-')[1])
@@ -192,12 +191,16 @@ def xmlParser(file=''):
         """
         Cambia el nombre del pais de acuerdo al codigo alpha-2
         """
-        try:
-            df['srcname'][idx] = countries[countries['country'] == df['srcloc'][idx]]['name'].reset_index(drop=True)[0]
-        except:
+
+        tmp = countries[countries['country'] == df['srcloc'][idx]]['name'].reset_index(drop=True)
+        if len(tmp) == 0:
             print('Pais no encontrado: alpha2={}, indice={}'.format(df['srcloc'][idx],idx))
+            tmp = 'INTERNO'
             df['srcloc'][idx] = default_country
-            df['srcname'][idx] = 'INTERNO'
+        else:
+            tmp = tmp[0]
+
+        df['srcname'][idx] = tmp
 ########################################################3
         """Ideia: Botar uma flag em caso de que nao seja pais atacado! :D"""
         tmp = Tec[Tec['Campus'] == df['dstloc'][idx]]['Nombre'] #!!!!!!!!!!!!!!!!!
@@ -205,7 +208,8 @@ def xmlParser(file=''):
             print('Campus no encontrado: {}, indice={}'.format(df['dstloc'][idx],idx))
             tmp = countries[countries['country3'] == df1.iloc[idx]]['name'].reset_index(drop=True)
             if len(tmp) == 0:
-                tmp = default_country
+                # tmp = default_country
+                drop_values.add(idx)
             else:
                 tmp = tmp[0]
         else:
@@ -220,7 +224,8 @@ def xmlParser(file=''):
         if len(tmp) == 0:
             tmp = countries[countries['country3'] == df['dstloc'][idx]]['longitude'].reset_index(drop=True)
             if len(tmp) == 0:
-                tmp = default_country
+                # tmp = default_country
+                drop_values.add(idx)
             else:
                 tmp = tmp[0]
         else:
@@ -234,7 +239,8 @@ def xmlParser(file=''):
         else:
             tmp = countries[countries['country3'] == df['dstloc'][idx]]['latitude'].reset_index(drop=True)
             if len(tmp) == 0:
-                tmp = default_country
+                # tmp = default_country
+                drop_values.add(idx)
             else:
                 tmp = tmp[0]
         df['dstlat'][idx] = tmp
@@ -247,6 +253,8 @@ def xmlParser(file=''):
         tmp = str(countries[countries['country'] == df['srcloc'][idx]]['latitude']).split()[1]
         df['srclat'][idx] = tmp
 
+    df = df.drop(list(drop_values))
+    df.reset_index(drop=True,inplace=True)
     a = ['device_name',
      'direction',
      'src',
