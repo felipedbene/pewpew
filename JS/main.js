@@ -11,7 +11,7 @@ var halt = 5;
 var def_cnt = 'Mexico';
 var log = [];
 var count = 0;
-var time = 100;
+var time = 1000;
 var len = 0;
 var precision = 1;
 var maxLength = 20;
@@ -209,7 +209,7 @@ var attacks = {
       var t = timer("Loop " + count);
     //<Parte Gabo>
     var a = log[len - count - 1];
-    $('#container2').html('<h1>' + a['time_generated'] + '</h1>');
+    // $('#container2').html('<h1>' + a['time_generated'] + '</h1>');
 
     var IP1 = a["src"],
       IP2 = a["dst"];
@@ -265,7 +265,7 @@ var attacks = {
       }
     });
 
-    $('#attackdiv').append("<b>" + srccountry + "</b> (" + IP1 + ") " +
+    $('#attackdiv').append("@"+a["time_generated"]+"<br/>  <b>" + srccountry + "</b> (" + IP1 + ") " +
       " <span style='color:#FF7474'>attacks</span><br/> <b>" +
       attackdiv_slatlong + "</b> (" + IP2 + ") <br>" +
       " <span style='color:" + strokeColor + "'> " + atkname +
