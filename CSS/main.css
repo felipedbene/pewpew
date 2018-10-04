@@ -36,9 +36,9 @@ img.cliente {
 
 .subheader {
   position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
+  top: 1em;
+  left: 15%;
+  right: 15%;
   z-index: 2;
   width: auto;
   text-align: center;
