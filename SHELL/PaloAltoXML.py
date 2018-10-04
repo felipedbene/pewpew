@@ -280,7 +280,7 @@ if __name__ == '__main__':
     firewall='10.4.29.121'
 
     maxlogs=1000
-    minutes = 15*60
+    minutes = 15
 
     with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'r') as file:
         token = file.read()
