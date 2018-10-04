@@ -1,11 +1,40 @@
 // Versión Rapida
-
 window.onerror = function(msg) {
   $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
   setTimeout(function() {
     location.reload();
   }, 3000);
 }
+
+
+
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function startTime() {
+  var today = new Date();
+  var ye = today.getFullYear();
+  var mo = today.getMonth();
+  var da = today.getDay();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  mo = checkTime(mo);
+  da = checkTime(da);
+  document.getElementById('container2').innerHTML = da + '/' + mo + '/' + ye + ' ' + h + ":" + m + ":" + s;
+  t = setTimeout(function() {
+    startTime()
+  }, 500);
+}
+startTime();
+
 
 var halt = 5;
 var def_cnt = 'Mexico';
