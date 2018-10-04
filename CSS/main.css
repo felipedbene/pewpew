@@ -16,10 +16,10 @@ img.cliente {
 
 .global_map {
   position: absolute;
-  top: 10%;
+  top: 15%;
   left: 10%;
   right: 10%;
-  bottom: 10%;
+  bottom: 5%;
   z-index: 1;
   /* background-color: red; */
 }
@@ -60,7 +60,7 @@ img.cliente {
 
 .attack_console {
   position: absolute;
-  background-color: black;
+  /* background-color: orange; */
   height: 35%;
   width: 30%;
   bottom: 0;
