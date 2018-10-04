@@ -44,18 +44,18 @@ def getJob(firewall, token, maxlogs, N=15):
     xml = response.text
 
     job = xml.split('line')[1].split()[-1].split('<')[0]
-    
+
     print('Finished.')
 
     print('#job:{}'.format(job))
-    
+
     return job
 
 
 # # Wait XML
-# 
+#
 #     Espera a que se termine de generar el log y despliega status en pantalla
-# 
+#
 
 # In[10]:
 
@@ -82,7 +82,7 @@ def waitXML(firewall, token, job, maxlogs):
     while progress < 100 and status != 'FIN':
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
         xml = response.text
-        status = xml.split('<status>')[1].split('</status>')[0]    
+        status = xml.split('<status>')[1].split('</status>')[0]
         progress = int(xml.split('progress="')[1].split('"')[0])
         print('Status:{}%\t{}'.format(progress,status),end='\r')
         time.sleep(3)
@@ -113,28 +113,28 @@ def getXML(firewall, token, job, maxlogs):
     response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
 
     xml = response.text
-    
+
     with open(os.path.expanduser('~/NorsePi/XML/LastHour.xml'),'w') as file:
         file.write(xml)
-        
+
     print('Finished.')
 
 
 # # New_Parser.py
-# 
+#
 
 # In[39]:
 
 
 def xmlParser(file=''):
     """
-        El código toma el archivo recibido de palo alto como xml y lo 
-        convierte a un archivo JSON que puede ser leído de manera más 
+        El código toma el archivo recibido de palo alto como xml y lo
+        convierte a un archivo JSON que puede ser leído de manera más
         sencilla por el programa de mapa de ataques o cualquier otro que
         consuma la info por JS
     """
     color_code = {'critical':'#ff4660', #red
-                  'high':'#f48154'  #orange,
+                  'high':'#f48154',  #orange
                  'medium':'#d9ff7f', #yellow
                  'low':'#42ff58', #green
                  'informational':'#54ba8a'} #blue
@@ -156,7 +156,7 @@ def xmlParser(file=''):
     print('Generating First JSON...')
     df.to_json('LastHour_1.json',orient='index')
     print('Finished. Moving on...')
-    
+
     df1 = df['device_name'].map(lambda x : x.split('-')[1])
     countries = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/all_countries.csv'),sep='\t',index_col=0)
     Tec = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
@@ -177,6 +177,9 @@ def xmlParser(file=''):
             df['dstloc'][idx] = df['device_name'][idx].split('-')[1]
             df['srcloc'][idx] = df['srcloc'][idx]['@cc']
 
+
+
+
             """
             Si viene como rango de IP, cambia por el default ('MX')
 
@@ -187,10 +190,15 @@ def xmlParser(file=''):
                 #print('{}->"MX"'.format(df['srcloc'][idx]))
                 df['srcloc'][idx] = default_country ######################################3
 
+
+
+
             """
             Cambia severidad por codigo de colores
             """
             df['severity'][idx] = color_code[df['severity'][idx]]
+
+
 
             """
             Cambia el nombre del pais de acuerdo al codigo alpha-2
@@ -201,6 +209,13 @@ def xmlParser(file=''):
                 print('Pais no encontrado: alpha2={}, indice={}'.format(df['srcloc'][idx],idx))
                 df['srcloc'][idx] = default_country
                 df['srcname'][idx] = 'INTERNO'
+
+
+
+
+
+
+
 
             """Ideia: Botar uma flag em caso de que nao seja pais atacado! :D"""
             tmp = Tec[Tec['Campus'] == df['dstloc'][idx]]['Nombre'] #!!!!!!!!!!!!!!!!!
@@ -213,6 +228,12 @@ def xmlParser(file=''):
             else:
                 tmp = tmp.reset_index(drop=True)[0]
             df['dstname'][idx] = tmp
+
+
+
+
+
+
 
             """
             TODO
@@ -231,15 +252,15 @@ def xmlParser(file=''):
                 tmp = tmp.reset_index(drop=True)[0]
             else:
                 tmp = countries[countries['country3'] == df['dstloc'][idx]]['latitude'].reset_index(drop=True)[0]
-            df['dstlat'][idx] = tmp    
+            df['dstlat'][idx] = tmp
 
             """
-            Cambia cordinadas de fuente 
+            Cambia cordinadas de fuente
             """
             tmp = str(countries[countries['country'] == df['srcloc'][idx]]['longitude']).split()[1]
             df['srclong'][idx] = tmp
             tmp = str(countries[countries['country'] == df['srcloc'][idx]]['latitude']).split()[1]
-            df['srclat'][idx] = tmp    
+            df['srclat'][idx] = tmp
         except Exception as e:
             pass
     a = ['device_name',
@@ -295,9 +316,9 @@ def xmlParser(file=''):
 
 
 if __name__ == '__main__':
-    
+
     urllib3.disable_warnings()
-    
+
     firewall='10.4.29.121'
 
     maxlogs=1000
@@ -310,6 +331,5 @@ if __name__ == '__main__':
     waitXML(firewall,token,job,maxlogs)
 
     getXML(firewall,token,job,maxlogs)
-    
-    xmlParser()
 
+    xmlParser()
