@@ -1,7 +1,7 @@
 Campus,longitud,latitud,Nombre
 AGS,-103.425108,25.563645,Aguascalientes
 CCM,-103.453782,20.73174,Campus Ciudad de México
-CCU,-100.415975,25.733837,Prepra Cumbres
+CCU,-100.415975,25.733837,Prepa Cumbres
 CDJ,-103.453782,20.73174,Ciudad Juárez
 CEDES,-100.290328,25.65142,CEDES
 CEM,-99.22879,19.594757,Campus Estado de México
@@ -12,6 +12,7 @@ COB,-103.453782,20.73174,Ciudad Obregón
 CSC,-100.430317,25.662025,Prepa Santa Catarina
 CSF,-99.258687,19.359747,Campus Santa Fe
 CUL,-100.2768498,25.6484251,Tecmilenio Culiacán
+CUM,-100.415975,25.733837,Prepa Cumbres
 CVA,-99.220633,18.807476,Cuernavaca
 EGA,-100.290328,25.65142,EGADE/EGAP
 EGL,-100.2756714,25.6175659,Prepa Garza Lagüera
