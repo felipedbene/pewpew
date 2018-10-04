@@ -240,8 +240,8 @@ var attacks = {
     var a = log[len - count - 1];
     // $('#container2').html('<h1>' + a['time_generated'] + '</h1>');
 
-    var IP1 = a["src"],
-      IP2 = a["dst"];
+    var IP1 = a["src"];
+    var IP2 = "";
 
     var srccountry = a["srcname"];
     var attackdiv_slatlong = a["dstname"];
