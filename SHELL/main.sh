@@ -6,9 +6,10 @@
 # xml, convierte el xml a JSON y arregla la sintaxis                   #
 ########################################################################
 
-# Get xml file
-python3 ~/NorsePi/SHELL/PaloAltoXML.py
+echo "Getting xml file"
+python3 $HOME/NorsePi/SHELL/PaloAltoXML.py
 
-cp $HOME/NorsePi/XML/LastHour.json $HOME/NorsePi/XML/LastHour
-cat $HOME/NorsePi/XML/LastHour | python -m json.tool > $HOME/NorsePi/XML/LastHour.json
-rm $HOME/NorsePi/XML/LastHour
+echo "Beautifying JSON"
+cp $HOME/NorsePi/XML/LastHour.json $HOME/NorsePi/XML/LastHour.tmp
+cat $HOME/NorsePi/XML/LastHour.tmp | python -m json.tool > $HOME/NorsePi/XML/LastHour.json
+rm $HOME/NorsePi/XML/LastHour.tmp

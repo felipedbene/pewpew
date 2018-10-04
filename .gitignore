@@ -6,7 +6,7 @@
 *.swp
 *$
 *LastHour.json
-
+TopAttack*
 
 MANIFEST
 build

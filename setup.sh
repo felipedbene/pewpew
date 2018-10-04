@@ -10,41 +10,44 @@
 # fondo de daemon de no-sleep y la ejecución de la app en fullscreen          #
 ###############################################################################
 
+echo "Creación de actualizador"
+cat > att <<EOF
 sudo apt update
-sudo apt install chromium-browser git curl xdotool -y
+sudo apt dist-upgrade -y
+sudo apt autoclean
+sudo apt autoremove -y
+EOF
 
-#Instalación administrador paquetes python
-echo "Instalación administrador paquetes python"
-/usr/bin/yes | sudo apt install python3-pip python3-pandas python3-xmltodict python3-requests
+echo "Actualización inicial"
+chmod +x att
+sudo mv att /bin/
+att
 
+echo "Instalación de dependencias"
+sudo apt install chromium-browser git curl xdotool python3-pip -y
 
-#Generación de token
+cd $HOME
+echo "Downloading NorsePi"
+git clone https://gogvale:e64a7d2d02b10bd8d07d047a64f902b54518224f@github.com/MicroplusOfficial/NorsePi
+
+echo "Instalación dependenicas python"
+yes | sudo pip3 install -r $HOME/NorsePi/requirements.txt
+
+#/usr/bin/yes | sudo apt install python3-pip python3-pandas python3-xmltodict python3-requests
+
 echo "Generación de token"
 python3 $HOME/NorsePi/SHELL/Token.py
 
-# Creación del script que mueve mouse e inicia chromium en fullscreen
-cd $HOME
-cat > start.sh << EOF
-#!/bin/bash
-###############################################################################
-# El siguiente programa hace con que se ejecute la descarga de logs a cada 10 #
-# minutos, inicia el servidor local y mueve el ratón a la parte inferior      #
-# izquierda de la pantalla. Debe ser la primera cosa al iniciar después de    #
-# prender.                                                                    #
-###############################################################################
+echo "Creación del script que mueve mouse e inicia chromium en fullscreen"
+cp $HOME/NorsePi/start.sh $HOME/
 
-#Downloading logs
-bash \$HOME/NorsePi/SHELL/main.sh
-watch -n 900 bash \$HOME/NorsePi/SHELL/main.sh & #downloads every 5 minutes
+echo "Creación de daemon para descargar logs"
+echo "*/15 * * * * $USER bash $HOME/NorsePi/SHELL/main.sh" | sudo tee -a /etc/crontab
 
-#Starting server
-cd \$HOME/NorsePi
-python3 -m http.server 3245 &
-#Moves mouse and start browser
-xdotool mousemove \$(xdpyinfo | awk '/dimensions/{print \$2}' | sed -e 's/x/ /g') && chromium-browser --kiosk --anonymous --app=http://localhost:3245
-EOF
+echo "Creación de job de arranque"
+echo "@bash $HOME/NorsePi/start.sh" | tee -a $HOME/.config/lxsession/Lubuntu/autostart
 
-chmod +x start.sh
-# echo "@xset s off" > $HOME/.config/lxsession/Lubuntu/autostart
+
 echo "Hacer configuración de screensaver manualmente"
-echo "@bash $HOME/start.sh" >> $HOME/.config/lxsession/Lubuntu/autostart
+
+
