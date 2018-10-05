@@ -47,6 +47,11 @@ echo "*/15 * * * * $USER bash $HOME/NorsePi/SHELL/main.sh" | sudo tee -a /etc/cr
 echo "Creación de job de arranque"
 echo "@bash $HOME/NorsePi/start.sh" | tee -a $HOME/.config/lxsession/Lubuntu/autostart
 
+echo "Configuración de SSH"
+sudo apt install openssh-server -y
+sudo sed -ie 's/^#Port.*$/Port 1337/g' /etc/ssh/sshd_config
+sudo ufw allow 1337
+sudo service ssh restart
 
 echo "Hacer configuración de screensaver manualmente"
 
