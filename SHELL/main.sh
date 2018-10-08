@@ -10,6 +10,4 @@ echo "Getting xml file"
 python3 $HOME/NorsePi/SHELL/PaloAltoXML.py
 
 echo "Beautifying JSON"
-cp $HOME/NorsePi/XML/LastHour.json $HOME/NorsePi/XML/LastHour.tmp
-cat $HOME/NorsePi/XML/LastHour.tmp | python -m json.tool > $HOME/NorsePi/XML/LastHour.json
-rm $HOME/NorsePi/XML/LastHour.tmp
+cat $HOME/NorsePi/XML/LastHour.json | python -m json.tool | tee $HOME/NorsePi/XML/LastHourReadable.json
