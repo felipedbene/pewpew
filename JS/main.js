@@ -16,19 +16,7 @@ function checkTime(i) {
 }
 
 function startTime() {
-  var today = new Date();
-  var ye = today.getFullYear();
-  var mo = today.getMonth();
-  var da = today.getDay();
-  var h = today.getHours();
-  var m = today.getMinutes();
-  var s = today.getSeconds();
-  // add a zero in front of numbers<10
-  m = checkTime(m);
-  s = checkTime(s);
-  mo = checkTime(mo);
-  da = checkTime(da);
-  document.getElementById('container2').innerHTML = da + '/' + mo + '/' + ye + ' ' + h + ":" + m + ":" + s;
+  document.getElementById('container2').innerHTML = Date().split(' G')[0];
   t = setTimeout(function() {
     startTime()
   }, 500);
