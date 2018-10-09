@@ -36,13 +36,13 @@ img.cliente {
 
 .subheader {
   position: absolute;
-  top: -1vw;
+  top: 0vw;
   left: 15%;
   right: 15%;
   z-index: 2;
   width: auto;
   text-align: center;
-  font-size: 2vw;
+  font-size: 1.75vw;
   /* background-color: blue; */
 }
 
@@ -61,10 +61,10 @@ img.cliente {
 .attack_console {
   position: absolute;
   /* background-color: orange; */
-  height: 27.5vw;
-  width: 37vw;
+  height: 32vw;
+  width: 35.5vw;
   bottom: -1vw;
-  left: 0vw;
+  left: 1vw;
   z-index: 3;
   font-size: 1.5vw;
   color: white;
