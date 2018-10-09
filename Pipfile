@@ -10,6 +10,7 @@ xmltodict = "*"
 "urllib3" = "*"
 
 [dev-packages]
+jupyter = "*"
 
 [requires]
 python_version = "3.6"

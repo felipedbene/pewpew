@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[1]:
 
 
 from datetime import datetime, timedelta
@@ -14,7 +14,7 @@ import xmltodict
 import time
 
 
-# In[7]:
+# In[2]:
 
 
 def getJob(firewall, token, maxlogs, N=15):
@@ -42,15 +42,15 @@ def getJob(firewall, token, maxlogs, N=15):
     xml = response.text
 
     job = xml.split('line')[1].split()[-1].split('<')[0]
-
+    
     print('Finished.')
 
     print('#job:{}'.format(job))
-
+    
     return job
 
 
-# In[8]:
+# In[3]:
 
 
 def waitXML(firewall, token, job, maxlogs,timeout=120):
@@ -76,7 +76,7 @@ def waitXML(firewall, token, job, maxlogs,timeout=120):
     while progress < 100 and status != 'FIN' and datetime.now() < a:
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
         xml = response.text
-        status = xml.split('<status>')[1].split('</status>')[0]
+        status = xml.split('<status>')[1].split('</status>')[0]    
         progress = int(xml.split('progress="')[1].split('"')[0])
         print('Status:{}%\t{}'.format(progress,status),end='\r')
         time.sleep(3)
@@ -88,7 +88,7 @@ def waitXML(firewall, token, job, maxlogs,timeout=120):
     return False
 
 
-# In[9]:
+# In[4]:
 
 
 def getXML(firewall, token, job, maxlogs):
@@ -109,20 +109,20 @@ def getXML(firewall, token, job, maxlogs):
     response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
 
     xml = response.text
-
+    
     with open(os.path.expanduser('~/NorsePi/XML/LastHour.xml'),'w') as file:
         file.write(xml)
-
+        
     print('Finished.')
 
 
-# In[10]:
+# In[5]:
 
 
 def xmlParser(file=''):
     """
-        El código toma el archivo recibido de palo alto como xml y lo
-        convierte a un archivo JSON que puede ser leído de manera más
+        El código toma el archivo recibido de palo alto como xml y lo 
+        convierte a un archivo JSON que puede ser leído de manera más 
         sencilla por el programa de mapa de ataques o cualquier otro que
         consuma la info por JS
     """
@@ -149,7 +149,7 @@ def xmlParser(file=''):
     print('Generating First JSON...')
     df.to_json('LastHour_1.json',orient='index')
     print('Finished. Moving on...')
-
+    
     df1 = df['device_name'].map(lambda x : x.split('-')[1])
     countries = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/all_countries.csv'),sep='\t',index_col=0)
     Tec = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
@@ -160,6 +160,7 @@ def xmlParser(file=''):
     df['dstlat'] = ''
     df['dstlong'] = ''
     a = len(df)
+    delete = set()
     for idx in range(a):
         try:
             print('{}/{}'.format(idx+1,a),end='\r')
@@ -194,6 +195,7 @@ def xmlParser(file=''):
                 print('Pais no encontrado: alpha2={}, indice={}'.format(df['srcloc'][idx],idx))
                 df['srcloc'][idx] = default_country
                 df['srcname'][idx] = 'INTERNO'
+                delete.add(idx)
 
             """Ideia: Botar uma flag em caso de que nao seja pais atacado! :D"""
             tmp = Tec[Tec['Campus'] == df['dstloc'][idx]]['Nombre'] #!!!!!!!!!!!!!!!!!
@@ -203,6 +205,8 @@ def xmlParser(file=''):
                     df['dstname'][idx] = countries[countries['country3'] == df1.iloc[idx]]['name'].reset_index(drop=True)[0]
                 except:
                     df['dstname'][idx] = default_country
+                    delete.add(idx)
+                    
             else:
                 tmp = tmp.reset_index(drop=True)[0]
             df['dstname'][idx] = tmp
@@ -224,17 +228,18 @@ def xmlParser(file=''):
                 tmp = tmp.reset_index(drop=True)[0]
             else:
                 tmp = countries[countries['country3'] == df['dstloc'][idx]]['latitude'].reset_index(drop=True)[0]
-            df['dstlat'][idx] = tmp
+            df['dstlat'][idx] = tmp    
 
             """
-            Cambia cordinadas de fuente
+            Cambia cordinadas de fuente 
             """
             tmp = str(countries[countries['country'] == df['srcloc'][idx]]['longitude']).split()[1]
             df['srclong'][idx] = tmp
             tmp = str(countries[countries['country'] == df['srcloc'][idx]]['latitude']).split()[1]
-            df['srclat'][idx] = tmp
+            df['srclat'][idx] = tmp    
         except Exception as e:
             pass
+    df.drop(list(delete),inplace=True)
     a = ['device_name',
      'direction',
      'src',
@@ -255,10 +260,16 @@ def xmlParser(file=''):
     df = df.sort_values('time_generated',ascending=False)
     df.reset_index(drop=True,inplace=True)
     df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+    
+
+
+# In[ ]:
 
 
 
-# In[19]:
+
+
+# In[6]:
 
 
 def fixTime(df=pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index'),tiempoMin=15):
@@ -273,7 +284,7 @@ def fixTime(df=pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),or
     return df
 
 
-# In[22]:
+# In[7]:
 
 
 def fixTime2(df=pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index'),tiempoMin=15):
@@ -289,13 +300,13 @@ def fixTime2(df=pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),o
     return df
 
 
-# In[20]:
+# In[8]:
 
 
 if __name__ == '__main__':
-
+    
     urllib3.disable_warnings()
-
+    
     firewall='10.4.29.121'
 
     maxlogs=1000
@@ -314,10 +325,8 @@ if __name__ == '__main__':
         xmlParser()
 
 
-# In[17]:
-
-
-xmlParser()
-
-
 # In[ ]:
+
+
+
+
