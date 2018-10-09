@@ -36,24 +36,24 @@ img.cliente {
 
 .subheader {
   position: absolute;
-  top: 0em;
+  top: -1vw;
   left: 15%;
   right: 15%;
   z-index: 2;
   width: auto;
   text-align: center;
-  font-size: 2em;
+  font-size: 2vw;
   /* background-color: blue; */
 }
 
 .timer {
   color: white;
   position: absolute;
-  bottom: 0;
-  right: 0.5em;
+  bottom: 0vw;
+  right: 0.5vw;
   width: auto;
   /* background-color: green; */
-  font-size: 4em;
+  font-size: 4vw;
   z-index: 3;
   font-family: arial;
 }
@@ -61,12 +61,12 @@ img.cliente {
 .attack_console {
   position: absolute;
   /* background-color: orange; */
-  height: 18em;
-  width: 30%;
-  bottom: 0;
-  left: 3px;
+  height: 27.5vw;
+  width: 37vw;
+  bottom: -1vw;
+  left: 0vw;
   z-index: 3;
-  font-size: 1.5em;
+  font-size: 1.5vw;
   color: white;
   overflow-y: auto;
 }
