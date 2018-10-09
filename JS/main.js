@@ -240,7 +240,7 @@ var attacks = {
     var a = log[len - count - 1];
     // $('#container2').html('<h1>' + a['time_generated'] + '</h1>');
 
-    var IP1 = a["src"];
+    var IP1 = "";
     var IP2 = "";
 
     var srccountry = a["srcname"];
@@ -294,9 +294,9 @@ var attacks = {
       }
     });
 
-    $('#attackdiv').append("@"+a["time_generated"]+"<br/>  <b>" + srccountry + "</b> (" + IP1 + ") " +
+    $('#attackdiv').append("@"+a["time_generated"]+"<br/>  <b>" + srccountry + "</b> " + IP1 + " " +
       " <span style='color:#FF7474'>attacks</span><br/> <b>" +
-      attackdiv_slatlong + "</b> (" + IP2 + ") <br>" +
+      attackdiv_slatlong + "</b> " + IP2 + " <br>" +
       " <span style='color:" + strokeColor + "'> " + atkname +
       "(" + which_attack + ")</span> " + "<br/>" + "<br/>");
 
