@@ -11,3 +11,5 @@ python3 $HOME/NorsePi/SHELL/PaloAltoXML.py
 
 echo "Beautifying JSON"
 cat $HOME/NorsePi/XML/LastHour.json | python -m json.tool | tee $HOME/NorsePi/XML/LastHourReadable.json
+rm -rf $HOME/.config/chromium/Default/*Cache
+bash $HOME/refreshChrome.sh
