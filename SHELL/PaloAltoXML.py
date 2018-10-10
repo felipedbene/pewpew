@@ -288,9 +288,9 @@ def fixTime2(df=pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),o
     Tiempo actual -15 mas valor aleatorio
     """
     b = df['time_generated']
-    c = b.map(lambda x : timeRandom(15))
+    c = b.map(lambda x : timeRandom(tiempoMin))
     df['time_generated'] = c
-    df = df.sort_values(['time_generated'])
+    df = df.sort_values('time_generated',ascending=False)
     df['time_generated'] = df['time_generated'].map(stringify)
     df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
     return df
