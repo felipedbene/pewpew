@@ -303,7 +303,7 @@ if __name__ == '__main__':
     
     urllib3.disable_warnings()
     
-    firewall='10.4.29.121'
+    firewall='10.4.29.122'
 
     maxlogs=1000
 
