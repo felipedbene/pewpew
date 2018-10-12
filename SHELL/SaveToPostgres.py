@@ -25,7 +25,7 @@ from dateutil import parser
 # In[2]:
 
 
-def readJSON(path:str='~/NorsePi/XML/LastHourReadable.json'):
+def readJSON(path:str='~/NorsePi/XML/LastHour.json'):
     df = pd.read_json(os.path.expanduser(path),orient='index')
     return df
 
@@ -156,13 +156,13 @@ def elimDup(df:pd.DataFrame,columns:list=['src','threatid','time_generated']):
 
 
 if __name__ == '__main__':
-    engine = create_engine('postgres://dashboard:U7h2cQ73JH@10.98.99.167:5432/logs')
+    engine = create_engine('postgres://dashboard:U7h2cQ73JH@localhost:5432/logs')
 #     engine = create_engine('postgres://postgres:Microplus@localhost:5432/postgres', echo=False)
     json = readJSON()
     try:
         db = readDB(engine,'tec')
     except:
-        pass #En caso de que no haya nada o la tabla no exista, olvidar ese paso. 
+        db = pd.DataFrame() #En caso de que no haya nada o la tabla no exista, olvidar ese paso. 
             #En cualquier otro caso, poner tabla nueva
     df = concat(db,json)
     df = fixDate(df)

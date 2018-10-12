@@ -283,7 +283,7 @@ def stringify(tiempo):
 # In[15]:
 
 
-def fixTime2(df=pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index'),tiempoMin=15):
+def fixTime2(df:pd.DataFrame,tiempoMin=15):
     """
     Tiempo actual -15 mas valor aleatorio
     """
@@ -315,7 +315,7 @@ if __name__ == '__main__':
     if waitXML(firewall,token,job,maxlogs):
         ### Send email on error
         print('error!!')
-        fixTime2()
+        fixTime2(pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index'))
     else:
         getXML(firewall,token,job,maxlogs)
         xmlParser()
