@@ -13,7 +13,7 @@ import requests
 import xmltodict
 import time
 import random
-
+import sys
 
 # In[2]:
 
@@ -301,6 +301,8 @@ def fixTime2(df:pd.DataFrame,tiempoMin=15):
 
 if __name__ == '__main__':
 
+    print(sys.argv)
+
     urllib3.disable_warnings()
 
     firewall='10.4.29.122'
@@ -311,7 +313,7 @@ if __name__ == '__main__':
         maxlogs = 1000
     else:
         maxlogs = maxlogs[0]
-        maxlogs = maxlogs.split('=')[-1]
+        maxlogs = int(maxlogs.split('=')[-1])
 
     tiempo=[x for x in sys.argv if 'tiempo' in x]
 
@@ -319,7 +321,7 @@ if __name__ == '__main__':
         tiempo = 15
     else:
         tiempo = tiempo[0]
-        tiempo = tiempo.split('=')[-1]
+        tiempo = int(tiempo.split('=')[-1])
 
     with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'r') as file:
         token = file.read()
