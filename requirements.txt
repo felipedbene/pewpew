@@ -1,7 +1,6 @@
-jupyter
 pandas
-pandoc
 pgcli
 requests
 SQLAlchemy
 xmltodict
+numpy
