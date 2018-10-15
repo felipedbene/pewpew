@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[15]:
 
 
 from datetime import datetime, timedelta
@@ -13,9 +13,16 @@ import requests
 import xmltodict
 import time
 import random
+import sys
 
 
-# In[2]:
+# In[4]:
+
+
+import sys
+
+
+# In[16]:
 
 
 def getJob(firewall, token, maxlogs, N=15):
@@ -51,7 +58,7 @@ def getJob(firewall, token, maxlogs, N=15):
     return job
 
 
-# In[3]:
+# In[17]:
 
 
 def waitXML(firewall, token, job, maxlogs,timeout=120):
@@ -89,7 +96,7 @@ def waitXML(firewall, token, job, maxlogs,timeout=120):
     return False
 
 
-# In[4]:
+# In[18]:
 
 
 def getXML(firewall, token, job, maxlogs):
@@ -117,7 +124,7 @@ def getXML(firewall, token, job, maxlogs):
     print('Finished.')
 
 
-# In[5]:
+# In[25]:
 
 
 def xmlParser(file=''):
@@ -264,7 +271,7 @@ def xmlParser(file=''):
 
 
 
-# In[6]:
+# In[20]:
 
 
 def timeRandom(tiempo):
@@ -273,32 +280,30 @@ def timeRandom(tiempo):
     return ahora - randomTime
 
 
-# In[13]:
+# In[21]:
 
 
 def stringify(tiempo):
     return tiempo.strftime('%Y-%m-%d %H:%M:%S')
 
 
-# In[15]:
+# In[22]:
 
 
-def fixTime2(df=pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index'),tiempoMin=15,save='False'):
+def fixTime2(df:pd.DataFrame,tiempoMin=15):
     """
-    Tiempo actual -15 más valor aleatorio
+    Tiempo actual -15 mas valor aleatorio
     """
     b = df['time_generated']
     c = b.map(lambda x : timeRandom(15))
     df['time_generated'] = c
     df = df.sort_values(['time_generated'])
     df['time_generated'] = df['time_generated'].map(stringify)
-    df = df.reset_index(drop=True).copy()
-    if save:
-        df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+    df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
     return df
 
 
-# In[9]:
+# In[32]:
 
 
 if __name__ == '__main__':
@@ -307,17 +312,31 @@ if __name__ == '__main__':
 
     firewall='10.4.29.122'
 
-    maxlogs=1000
+    maxlogs=[x for x in sys.argv if 'maxlogs' in x]
+
+    if len(maxlogs) == 0:
+        maxlogs = 1000
+    else:
+        maxlogs = maxlogs[0]
+        maxlogs = maxlogs.split('=')[-1]
+
+    tiempo=[x for x in sys.argv if 'tiempo' in x]
+
+    if len(tiempo) == 0:
+        tiempo = 15
+    else:
+        tiempo = tiempo[0]
+        tiempo = tiempo.split('=')[-1]
 
     with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'r') as file:
         token = file.read()
 
-    job = getJob(firewall,token,maxlogs)
+    job = getJob(firewall,token,maxlogs,N=tiempo)
 
     if waitXML(firewall,token,job,maxlogs):
         ### Send email on error
-        print('error!! Trying to fix times')
-        fixTime2(save=True)
+        print('error!!')
+        fixTime2(pd.read_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index'))
     else:
         getXML(firewall,token,job,maxlogs)
         xmlParser()
