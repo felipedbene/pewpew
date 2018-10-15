@@ -8,11 +8,17 @@ pandas = "*"
 requests = "*"
 xmltodict = "*"
 "urllib3" = "*"
+<<<<<<< HEAD
 sqlalchemy = "*"
 "psycopg2" = "*"
+=======
+pgcli = "*"
+>>>>>>> 62d532fbc0b7bdd3312f97a024bd97f769615b7b
 
 [dev-packages]
 jupyter = "*"
+pandoc = "*"
+nbconvert = "*"
 
 [requires]
 python_version = "3.6"

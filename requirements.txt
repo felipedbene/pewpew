@@ -1,4 +1,7 @@
+jupyter
 pandas
+pandoc
+pgcli
 requests
+SQLAlchemy
 xmltodict
-urllib3

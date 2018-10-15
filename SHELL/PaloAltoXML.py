@@ -14,6 +14,7 @@ import xmltodict
 import time
 import random
 import sys
+<<<<<<< HEAD
 
 
 # In[4]:
@@ -21,6 +22,8 @@ import sys
 
 import sys
 
+=======
+>>>>>>> 62d532fbc0b7bdd3312f97a024bd97f769615b7b
 
 # In[16]:
 
@@ -268,6 +271,10 @@ def xmlParser(file=''):
     df = df.sort_values('time_generated',ascending=False)
     df.reset_index(drop=True,inplace=True)
     df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 62d532fbc0b7bdd3312f97a024bd97f769615b7b
 
 
 
@@ -308,6 +315,11 @@ def fixTime2(df:pd.DataFrame,tiempoMin=15):
 
 if __name__ == '__main__':
 
+<<<<<<< HEAD
+=======
+    print(sys.argv)
+
+>>>>>>> 62d532fbc0b7bdd3312f97a024bd97f769615b7b
     urllib3.disable_warnings()
 
     firewall='10.4.29.122'
@@ -318,7 +330,11 @@ if __name__ == '__main__':
         maxlogs = 1000
     else:
         maxlogs = maxlogs[0]
+<<<<<<< HEAD
         maxlogs = maxlogs.split('=')[-1]
+=======
+        maxlogs = int(maxlogs.split('=')[-1])
+>>>>>>> 62d532fbc0b7bdd3312f97a024bd97f769615b7b
 
     tiempo=[x for x in sys.argv if 'tiempo' in x]
 
@@ -326,7 +342,11 @@ if __name__ == '__main__':
         tiempo = 15
     else:
         tiempo = tiempo[0]
+<<<<<<< HEAD
         tiempo = tiempo.split('=')[-1]
+=======
+        tiempo = int(tiempo.split('=')[-1])
+>>>>>>> 62d532fbc0b7bdd3312f97a024bd97f769615b7b
 
     with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'r') as file:
         token = file.read()
