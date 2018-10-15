@@ -282,7 +282,7 @@ var attacks = {
       }
     });
 
-    $('#attackdiv').append("@"+a["time_generated"]+"<br/>  <b>" + srccountry + "</b> " + IP1 + " " +
+    $('#attackdiv').append("<b>" + srccountry + "</b> " + IP1 + " " +
       " <span style='color:#FF7474'>attacks</span><br/> <b>" +
       attackdiv_slatlong + "</b> " + IP2 + " <br>" +
       " <span style='color:" + strokeColor + "'> " + atkname +

@@ -61,8 +61,8 @@ img.cliente {
 .attack_console {
   position: absolute;
   /* background-color: orange; */
-  height: 32vw;
-  width: 35.5vw;
+  height: 29vw;
+  width: 20.5vw;
   bottom: -1vw;
   left: 1vw;
   z-index: 3;
