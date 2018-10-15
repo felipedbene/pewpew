@@ -305,12 +305,26 @@ if __name__ == '__main__':
 
     firewall='10.4.29.122'
 
-    maxlogs=1000
+    maxlogs=[x for x in sys.argv if 'maxlogs' in x]
+
+    if len(maxlogs) == 0:
+        maxlogs = 1000
+    else:
+        maxlogs = maxlogs[0]
+        maxlogs = maxlogs.split('=')[-1]
+
+    tiempo=[x for x in sys.argv if 'tiempo' in x]
+
+    if len(tiempo) == 0:
+        tiempo = 15
+    else:
+        tiempo = tiempo[0]
+        tiempo = tiempo.split('=')[-1]
 
     with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'r') as file:
         token = file.read()
 
-    job = getJob(firewall,token,maxlogs)
+    job = getJob(firewall,token,maxlogs,N=tiempo)
 
     if waitXML(firewall,token,job,maxlogs):
         ### Send email on error
