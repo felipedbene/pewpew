@@ -1,8 +1,40 @@
+function readTextFile(file, callback) {
+  var rawFile = new XMLHttpRequest();
+  rawFile.overrideMimeType("application/json");
+  rawFile.open("GET", file, true);
+  rawFile.onreadystatechange = function() {
+    if (rawFile.readyState === 4 && rawFile.status == "200") {
+      callback(rawFile.responseText);
+    } else {
+      $('#attackdiv').html('<h1 style="color:red;font-size:1em">No file found</h1>')
+      setTimeout(function() {
+        location.reload();
+      }, 1500000);
+    }
+  }
+  rawFile.onerror = function(msg) {
+    $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
+    setTimeout(function() {
+      location.reload();
+    }, 1500000);
+  }
+  rawFile.upload.onerror = function(msg) {
+    $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
+    setTimeout(function() {
+      location.reload();
+    }, 1500000);
+  }
+
+  rawFile.send(null);
+}
+
 window.onload = function() {
 
   var pie = {
+    backgroundColor: "transparent",
+    theme: "dark2",
     title: {
-      text: "Website Traffic Source"
+      text: "Categorías de ataque"
     },
     data: [{
       type: "pie",
@@ -12,41 +44,28 @@ window.onload = function() {
       indexLabel: "{label} ({y})",
       yValueFormatString: "#,##0.#" % "",
       dataPoints: [{
-          label: "Organic",
-          y: 36
+          "color": "#f48154",
+          "y": 49
         },
         {
-          label: "Email Marketing",
-          y: 31
+          "color": "#ff4660",
+          "y": 6
         },
         {
-          label: "Referrals",
-          y: 7
-        },
-        {
-          label: "Twitter",
-          y: 7
-        },
-        {
-          label: "Facebook",
-          y: 6
-        },
-        {
-          label: "Google",
-          y: 10
-        },
-        {
-          label: "Others",
-          y: 3
+          "color": "#d9ff7f",
+          "y": 4
         }
       ]
+
     }]
   };
   var bar = {
+    backgroundColor: "transparent",
+    theme: "dark2",
     animationEnabled: true,
 
     title: {
-      text: "Fortune 500 Companies by Country"
+      text: "Países con mayor número de ataques"
     },
     axisX: {
       interval: 1
@@ -54,7 +73,6 @@ window.onload = function() {
     axisY2: {
       interlacedColor: "rgba(1,77,101,.2)",
       gridColor: "rgba(1,77,101,.1)",
-      title: "Number of Companies"
     },
     data: [{
       type: "bar",
@@ -62,78 +80,39 @@ window.onload = function() {
       axisYType: "secondary",
       color: "#014D65",
       dataPoints: [{
-          y: 3,
-          label: "Sweden"
+          "label": "China",
+          "y": 21
         },
         {
-          y: 7,
-          label: "Taiwan"
+          "label": "Mexico",
+          "y": 13
         },
         {
-          y: 5,
-          label: "Russia"
+          "label": "Viet Nam",
+          "y": 10
         },
         {
-          y: 9,
-          label: "Spain"
+          "label": "India",
+          "y": 5
         },
         {
-          y: 7,
-          label: "Brazil"
+          "label": "United States",
+          "y": 4
         },
         {
-          y: 7,
-          label: "India"
+          "label": "Russian Federation",
+          "y": 3
         },
         {
-          y: 9,
-          label: "Italy"
+          "label": "France",
+          "y": 2
         },
         {
-          y: 8,
-          label: "Australia"
-        },
-        {
-          y: 11,
-          label: "Canada"
-        },
-        {
-          y: 15,
-          label: "South Korea"
-        },
-        {
-          y: 12,
-          label: "Netherlands"
-        },
-        {
-          y: 15,
-          label: "Switzerland"
-        },
-        {
-          y: 25,
-          label: "Britain"
-        },
-        {
-          y: 28,
-          label: "Germany"
-        },
-        {
-          y: 29,
-          label: "France"
-        },
-        {
-          y: 52,
-          label: "Japan"
-        },
-        {
-          y: 103,
-          label: "China"
-        },
-        {
-          y: 134,
-          label: "US"
+          "label": "Turkey",
+          "y": 1
         }
       ]
+
     }]
   };
   $(".bot.left").CanvasJSChart(pie);
