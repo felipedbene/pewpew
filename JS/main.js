@@ -277,15 +277,14 @@ var attacks = {
         return '<div class="hoverinfo">' + data.attk + '</div>';
       }
     });
-    if(show_time){
-      tiempo = "@"+a['time_generated']+'<br>';
-    }
-    else{
+    if (show_time) {
+      tiempo = "@" + a['time_generated'] + '<br>';
+    } else {
       tiempo = '';
     }
 
-    $('#attackdiv').append(tiempo+"<b>"+srccountry + "</b> " + IP1 +
-    " <span style='color:#FF7474'>attacks</span><br/> <b>" +
+    $('#attackdiv').append(tiempo + "<b>" + srccountry + "</b> " + IP1 +
+      " <span style='color:#FF7474'>attacks</span><br/> <b>" +
       attackdiv_slatlong + "</b> " + IP2 + " <br>" +
       " <span style='color:" + strokeColor + "'> " + atkname +
       "(" + which_attack + ")</span> " + "<br/>" + "<br/>");
