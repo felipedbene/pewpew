@@ -4,9 +4,9 @@ var map = new Datamap({
   element: document.getElementById('container1'),
   setProjection: function(element) {
     var projection = d3.geo.mercator()
-      .center([-91, 25])
+      .center([-100, 25])
       .rotate([4.4, 0])
-      .scale(1500)
+      .scale(1000)
       .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
     var path = d3.geo.path()
       .projection(projection);

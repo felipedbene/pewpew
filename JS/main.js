@@ -285,7 +285,7 @@ var attacks = {
         //~ $('#attackdiv').html('Loading')
         count = 0;
         log = [];
-        location.reload();
+        // location.reload();
         attacks.test();
       }, time);
       //location.reload();
