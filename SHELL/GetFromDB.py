@@ -15,10 +15,14 @@ import sqlalchemy
 import sys
 
 
-# def fixTime():
-#     tiempo = timedelta(seconds=random.Random().randrange(0,15*60))#.strftime('%Y-%m-%d %H:%M:%S')
-#     ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
-#     return (ahora-tiempo).replace(microsecond=0)
+# In[278]:
+
+
+def fixTime():
+    tiempo = timedelta(seconds=random.Random().randrange(0,15*60))#.strftime('%Y-%m-%d %H:%M:%S')
+    ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
+    return (ahora-tiempo).replace(microsecond=0)
+
 
 # In[277]:
 
