@@ -35,6 +35,7 @@ var maxLength = 20;
 var debug = false;
 var tamano = document.getElementById("attackdiv").innerText;
 var queue = 50;
+var show_time = false;
 //~ Timer
 var timer = function(name) {
   var start = new Date();
@@ -281,8 +282,14 @@ var attacks = {
         return '<div class="hoverinfo">' + data.attk + '</div>';
       }
     });
+    if(show_time){
+      tiempo = "@"+a['time_generated']+'<br>';
+    }
+    else{
+      tiempo = '';
+    }
 
-    $('#attackdiv').append("<b>"+srccountry + "</b> " + IP1 +
+    $('#attackdiv').append(tiempo+"<b>"+srccountry + "</b> " + IP1 +
     " <span style='color:#FF7474'>attacks</span><br/> <b>" +
       attackdiv_slatlong + "</b> " + IP2 + " <br>" +
       " <span style='color:" + strokeColor + "'> " + atkname +
