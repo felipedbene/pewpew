@@ -39,13 +39,13 @@ echo "Generación de token"
 python3 $HOME/NorsePi/SHELL/Token.py
 
 echo "Creación del script que mueve mouse e inicia chromium en fullscreen"
-cp $HOME/NorsePi/start.sh $HOME/
+cp $HOME/NorsePi/start_slave.sh $HOME/
 
 echo "Creación de daemon para descargar logs"
-echo "3/10 * * * * $USER bash $HOME/NorsePi/SHELL/main.sh" | sudo tee -a /etc/crontab
+echo "*/10 * * * * $USER bash $HOME/NorsePi/SHELL/main_slave.sh" | sudo tee -a /etc/crontab
 
 echo "Creación de job de arranque"
-echo "@bash $HOME/NorsePi/start.sh" | tee -a $HOME/.config/lxsession/Lubuntu/autostart
+echo "@bash $HOME/NorsePi/start_slave.sh" | tee -a $HOME/.config/lxsession/Lubuntu/autostart
 
 echo "Configuración de SSH"
 sudo apt install openssh-server -y
