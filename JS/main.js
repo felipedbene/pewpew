@@ -1,6 +1,7 @@
 // Versión Rapida
 window.onerror = function(msg) {
-  $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
+  // $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
+  console.log(msg);
   setTimeout(function() {
     location.reload();
   }, 3000);
