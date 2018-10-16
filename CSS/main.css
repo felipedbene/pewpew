@@ -3,7 +3,7 @@ html{
 }
 .wrapper {
   position: absolute;
-  width: 40%;
+  width: 31%;
   height: 50%;
   bottom: 0;
   /* left: 0; */
@@ -18,10 +18,11 @@ img.cliente {
 }
 
 .global_map {
+  width:100%;
   position: absolute;
   top: 15%;
-  left: 10%;
-  right: 10%;
+  /* left: 10%; */
+  /* right: 10%; */
   bottom: 5%;
   z-index: 1;
   /* background-color: red; */
@@ -53,7 +54,7 @@ img.cliente {
   color: white;
   position: absolute;
   bottom: 0%;
-  right: 0.5%;
+  left: 0.5%;
   width: auto;
   /* background-color: green; */
   font-size: 2vw;
@@ -120,7 +121,7 @@ img.cliente {
     background-color: yellow;
 }
 
-.top.mid.tile {
+.mid.tile {
     width: 39vw;
 }
 
