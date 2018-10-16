@@ -27,12 +27,12 @@ startTime();
 
 var log = [];
 var count = 0;
-var time = 100;
+var time = 50;
 var len = 0;
 var debug = false;
 var queue = 50;
 var show_time = true;
-var show_console = true;
+var show_console = false;
 
 if(!show_console){
   var tmp = document.getElementById('attackdiv')
