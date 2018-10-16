@@ -26,11 +26,18 @@ startTime();
 
 var log = [];
 var count = 0;
-var time = 1000;
+var time = 100;
 var len = 0;
 var debug = false;
 var queue = 50;
-var show_time = false;
+var show_time = true;
+var show_console = true;
+
+if(!show_console){
+  var tmp = document.getElementById('attackdiv')
+  tmp.style.visibility = 'hidden';
+}
+
 //~ Timer
 var timer = function(name) {
   var start = new Date();
@@ -101,34 +108,6 @@ FixedQueue.push = FixedQueue.wrapMethod("push", FixedQueue.trimHead);
 FixedQueue.splice = FixedQueue.wrapMethod("splice", FixedQueue.trimTail);
 FixedQueue.unshift = FixedQueue.wrapMethod("unshift", FixedQueue.trimTail);
 
-var map = new Datamap({
-
-  scope: 'world',
-  element: document.getElementById('container1'),
-  projection: 'mercator',
-  // change the projection to something else only if you have absolutely no cartographic sense
-
-  fills: {
-    defaultFill: 'black',
-  },
-
-  geographyConfig: {
-    dataUrl: null,
-    hideAntarctica: false,
-    borderWidth: 2,
-    borderColor: '#079a9a',
-    popupTemplate: function(geography, data) {
-      return '<div class="hoverinfo" style="color:white;background:black">' +
-        geography.properties.name + '</div>';
-    },
-    popupOnHover: true,
-    highlightOnHover: true,
-    highlightFillColor: '#33ac1a',
-    highlightBorderColor: '#33ac1a',
-    highlightBorderWidth: 3
-  },
-
-})
 
 // we read in a modified file of all country centers
 var centers = [];
