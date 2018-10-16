@@ -1,6 +1,8 @@
+jupyter
 pandas
+pandoc
 pgcli
+psycopg2-binary
 requests
 SQLAlchemy
 xmltodict
-numpy

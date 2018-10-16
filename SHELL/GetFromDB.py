@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[111]:
 
 
 from datetime import datetime, timedelta
@@ -10,11 +10,21 @@ from sqlalchemy import create_engine
 import os
 import pandas as pd
 import pgcli as psycopg2
+import random
 import sqlalchemy
 import sys
 
 
-# In[106]:
+# In[222]:
+
+
+def fixTime():
+    tiempo = timedelta(seconds=random.Random().randrange(0,15*60))#.strftime('%Y-%m-%d %H:%M:%S')
+    ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
+    return (ahora-tiempo).replace(microsecond=0)
+
+
+# In[195]:
 
 
 def getLastDB(minutos=3*60,
@@ -33,10 +43,17 @@ def getLastDB(minutos=3*60,
     """
     df = pd.read_sql(table,con=engine)
 #     df.set_index(['time_generated'],inplace=True)
-    tiempo = (datetime.now() - timedelta(minutes=minutos))#.strftime('%Y-%m-%d %H:%M:%S')
-    ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
-    mask = (df['time_generated'] > tiempo) & (df['time_generated'] <= ahora)
-    df = df[mask]
+    if len(df) == 0:
+        """
+        'Fix' time with 15 minutes before
+        """
+        print('no log found, generating new one...')
+        df['time_generated'] = fixTime()
+    else:
+        tiempo = (datetime.now() - timedelta(minutes=minutos))#.strftime('%Y-%m-%d %H:%M:%S')
+        ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
+        mask = (df['time_generated'] > tiempo) & (df['time_generated'] <= ahora)
+        df = df[mask]
     df['time_generated'] = df['time_generated'].astype(str)
     df.reset_index(drop=True,inplace=True)
     df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
@@ -44,9 +61,9 @@ def getLastDB(minutos=3*60,
     
 
 
-# sys.argv.append('tiempo=60')
+# sys.argv.append('tiempo=15')
 
-# In[105]:
+# In[197]:
 
 
 if __name__ == '__main__':

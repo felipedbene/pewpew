@@ -9,6 +9,7 @@ requests = "*"
 xmltodict = "*"
 "urllib3" = "*"
 pgcli = "*"
+"psycopg2-binary" = "*"
 
 [dev-packages]
 jupyter = "*"
