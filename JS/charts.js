@@ -34,7 +34,7 @@ window.onload = function() {
     backgroundColor: "transparent",
     theme: "dark2",
     title: {
-      text: "Categorías de ataque"
+      text: "Severidad de ataques bloqueados"
     },
     data: [{
       type: "pie",

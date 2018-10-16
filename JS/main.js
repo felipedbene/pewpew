@@ -297,6 +297,12 @@ var attacks = {
 };
 
 attacks.test();
+
+var a = document.getElementById('counter')
+setInterval(function() {
+  a.innerText = +a.innerText + 1;
+}, time);
+
 d3.select(window).on('resize', function() {
   location.reload();
 });
