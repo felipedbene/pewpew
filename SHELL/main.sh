@@ -7,7 +7,7 @@
 ########################################################################
 
 echo "Getting xml file"
-python3 $HOME/NorsePi/SHELL/PaloAltoXML.py maxlogs=5000 tiempo=60
+python3 $HOME/NorsePi/SHELL/PaloAltoXML.py maxlogs=5000 tiempo=15
 echo "Cleaning file"
 cat $HOME/NorsePi/XML/LastHour.json | python3 -m json.tool | tee $HOME/NorsePi/XML/LastHourReadable.json
 echo "putting on DB"
