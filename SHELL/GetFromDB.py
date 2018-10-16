@@ -14,7 +14,7 @@ import sqlalchemy
 import sys
 
 
-# In[101]:
+# In[106]:
 
 
 def getLastDB(minutos=3*60,
@@ -38,6 +38,7 @@ def getLastDB(minutos=3*60,
     mask = (df['time_generated'] > tiempo) & (df['time_generated'] <= ahora)
     df = df[mask]
     df['time_generated'] = df['time_generated'].astype(str)
+    df.reset_index(drop=True,inplace=True)
     df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
     return df
     
