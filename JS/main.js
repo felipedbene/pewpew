@@ -24,16 +24,11 @@ function startTime() {
 startTime();
 
 
-var halt = 5;
-var def_cnt = 'Mexico';
 var log = [];
 var count = 0;
 var time = 1000;
 var len = 0;
-var precision = 1;
-var maxLength = 20;
 var debug = false;
-var tamano = document.getElementById("attackdiv").innerText;
 var queue = 50;
 var show_time = false;
 //~ Timer
@@ -226,7 +221,7 @@ var attacks = {
     if (debug)
       var t = timer("Loop " + count);
     //<Parte Gabo>
-    var a = log[len - count - 1];
+    var a = log[count];
     // $('#container2').html('<h1>' + a['time_generated'] + '</h1>');
 
     var IP1 = "";
