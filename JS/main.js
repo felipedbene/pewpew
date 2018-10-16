@@ -282,8 +282,8 @@ var attacks = {
       }
     });
 
-    $('#attackdiv').append("<b>" + srccountry + "</b> " + IP1 + " " +
-      " <span style='color:#FF7474'>attacks</span><br/> <b>" +
+    $('#attackdiv').append("<b>"+srccountry + "</b> " + IP1 +
+    " <span style='color:#FF7474'>attacks</span><br/> <b>" +
       attackdiv_slatlong + "</b> " + IP2 + " <br>" +
       " <span style='color:" + strokeColor + "'> " + atkname +
       "(" + which_attack + ")</span> " + "<br/>" + "<br/>");
