@@ -68,8 +68,12 @@ window.onload = function() {
       text: "Países con mayor número de ataques"
     },
     axisX: {
+      reversed: true,
       interval: 1
     },
+    // axisY: {
+    //   reversed: true,
+    // },
     axisY2: {
       interlacedColor: "rgba(1,77,101,.2)",
       gridColor: "rgba(1,77,101,.1)",
@@ -117,5 +121,8 @@ window.onload = function() {
   };
   $(".bot.left").CanvasJSChart(pie);
   $(".bot.mid").CanvasJSChart(bar);
+
+  document.getElementById('pais').innerText = bar.data[0].dataPoints[0].label
+
 
 }

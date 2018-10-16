@@ -1,5 +1,5 @@
 html{
-  background-color: wheat;
+  background-color: black;
 }
 .wrapper {
   position: absolute;
@@ -9,7 +9,7 @@ html{
   /* left: 0; */
   right: 0;
   /* top: 0; */
-  background-color: black;
+  /* background-color: black; */
 }
 
 img.cliente {
@@ -84,29 +84,29 @@ img.cliente {
 .left {
     position: absolute;
     left: 0;
-    background-color: red;
+    /* background-color: red; */
 }
 
 .top {
     position: absolute;
-    background-color: blue;
+    /* background-color: blue; */
     top: 0;
 }
 
 .right {
     position: absolute;
-    background-color: orange;
+    /* background-color: orange; */
     right: 0;
 }
 
 .bot {
     position: absolute;
-    background-color: purple;
+    /* background-color: purple; */
     bottom: 0;
 }
 
 .mid {
-    background-color: green;
+    /* background-color: green; */
     margin-left: 30%;
     margin-right: auto;
 }
@@ -118,7 +118,7 @@ img.cliente {
 }
 
 .bot.mid.tile {
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 .mid.tile {
