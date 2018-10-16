@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Metodo para pedir ultimos N minutos:
-
-# In[ ]:
+# In[1]:
 
 
 from datetime import datetime, timedelta
@@ -16,90 +14,53 @@ import sqlalchemy
 import sys
 
 
-# In[ ]:
-
-def readDB(engine,table:str='AtaquesTec'):
-    a = pd.read_sql(table,con=engine)
-    return a
-
-def stringify(tiempo):
-    return tiempo.strftime('%Y-%m-%d %H:%M:%S')
-
-def getLastTime(minutos:int):
-    """Regresa tiempo hace X minutos"""
-    now = datetime.now()
-    lilback = timedelta(minutes = minutos)
-    return now - lilback
-
-def saveLastResults(time:int,string=''):
-    """Toma los logs de los ultimos <time> minutos de la base de datos <string>"""
-    if len(string) == 0:
-        print('tomando valores de la base de datos del tec...')
-        engine = create_engine('postgres://dashboard:U7h2cQ73JH@10.98.99.167:5432/logs')
-    else:
-        engine = create_engine(string)
-    print(f"tomando los ultimos {time} minutos...")
-    tmp = getLastDB(time,readDB(engine,'tec'))
-    print("grabando en la memoria como JSON...")
-    tmp.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
-    print("finished!")
-    return tmp
+# In[101]:
 
 
-# In[ ]:
-
-
-def fixDate(df:pd.DataFrame):
-    """toma la fecha y regresa en el formato apropiado, como tiempo"""
-    a = df['time_generated'].copy()
-    a = a.map(str)
-    df['time_generated'] = a.map(lambda x : parser.parse(x)).copy()
-    return df
-
-
-# In[ ]:
-
-
-def sortDate(df:pd.DataFrame):
-    """Convierte columna a tiempo, hace un sort con los valores,
-    reset del indice y convierte al formato convencional
+def getLastDB(minutos=3*60,
+              engine = create_engine('postgres://dashboard:U7h2cQ73JH@10.98.99.167:5432/logs'),
+              table='tec'):
     """
-    a = df['time_generated'].copy()
-    df['time_generated'] = pd.to_datetime(a,infer_datetime_format=True)
-    df2 = df.copy().sort_values(['time_generated'],ascending=True)
-    df2 = df2.reset_index(drop=True)
-    df2['time_generated'] = df2['time_generated'].map(lambda x : stringify(x))
-    return df2
-
-
-# In[ ]:
-
-
-def getLastDB(tiempo:int,df:pd.DataFrame):
-    """Arregla el tiempo y busca los ultimos logs basados en la hora actual"""
-    df = fixDate(df)
-    df = df.set_index('time_generated')
-    df2 = df.loc[stringify(getLastTime(tiempo)):].copy()
-    df2['time_generated'] = df2.index
-    df2 = df2.reset_index(drop=True)
-    df = sortDate(df2)
+    crear engine
+    acceder a la base de datos
+    grabar con indice como tiempo
+    filtrar el indice
+    poner en orden
+    imprimir hora actual, primer y ultimo tiempo
+    poner como string el tiempo
+    grabar en archivo JSON
+    regresar df
+    """
+    df = pd.read_sql(table,con=engine)
+#     df.set_index(['time_generated'],inplace=True)
+    tiempo = (datetime.now() - timedelta(minutes=minutos))#.strftime('%Y-%m-%d %H:%M:%S')
+    ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
+    mask = (df['time_generated'] > tiempo) & (df['time_generated'] <= ahora)
+    df = df[mask]
+    df['time_generated'] = df['time_generated'].astype(str)
+    df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
     return df
+    
 
 
-# In[ ]:
+# sys.argv.append('tiempo=60')
+
+# In[105]:
 
 
 if __name__ == '__main__':
-    """Poner como argumento el tiempo que se desea tomar de la base de datos"""
-    if type(sys.argv[-1]) == int:
-        saveLastResults(sys.argv[-1])
-    elif len(sys.argv) > 1:
-        try:
-            tmp = int(sys.argv[-1])
-            saveLastResults(tmp)
-        except Exception as e:
-            print('Por favor, dame el tiempo que necesitas de la base de datos. \nSaliendo...')
-            print(e)
-            pass
+    """Poner como argumento el tiempo que se desea tomar de la base de datos en minutos
+    e.g.: python3 GetFromDB.py tiempo=130"""
+    argum = [x for x in sys.argv if 'tiempo' in x]
+    try:
+        tiempo = argum[-1].split('=')[-1]
+        tiempo = int(tiempo)
+    except: 
+        tiempo = ''
+    if type(tiempo) == int:
+        print(f'Tiempo encontrado! Imprimiendo últimos {tiempo} minutos')
+        getLastDB(tiempo)
     else:
-        saveLastResults(3*60)
+        print(f'Tiempo no encontrado. Imprimiendo últimos {3*60} minutos')
+        getLastDB(3*60)
+
