@@ -12,9 +12,28 @@
 	<script src="JS/datamaps.world.min.js"></script>
 	<script src="JS/jquery-2.1.1.min.js"></script>
 	<script src="JS/jquery.simplemodal-1.4.4.js"></script>
+	<script src="JS/Chart.bundle.min.js" charset="utf-8"></script>
 </head>
 
 <body>
+	<div class="top left tile">
+
+	</div>
+	<div class="top mid tile">
+		<p>Ataques bloqueados <br>
+		(Últimas 24h)</p>
+		<p id="counter">0</p>
+	</div>
+	<div class="top right tile">
+		<p>País con mayor número de repeticiones</p>
+		<p id="pais">México</p>
+	</div>
+	<div class="bot left tile" id="pie_chart">
+
+	</div>
+	<div class="bot mid tile">
+
+	</div>
 	<div class="wrapper">
 		<img class="cliente" src="img/tec-de-monterrey-logo.png" alt="logo" />
 		<div class="global_map" id="container1"></div>
@@ -30,6 +49,7 @@
 
 	</div>
 	<script src="templates/mexico.js" charset="utf-8"></script>
+	<script src="JS/pie.js" charset="utf-8"></script>
 	<script src="JS/main.js"></script>
 </body>
 

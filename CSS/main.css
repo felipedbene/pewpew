@@ -77,3 +77,66 @@ img.cliente {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
 }
+
+
+
+.left {
+    position: absolute;
+    left: 0;
+    background-color: red;
+}
+
+.top {
+    position: absolute;
+    background-color: blue;
+    top: 0;
+}
+
+.right {
+    position: absolute;
+    background-color: orange;
+    right: 0;
+}
+
+.bot {
+    position: absolute;
+    background-color: purple;
+    bottom: 0;
+}
+
+.mid {
+    background-color: green;
+    margin-left: 30%;
+    margin-right: auto;
+}
+
+.tile{
+  width: 31vw;
+  height: 50%;
+  text-align: center;
+}
+
+.bot.mid.tile {
+    background-color: yellow;
+}
+
+.top.mid.tile {
+    width: 39vw;
+}
+
+
+p {
+    margin-top: 25%;
+    font-size: -webkit-xxx-large;
+    color: white;
+    font-family: arial;
+}
+
+#pais {
+    font-size: 6vw;
+    margin-top: -2vw;
+}
+#counter {
+    font-size: 10vw;
+    margin-top: -5vw;
+}
