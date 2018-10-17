@@ -21,10 +21,11 @@ function startTime() {
   var options = {
     weekday: 'long',
     year: 'numeric',
-    month: 'long',
+    month: 'numeric',
     day: 'numeric'
   };
-  var horaMexico = event.toLocaleDateString('es-MX', options);
+  var horaMexico = event.toLocaleTimeString('es-MX',options)
+
   document.getElementById('container2').innerHTML = horaMexico;
   t = setTimeout(function() {
     startTime()
