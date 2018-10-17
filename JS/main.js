@@ -17,7 +17,10 @@ function checkTime(i) {
 }
 
 function startTime() {
-  document.getElementById('container2').innerHTML = Date().split(' G')[0];
+  var event = new Date();
+  var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  var horaMexico = event.toLocaleDateString('es-MX', options);
+  document.getElementById('container2').innerHTML = horaMexico;
   t = setTimeout(function() {
     startTime()
   }, 500);
