@@ -14,5 +14,5 @@ echo "putting on DB"
 python3 $HOME/NorsePi/SHELL/SaveToPostgres.py
 echo "Clearing cache"
 rm -rf $HOME/.config/chromium/Default/*Cache*
-echo "Refreshing Browser"
-bash $HOME/refreshChrome.sh
+#echo "Refreshing Browser"
+#bash $HOME/refreshChrome.sh
