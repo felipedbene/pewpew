@@ -97,7 +97,10 @@ img {
   left: 30%;
 }
 .cliente3{
-  right: 23%;
+  top: -1.5vw;
+  height: 8vw;
+  right: 22%;
+  width: auto;
 }
 .logo{
   position: absolute;
