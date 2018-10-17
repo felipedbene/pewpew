@@ -16,9 +16,9 @@ img.cliente {
 
 .global_map {
   position: absolute;
-  top: 15%;
-  left: 10%;
-  right: 10%;
+  top: 20%;
+  left: 0%;
+  right: 0%;
   bottom: 5%;
   z-index: 1;
   /* background-color: red; */
@@ -33,17 +33,16 @@ img.cliente {
   font-family: arial;
 }
 
-
 .subheader {
   position: absolute;
-  top: 0vw;
-  left: 15%;
-  right: 15%;
+  top: 3vw;
+  left: 0%;
+  right: 0%;
   z-index: 2;
-  width: auto;
+  width: 100%;
   text-align: center;
   font-size: 1.75vw;
-  /* background-color: blue; */
+  background-color: transparent;
 }
 
 .timer {
@@ -70,7 +69,36 @@ img.cliente {
   color: white;
   overflow-y: auto;
 }
+
 ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
+  width: 0px;
+  background: transparent;
+  /* make scrollbar transparent */
+}
+
+.banner {
+  width: 80%;
+  height: 5vw;
+  position: absolute;
+  top: 0;
+  left: 10%;
+}
+
+img {
+  height: inherit;
+}
+.cliente1{
+  left: 0;
+}
+.cliente4{
+  right: 0;
+}
+.cliente2{
+  left: 30%;
+}
+.cliente3{
+  right: 23%;
+}
+.logo{
+  position: absolute;
 }

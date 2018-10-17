@@ -18,7 +18,12 @@ function checkTime(i) {
 
 function startTime() {
   var event = new Date();
-  var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  var options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
   var horaMexico = event.toLocaleDateString('es-MX', options);
   document.getElementById('container2').innerHTML = horaMexico;
   t = setTimeout(function() {
@@ -36,8 +41,9 @@ var debug = false;
 var queue = 50;
 var show_time = true;
 var show_console = true;
+var estatico = false;
 
-if(!show_console){
+if (!show_console) {
   var tmp = document.getElementById('attackdiv')
   tmp.style.visibility = 'hidden';
 }
@@ -280,9 +286,12 @@ var attacks = {
     count++;
 
     if (count < len) {
-      if (debug)
+      if (debug) {
         t.stop();
-      attacks.init();
+      }
+      if (!estatico) {
+        attacks.init();
+      }
     } else {
       setTimeout(function() {
         //~ $('#attackdiv').html('Loading')
