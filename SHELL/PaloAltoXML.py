@@ -318,7 +318,7 @@ def xmlParser(file=''):
 
 
 
-    df1 = df['device_name'].map(lambda x : x.split('-')[1])
+    df1 = df['device_name'].map(lambda x : x.split('-')[int((len(x.split('-'))+1)/2)-1])
 
     countries = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/all_countries.csv'),sep='\t',index_col=0)
 
