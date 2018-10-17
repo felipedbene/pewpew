@@ -77,19 +77,11 @@ img.cliente {
 }
 
 .banner {
-<<<<<<< HEAD
   width: 90%;
   height: 5vw;
   position: absolute;
   top: 0;
   left: 5%;
-=======
-  width: 100%;
-  height: 5vw;
-  position: absolute;
-  top: 0;
-  /* left: 10%; */
->>>>>>> 455e2007de18ec70d7dd886e49b6dea02490bf0d
 }
 
 img {
