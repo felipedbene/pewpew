@@ -42,7 +42,7 @@ var debug = false;
 var queue = 50;
 var show_time = false;
 var show_console = true;
-var estatico = true;
+var estatico = false;
 
 if (!show_console) {
   var tmp = document.getElementById('attackdiv')
