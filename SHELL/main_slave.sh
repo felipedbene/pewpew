@@ -8,6 +8,8 @@
 
 echo "Getting xml file"
 python3 $HOME/NorsePi/SHELL/GetFromDB.py tiempo=15
+echo "Parsing values for dashboard"
+python3 $HOME/NorsePi/SHELL/GetDatamapStatus.py
 echo "Cleaning file"
 cat $HOME/NorsePi/XML/LastHour.json | python3 -m json.tool | tee $HOME/NorsePi/XML/LastHourReadable.json
 echo "Clearing cache"
