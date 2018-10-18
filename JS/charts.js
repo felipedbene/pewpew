@@ -1,3 +1,8 @@
+// comment this to stop reloading
+setInterval(function() {
+  window.location.reload();
+}, 15*60*1000); // reloads page every 15 minutes
+
 window.onload = function() {
   var getjson = function(jsonUrl) {
     var defer = $.Deferred();
