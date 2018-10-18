@@ -34,7 +34,7 @@ var queue = 50;
 var show_time = true;
 var show_console = false;
 
-if(!show_console){
+if (!show_console) {
   var tmp = document.getElementById('attackdiv')
   tmp.style.visibility = 'hidden';
 }
@@ -279,14 +279,16 @@ var attacks = {
     if (count < len) {
       if (debug)
         t.stop();
+        // console.clear();
+        // console.log(100 * (count / len) + "%");
       attacks.init();
     } else {
       setTimeout(function() {
         //~ $('#attackdiv').html('Loading')
         count = 0;
         log = [];
-        // location.reload();
-        attacks.test();
+        location.reload();
+        // attacks.test();
       }, time);
       //location.reload();
 

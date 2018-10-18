@@ -1,7 +1,7 @@
-// comment this to stop reloading
-setInterval(function() {
-  window.location.reload();
-}, 15*60*1000); // reloads page every 15 minutes
+// // comment this to stop reloading
+// setInterval(function() {
+//   window.location.reload();
+// }, 15 * 60 * 1000); // reloads page every 15 minutes
 
 window.onload = function() {
   var getjson = function(jsonUrl) {
@@ -17,8 +17,9 @@ window.onload = function() {
 
   $.when(
     getjson("XML/TopCategory.json"),
-    getjson("XML/TopCountries.json")
-  ).done(function(res1, res2) {
+    getjson("XML/TopCountries.json"),
+    getjson("XML/TotalAttacks.txt")
+  ).done(function(res1, res2, res3) {
     var pie = {
       backgroundColor: "transparent",
       theme: "dark2",
@@ -61,7 +62,8 @@ window.onload = function() {
     };
     $(".bot.left").CanvasJSChart(pie);
     $(".bot.mid").CanvasJSChart(bar);
-    document.getElementById('pais').innerText = bar.data[0].dataPoints[0].label
+    document.getElementById('pais').innerText = bar.data[0].dataPoints[0].label;
+    document.getElementById('counter').innerText = res3;
   }).fail(function(err) {
     console.log(err);
   });
