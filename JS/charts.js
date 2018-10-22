@@ -42,7 +42,7 @@ window.onload = function() {
       animationEnabled: true,
 
       title: {
-        text: "Países con mayor número de ataques"
+        text: "Países que más nos atacan"
       },
       axisX: {
         reversed: true,
