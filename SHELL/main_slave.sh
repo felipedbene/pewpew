@@ -7,7 +7,7 @@
 ########################################################################
 
 echo "Getting xml file"
-python3 $HOME/NorsePi/SHELL/GetFromDB.py tiempo=15
+python3 $HOME/NorsePi/SHELL/GetFromDB.py tiempo=1440
 echo "Parsing values for dashboard"
 python3 $HOME/NorsePi/SHELL/GetDatamapStatus.py
 echo "Cleaning file"
