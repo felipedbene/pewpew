@@ -2,35 +2,21 @@
 
 ## **total**
 
-### Descripción:
-
-Da el valor total de (?) - _probablemente documentos escaneados_
-
-### Ejemplo
-
 ```javascript
 "total": 2110664,
 ```
 
-* * *
+--------------
 
 ## **took**
-
-### Descripción:
-
-Da el valor de (?) - _probablemente amenazas encontradas_
-
-### Ejemplo
 
 ```javascript
 "took": 488,
 ```
 
-* * *
+--------------
 
 ## tags
-
-### Ejemplo
 
 ```javascript
 "commodity.triusor": {
@@ -54,13 +40,9 @@ Da el valor de (?) - _probablemente amenazas encontradas_
 }
 ```
 
-### Descripción
-
-* * *
+--------------
 
 ## **hits**
-
-### Ejemplo
 
 ```javascript
 "hits": [{
