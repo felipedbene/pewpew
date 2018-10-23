@@ -20,25 +20,20 @@
 
 ```javascript
 "tags": {
-  "commodity.allaple": {
+  "unit42.http_no_user_agent": {
     "support_id": 1,
-    "tag_name": "Allaple",
-    "public_tag_name": "Commodity.Allaple",
-    "tag_definition_scope_id": 3,
+    "tag_name": "HttpNoUserAgent",
+    "public_tag_name": "Unit42.HttpNoUserAgent",
+    "tag_definition_scope_id": 4,
     "tag_definition_status_id": 1,
-    "count": 21917165,
-    "lasthit": "2018-10-18 00:46:35",
-    "description": "Allaple is a Network Worm which tries to spread to Windows file shares using a list of pre-defined logins and passwords. Allaple was first released in 2006 and was used to launch DDoS attacks at that time.",
+    "count": 7827743,
+    "lasthit": "2018-10-09 14:07:17",
+    "description": "A sample creates HTTP traffic but omits or uses a blank user-agent field. Typically, legitimate applications will include a user-agent value in HTTP requests. HTTP requests without the user-agent header or with a blank user agent value are extremely suspect. This tag identified such suspect applications.",
     "customer_name": "Palo Alto Networks Unit42",
     "customer_industry": "High Tech",
     "source": "Unit 42",
-    "tag_class_id": 3,
-    "tag_definition_id": 27322,
-    "up_votes": 7,
-    "tag_groups": [{
-      "tag_group_name": "Worm",
-      "description": "Worm related tags"
-    }]
+    "tag_class_id": 5,
+    "tag_definition_id": 41533
   }
 }
 ```
@@ -50,21 +45,22 @@
 ```javascript
 "hits": [{
   "_source": {
-    "sha1": "4c3e98723fbd762cd46ac7808599df73c25b46cc",
+    "sha1": "0562d8cfc34ef3f49e203700f67fc7ddda76f105",
+    "app_packagename": "com.bigpinwheel.game.majiang",
     "filetype": "Android APK",
-    "app_name": "System UI",
+    "app_name": "风扯血战麻将",
     "malware": 1,
-    "sha256": "ac2135a7577162dd176880ba433fc3ecc949a810033744c7359af1aae83802cd",
-    "size": 4086506,
-    "finish_date": "2018-10-22T15:02:12",
-    "ssdeep": "49152:DOumUQcUj2x+DKm8Xo33WubhHSYoTIXx8OGraDldXWoTIXLgpjVUlxTS5inoz1qj:NUKxJ09bgMdGeK+vd1q2j6rD",
+    "sha256": "94e5594dc107baa3e3da796cc57003b901392be91de5cc0a0a90445e6b5fbe22",
+    "size": 5471129,
+    "finish_date": "2018-10-22T15:01:57",
+    "ssdeep": "98304:RrdlpH3FTyEhqE53TLpKcEgY9ACE7uWZmKRia/FrMR7//jIU:7nH3EEndIcPyKmKJ/FrMR7DIU",
+    "create_date": "2018-10-22T14:57:55",
     "region": ["us"],
-    "create_date": "2018-10-22T15:00:55",
-    "md5": "acdf483f0e22ffd78322a8289f554642",
-    "tag": [],
-    "tag_groups": []
+    "md5": "cb23db8d1d3eaf0c06a1f72b68efca24",
+    "tag": ["Unit42.AndroidSudo", "Unit42.AndroidPorn", "Commodity.UmengAdware"],
+    "tag_groups": ["Android", "AdWare"]
   },
-  "_id": "ac2135a7577162dd176880ba433fc3ecc949a810033744c7359af1aae83802cd",
+  "_id": "94e5594dc107baa3e3da796cc57003b901392be91de5cc0a0a90445e6b5fbe22",
   "visible": true
 }]
 ```
