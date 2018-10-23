@@ -6,12 +6,14 @@ Tags autofocus (nome de malware, caracteristicas):
     ☐ Falar com Grecia
     ☐ Fazer Slider
 Tarefas:
-  ☐ confirmar API ***** -> fazer uma demo/reporte de informação sacada
+  ✔ confirmar API  @done(2018-10-22 17:14) @project(Tarefas)
+  ✔ fazer uma demo/reporte de informação sacada @done(2018-10-23 11:02) @project(Tarefas)
   ☐ Falar com a Grecia sugestoes de API - conscientização
-  ☐ paises que más nos atacan - cambiar nombre dashboard (mid-bot)
+  ☐ Fazer muestra de dashboard - GIMP
 Futuro:
   ☐ Trocar contador por (# analisados) + (% virus)
   ☐ Botar CSV em base de dados
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Países que más nos atacan - cambiar nombre dashboard (mid-bot) @done(2018-10-22 15:55) @project(Tarefas)
