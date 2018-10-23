@@ -18,7 +18,8 @@ window.onload = function() {
   $.when(
     getjson("XML/TopCategory.json"),
     getjson("XML/TopCountries.json"),
-    getjson("XML/TotalAttacks.txt")
+    // getjson("XML/TotalAttacks.txt"),
+    getjson("XML/result.json")
   ).done(function(res1, res2, res3) {
     var pie = {
       backgroundColor: "transparent",
@@ -63,7 +64,7 @@ window.onload = function() {
     $(".bot.left").CanvasJSChart(pie);
     $(".bot.mid").CanvasJSChart(bar);
     document.getElementById('pais').innerText = bar.data[0].dataPoints[0].label;
-    document.getElementById('counter').innerText = res3;
+    document.getElementById('counter').innerText = res3.total;
   }).fail(function(err) {
     console.log(err);
   });

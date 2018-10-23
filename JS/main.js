@@ -33,6 +33,7 @@ var debug = false;
 var queue = 50;
 var show_time = true;
 var show_console = false;
+var increase_counter = false;
 
 if (!show_console) {
   var tmp = document.getElementById('attackdiv')
@@ -279,8 +280,8 @@ var attacks = {
     if (count < len) {
       if (debug)
         t.stop();
-        // console.clear();
-        // console.log(100 * (count / len) + "%");
+      // console.clear();
+      // console.log(100 * (count / len) + "%");
       attacks.init();
     } else {
       setTimeout(function() {
@@ -301,9 +302,11 @@ var attacks = {
 attacks.test();
 
 var a = document.getElementById('counter')
-setInterval(function() {
-  a.innerText = +a.innerText + 1;
-}, time);
+if (increase_counter) {
+  setInterval(function() {
+    a.innerText = +a.innerText + 1;
+  }, time);
+}
 
 d3.select(window).on('resize', function() {
   location.reload();
