@@ -22,7 +22,7 @@ Da el valor de (?) - _probablemente amenazas encontradas_
 
 ### Ejemplo
 
-```json
+```javascript
 "took": 488,
 ```
 
@@ -32,7 +32,7 @@ Da el valor de (?) - _probablemente amenazas encontradas_
 
 ### Ejemplo
 
-```json
+```javascript
 "commodity.triusor": {
   "support_id": 1,
   "tag_name": "Triusor",
@@ -62,7 +62,7 @@ Da el valor de (?) - _probablemente amenazas encontradas_
 
 ### Ejemplo
 
-```json
+```javascript
 "hits": [{
   "_source": {
     "sha1": "4c3e98723fbd762cd46ac7808599df73c25b46cc",
