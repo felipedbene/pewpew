@@ -6,7 +6,7 @@
 "total": 2110664,
 ```
 
---------------
+* * *
 
 ## **took**
 
@@ -14,33 +14,36 @@
 "took": 488,
 ```
 
---------------
+* * *
 
 ## tags
 
 ```javascript
-"commodity.triusor": {
-  "support_id": 1,
-  "tag_name": "Triusor",
-  "public_tag_name": "Commodity.Triusor",
-  "tag_definition_scope_id": 3,
-  "tag_definition_status_id": 1,
-  "count": 119899,
-  "lasthit": "2018-10-22 14:45:38",
-  "description": "Triusor searches files with .exe extension in the system and infects the files.",
-  "customer_name": "Palo Alto Networks Unit42",
-  "customer_industry": "High Tech",
-  "source": "Unit 42",
-  "tag_class_id": 3,
-  "tag_definition_id": 67936,
-  "tag_groups": [{
-    "tag_group_name": "FileInfector",
-    "description": "FileInfector related tags"
-  }]
+"tags": {
+  "commodity.allaple": {
+    "support_id": 1,
+    "tag_name": "Allaple",
+    "public_tag_name": "Commodity.Allaple",
+    "tag_definition_scope_id": 3,
+    "tag_definition_status_id": 1,
+    "count": 21917165,
+    "lasthit": "2018-10-18 00:46:35",
+    "description": "Allaple is a Network Worm which tries to spread to Windows file shares using a list of pre-defined logins and passwords. Allaple was first released in 2006 and was used to launch DDoS attacks at that time.",
+    "customer_name": "Palo Alto Networks Unit42",
+    "customer_industry": "High Tech",
+    "source": "Unit 42",
+    "tag_class_id": 3,
+    "tag_definition_id": 27322,
+    "up_votes": 7,
+    "tag_groups": [{
+      "tag_group_name": "Worm",
+      "description": "Worm related tags"
+    }]
+  }
 }
 ```
 
---------------
+* * *
 
 ## **hits**
 
