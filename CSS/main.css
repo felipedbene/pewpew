@@ -127,8 +127,7 @@ img.cliente {
 
 
 p {
-    margin-top: 25%;
-    font-size: -webkit-xxx-large;
+    /* margin-top: 25%; */
     color: white;
     font-family: arial;
 }
@@ -139,7 +138,7 @@ p {
 }
 #counter {
     font-size: 10vw;
-    margin-top: -5vw;
+    margin-top: auto;
 }
 
 .global_map {

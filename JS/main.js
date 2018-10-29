@@ -34,6 +34,7 @@ var queue = 50;
 var show_time = true;
 var show_console = false;
 var increase_counter = false;
+var stop = true;
 
 if (!show_console) {
   var tmp = document.getElementById('attackdiv')
@@ -288,7 +289,8 @@ var attacks = {
         //~ $('#attackdiv').html('Loading')
         count = 0;
         log = [];
-        location.reload();
+        if(!stop){
+        location.reload();}
         // attacks.test();
       }, time);
       //location.reload();
