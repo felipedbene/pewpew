@@ -1,12 +1,12 @@
 // Versión Rapida
-window.onerror = function(msg) {
-  // $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
-  console.log(msg);
-  setTimeout(function() {
-    location.reload();
-  }, 3000);
-}
-
+// window.onerror = function(msg) {
+//   // $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
+//   console.log(msg);
+//   setTimeout(function() {
+//     location.reload();
+//   }, 3000);
+// }
+//
 
 
 function checkTime(i) {
@@ -24,7 +24,7 @@ function startTime() {
     month: 'numeric',
     day: 'numeric'
   };
-  var horaMexico = event.toLocaleTimeString('es-MX',options)
+  var horaMexico = event.toLocaleTimeString('es-MX', options)
 
   document.getElementById('container2').innerHTML = horaMexico;
   t = setTimeout(function() {
@@ -36,7 +36,7 @@ startTime();
 
 var log = [];
 var count = 0;
-var time = 500;
+var time = 50;
 var len = 0;
 var debug = false;
 var queue = 50;
@@ -212,78 +212,81 @@ var attacks = {
       var t = timer("Loop " + count);
     //<Parte Gabo>
     var a = log[count];
-    // $('#container2').html('<h1>' + a['time_generated'] + '</h1>');
 
-    var IP1 = "";
-    var IP2 = "";
-
-    var srccountry = a["srcname"];
-    var attackdiv_slatlong = a["dstname"];
-    /*
-    		if (typeof b === 'undefined' || b === null)
-    		{
-    			b = {}
-    			for (var i=0; i<countries.length; i++){
-    				b[countries[i].name] = countries[i];
-    			}
-    			countries = b;
-    		}
-    */
-    var srclat = a["srclat"];
-    var srclong = a["srclong"];
-    var dstlat = a["dstlat"];
-    var dstlong = a["dstlong"];
-
-    which_attack = a["subtype"];
-    var atkname = a["threatid"];
-    strokeColor = a["severity"];
-
-    hits.push({
-      origin: {
-        latitude: +srclat,
-        longitude: +srclong
-      },
-      destination: {
-        latitude: +dstlat,
-        longitude: +dstlong
-      }
-    });
-    map.arc(hits, {
-      strokeWidth: 3,
-      strokeColor: strokeColor
-    });
-
-    // add boom to the bubbles queue
-
-    boom.push({
-      radius: 7,
-      latitude: +dstlat,
-      longitude: +dstlong,
-      fillOpacity: 0.5,
-      attk: which_attack
-    });
-    map.bubbles(boom, {
-      popupTemplate: function(geo, data) {
-        return '<div class="hoverinfo">' + data.attk + '</div>';
-      }
-    });
-    if (show_time) {
-      tiempo = "@" + a['time_generated'] + '<br>';
+    if (a.srclat == "" || a.dstlat == "") {
+      console.log("true - " + count);
     } else {
-      tiempo = '';
+
+      var IP1 = "";
+      var IP2 = "";
+
+      var srccountry = a["srcname"];
+      var attackdiv_slatlong = a["dstname"];
+      /*
+      		if (typeof b === 'undefined' || b === null)
+      		{
+      			b = {}
+      			for (var i=0; i<countries.length; i++){
+      				b[countries[i].name] = countries[i];
+      			}
+      			countries = b;
+      		}
+      */
+      var srclat = a["srclat"];
+      var srclong = a["srclong"];
+      var dstlat = a["dstlat"];
+      var dstlong = a["dstlong"];
+
+      which_attack = a["subtype"];
+      var atkname = a["threatid"];
+      strokeColor = a["severity"];
+
+      hits.push({
+        origin: {
+          latitude: +srclat,
+          longitude: +srclong
+        },
+        destination: {
+          latitude: +dstlat,
+          longitude: +dstlong
+        }
+      });
+      map.arc(hits, {
+        strokeWidth: 3,
+        strokeColor: strokeColor
+      });
+
+      // add boom to the bubbles queue
+
+      boom.push({
+        radius: 7,
+        latitude: +dstlat,
+        longitude: +dstlong,
+        fillOpacity: 0.5,
+        attk: which_attack
+      });
+      map.bubbles(boom, {
+        popupTemplate: function(geo, data) {
+          return '<div class="hoverinfo">' + data.attk + '</div>';
+        }
+      });
+      if (show_time) {
+        tiempo = "@" + a['time_generated'] + '<br>';
+      } else {
+        tiempo = '';
+      }
+
+      $('#attackdiv').append(tiempo + "<b>" + srccountry + "</b> " + IP1 +
+        " <span style='color:#FF7474'>attacks</span><br/> <b>" +
+        attackdiv_slatlong + "</b> " + IP2 + " <br>" +
+        " <span style='color:" + strokeColor + "'> " + atkname +
+        "(" + which_attack + ")</span> " + "<br/>" + "<br/>");
+
+      $('#attackdiv').animate({
+        scrollTop: $('#attackdiv').prop("scrollHeight")
+      }, time);
     }
 
-    $('#attackdiv').append(tiempo + "<b>" + srccountry + "</b> " + IP1 +
-      " <span style='color:#FF7474'>attacks</span><br/> <b>" +
-      attackdiv_slatlong + "</b> " + IP2 + " <br>" +
-      " <span style='color:" + strokeColor + "'> " + atkname +
-      "(" + which_attack + ")</span> " + "<br/>" + "<br/>");
-
-    $('#attackdiv').animate({
-      scrollTop: $('#attackdiv').prop("scrollHeight")
-    }, time);
-
-    // pick a new random time and start the timer again!
     count++;
 
     if (count < len) {
