@@ -10,12 +10,14 @@ xmltodict = "*"
 "urllib3" = "*"
 pgcli = "*"
 "psycopg2-binary" = "*"
+SQLAlchemy = "==1.2.13"
 
 [dev-packages]
+nbconvert = "*"
 jupyter = "*"
 pandoc = "*"
-nbconvert = "*"
 pylint = "*"
+simplegeneric = "*"
 
 [requires]
 python_version = "3.6"
