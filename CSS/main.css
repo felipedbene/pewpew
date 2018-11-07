@@ -115,6 +115,7 @@ img.cliente {
   width: 31vw;
   height: 50%;
   text-align: center;
+  background-color: black;
 }
 
 .bot.mid.tile {
