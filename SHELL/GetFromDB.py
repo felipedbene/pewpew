@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[111]:
+# In[1]:
 
 
 from datetime import datetime, timedelta
@@ -15,56 +15,43 @@ import sqlalchemy
 import sys
 
 
-# In[278]:
-
-
-def fixTime():
-    tiempo = timedelta(seconds=random.Random().randrange(0,15*60))#.strftime('%Y-%m-%d %H:%M:%S')
-    ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
-    return (ahora-tiempo).replace(microsecond=0)
-
-
-# In[277]:
+# In[ ]:
 
 
 def getLastDB(minutos=3*60,
               engine = create_engine('postgres://dashboard:U7h2cQ73JH@10.98.99.167:5432/logs'),
               table='tec'):
-    """
-    crear engine
-    acceder a la base de datos
-    grabar con indice como tiempo
-    filtrar el indice
-    poner en orden
-    imprimir hora actual, primer y ultimo tiempo
-    poner como string el tiempo
-    grabar en archivo JSON
-    regresar df
-    """
+    
+
     df = pd.read_sql(table,con=engine)
+
     cp = df.copy()
-#     df.set_index(['time_generated'],inplace=True)
     tiempo = (datetime.now() - timedelta(minutes=minutos))#.strftime('%Y-%m-%d %H:%M:%S')
-    ahora = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
-    mask = (df['time_generated'] > tiempo) & (df['time_generated'] <= ahora)
-    df = df[mask]
-    
+
+    df.set_index('time_generated',inplace=True)
+
+    df.index = pd.to_datetime(df.index)
+
+    df = df[df.index > tiempo]
+
+
     if len(df) == 0:
-        """
-        'Fix' time with 15 minutes before
-        """
-        print('no log found, generating new one...')
-        cp['time_generated'] = fixTime()
-        df = cp.head(100).copy()
-    
-    df['time_generated'] = df['time_generated'].astype(str)
-    df.reset_index(drop=True,inplace=True)
-    df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+        filename = 'PaloAltoError'
+        log = f"Database returned empty at {datetime.now().ctime()}"
+
+        a = open(os.path.expanduser(f'~/{filename}.log'),'a')
+        print(log,file=a)
+        print("="*len(log),file=a)
+        a.close()
+
+    else:
+
+        df['time_generated'] = df.index.astype(str)
+        df.reset_index(drop=True,inplace=True)
+        df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+
     return df
-    
 
-
-# sys.argv.append('tiempo=15')
 
 # In[240]:
 
@@ -79,9 +66,9 @@ if __name__ == '__main__':
     except: 
         tiempo = ''
     if type(tiempo) == int:
-        print(f'Tiempo encontrado! Imprimiendo últimos {tiempo} minutos')
+        print(f'Tiempo encontrado en los argumentos! Buscando últimos {tiempo} minutos')
         getLastDB(tiempo)
     else:
-        print(f'Tiempo no encontrado. Imprimiendo últimos {3*60} minutos')
+        print(f'Tiempo no encontrado en los argumentos. Imprimiendo últimos {3*60} minutos')
         getLastDB(3*60)
 
