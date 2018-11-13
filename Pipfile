@@ -10,6 +10,7 @@ pgcli = "==2.0.0"
 requests = "==2.20.0"
 xmltodict = "==0.11.0"
 SQLAlchemy = "==1.2.13"
+pymongo = "*"
 
 [dev-packages]
 
