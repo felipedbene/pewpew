@@ -1,70 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 	<meta charset="utf-8">
 	<title>Microplus Attack Map</title>
-	<link rel="stylesheet" type="text/css" href="CSS/main.css">
-	<link rel="stylesheet" type="text/css" href="CSS/slider.css">
+	<link rel="stylesheet" type="text/css" href="CSS/master.css">
 	<link rel="shortcut icon" href="img/tab_icon.jpg">
-	<script src="JS/d3.v3.min.js"></script>
-	<script src="JS/d3.geo.projection.v0.min.js"></script>
-	<script src="JS/topojson.v1.min.js"></script>
-	<script src="JS/datamaps.world.min.js"></script>
-	<script src="JS/jquery-2.1.1.min.js"></script>
-	<script src="JS/jquery.simplemodal-1.4.4.js"></script>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
-		<div class="banner">
-				<img class="logo cliente1" src="img/first-logo.png" alt="logo" />
-				<img class="logo cliente2" src="img/second-logo.png" alt="logo" />
-				<img class="logo cliente3" src="img/third-logo.png" alt="logo" />
-				<img class="logo cliente4" src="img/fourth-logo.png" alt="logo" />
-			</div>
-			
-	<div class="top left tile">
-		<p class="item-1">Android software that reads, forwards, or otherwise monitors and/or deletes SMS messages.</p>
+	<div class="banner">
+		<img class="logo cliente1" src="img/first-logo.png" alt="logo" />
+		<img class="logo cliente2" src="img/second-logo.png" alt="logo" />
+		<img class="logo cliente3" src="img/third-logo.png" alt="logo" />
+		<img class="logo cliente4" src="img/fourth-logo.png" alt="logo" />
+	</div>
 
-		<p class="item-2">Porn related Android applications (apks) that download other porn apps after infecting a device to propagate further.</p>
-
-		<p class="item-3">The PendingFileRenameOperations key stores the names of files to be renamed when the system restarts.</p>
-	</div>
-	<div class="top mid tile">
-		<p>Ataques bloqueados <br>
-			(Contados a partir de la 0h)</p>
-		<p id="counter">0</p>
-	</div>
-	<div class="top right tile">
-		<p>País con mayor número de repeticiones</p>
-		<p id="pais">México</p>
-	</div>
-	<div class="bot left tile" id="pie_chart">
-
-	</div>
-	<div class="bot mid tile">
-
-	</div>
-	<!-- mapa de ataques -->
-	<div class="wrapper">
-		<div class="global_map" id="container1"></div>
-		<div class="name">
-			<div class="subheader">
-				Ciberseguridad <br> Mapa de Ataques - Tecnológico de Monterrey
-			</div>
+	<div class="body-wrapper">
+		<div id="gauge-container">
+			<div id="gauge"></div>
+			<div class="table" id="gauge-tabla"></div>
 		</div>
-		<div class="timer" id="container2">
-			REAL TIME
+		<div class="graph" id="categorias-frecuentes"></div>
+		<div class="numero texto" id="ataques-bloqueados">
+			<p>Ataques bloqueados <br></p>
+			<p id="counter">0</p>
 		</div>
-		<div class="attack_console" id="attackdiv"></div>
-
+		<div class="table" id="tabla-historica"></div>
+		<div class="graph" id="severidades"></div>
+		<div class="graph" id="paises-atacantes"></div>
 	</div>
-	<script src="templates/mexico.js" charset="utf-8"></script>
-	<script src="JS/charts.js" charset="utf-8"></script>
-	<script src="JS/main.js"></script>
-	<script type="text/javascript" src="JS/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="JS/jquery.canvasjs.min.js"></script>
-
 </body>
 
 </html>
