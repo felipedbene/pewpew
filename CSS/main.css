@@ -119,6 +119,7 @@ img.cliente {
 }
 
 .bot.mid.tile {
+  visibility: visible
     /* background-color: yellow; */
 }
 
