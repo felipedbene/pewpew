@@ -10,6 +10,8 @@ xmltodict = "*"
 "urllib3" = "*"
 pgcli = "*"
 "psycopg2-binary" = "*"
+odo = "*"
+networkx = "==1.11"
 
 [dev-packages]
 jupyter = "*"
