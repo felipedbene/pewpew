@@ -2,14 +2,36 @@ body{
     background-color: black;
 }
 .wrapper{
-    display: flex;
+    display: inline-flex;
 }
 
 .wrapper, div, img{
     padding: 10px;
     border: 1px #ccc solid;
 }
-
+.gauge{
+    flex-direction: column;
+}
+.banner{
+    flex-basis: auto;
+    justify-content: space-around;
+    display: flex;
+}
 .texto{
     color: white;
+}
+img{
+    height: 10vh;
+}
+.body{
+    justify-content: space-evenly;
+    display:flex;
+    flex-wrap:wrap;
+    height: 80vh;
+}
+.inner{
+    flex-basis:30%;
+}
+.gauge{
+    
 }
