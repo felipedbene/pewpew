@@ -26,12 +26,14 @@ img{
 .body{
     justify-content: space-evenly;
     display:flex;
-    flex-wrap:wrap;
     height: 80vh;
+    flex-flow: row wrap;
 }
 .inner{
+    height: 40vh;
+    width: 33vh;
     flex-basis:30%;
 }
 .gauge{
-    
+
 }
