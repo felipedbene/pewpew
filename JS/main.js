@@ -239,7 +239,7 @@ var attacks = {
 
       which_attack = a["subtype"];
       var atkname = a["threatid"];
-      strokeColor = a["severity"];
+      strokeColor = a["color_ataque"];
 
       hits.push({
         origin: {

@@ -24,7 +24,7 @@ def getLastDB(minutos=3*60,
     
 
     df = pd.read_sql(table,con=engine)
-
+    print(df.iloc[0])
     cp = df.copy()
     tiempo = (datetime.now() - timedelta(minutes=minutos))#.strftime('%Y-%m-%d %H:%M:%S')
 
