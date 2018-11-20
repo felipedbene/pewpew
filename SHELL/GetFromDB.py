@@ -80,8 +80,8 @@ if __name__ == '__main__':
         tiempo = ''
     if type(tiempo) == int:
         print(f'Tiempo encontrado! Imprimiendo últimos {tiempo} minutos')
-        getLastDB(tiempo)
+        print(getLastDB(tiempo))
     else:
         print(f'Tiempo no encontrado. Imprimiendo últimos {3*60} minutos')
-        getLastDB(3*60)
+        print(getLastDB(3*60))
 
