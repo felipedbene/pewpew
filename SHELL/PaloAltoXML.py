@@ -90,7 +90,7 @@ def xmlParser(file=''):
     campi = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
     # TODO Ler lista Felipe
-    campusDevice = pd.read_csv(os.path.expanduser('/home/gabriel/NorsePi/CSV/GPSTec.csv'))
+    campusDevice = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
     notFound = set()
     for idx in range(len(df)):
