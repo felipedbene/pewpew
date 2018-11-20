@@ -36,7 +36,7 @@ startTime();
 
 var log = [];
 var count = 0;
-var time = 50;
+var time = 500;
 var len = 0;
 var debug = false;
 var queue = 50;
