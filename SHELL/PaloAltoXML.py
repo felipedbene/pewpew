@@ -16,7 +16,7 @@ import os
 import pandas as pd
 
 
-# In[2]:
+# In[12]:
 
 
 def xmlParser(file=''):
@@ -42,9 +42,7 @@ def xmlParser(file=''):
                  'low':'#42ff58', #green
 
                  'informational':'#54ba8a'} #blue
-
-    default_country = 'MX'
-
+    
     if file == '':
 
         with open(os.path.expanduser('~/NorsePi/XML/LastHour.xml'),'r') as fd:
@@ -83,7 +81,7 @@ def xmlParser(file=''):
         df['src_alpha2'][idx] = i['@cc']
     for idx in range(len(df)):
         df.iloc[idx]['color_ataque'] = color_code[df.iloc[idx]['severity']]
-
+    
 
     paises = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/country_centroids_primary.csv'),sep='\t')
 
@@ -139,7 +137,9 @@ def xmlParser(file=''):
         except Exception as e:
             notFound.add(idx)
             print('destiny:',idx,e)   
-
+    
+    df.drop(columns=['srcloc','dstloc'],inplace=True)
+    
     df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
     return df
 
@@ -259,7 +259,7 @@ def fixTime2(df:pd.DataFrame,tiempoMin=15):
     return df
 
 
-# In[9]:
+# In[38]:
 
 
 if __name__ == '__main__':
@@ -274,7 +274,7 @@ if __name__ == '__main__':
         maxlogs = int(maxlogs.split('=')[-1])
     tiempo=[x for x in sys.argv if 'tiempo' in x]
     if len(tiempo) == 0:
-        tiempo = 15
+        tiempo = 150
     else:
         tiempo = tiempo[0]
         tiempo = int(tiempo.split('=')[-1])
@@ -287,10 +287,4 @@ if __name__ == '__main__':
     else:
         getXML(firewall,token,job,maxlogs)
         xmlParser()
-
-
-# In[10]:
-
-
-df = xmlParser()
 
