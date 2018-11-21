@@ -16,7 +16,7 @@ import os
 import pandas as pd
 
 
-# In[12]:
+# In[2]:
 
 
 def xmlParser(file=''):
@@ -90,10 +90,16 @@ def xmlParser(file=''):
     campi = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
     # TODO Ler lista Felipe
-    campusDevice = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
+    campusDevice = pd.read_csv(os.path.expanduser('/home/gabriel/NorsePi/CSV/GPSTec.csv'))
 
     notFound = set()
     for idx in range(len(df)):
+        """Nota Gabriel:
+            Para esa parte del código, haremos una modificación en caso de que 
+            tenga el Tec como fuente de ataques. Si es el caso, pondremos el 
+            valor encontrado como fuente y el otro como destino.
+        """
+        
         # Source
         try:
                 # Checa si el origen es un pais
@@ -135,12 +141,15 @@ def xmlParser(file=''):
                 df.iloc[idx]['dstname'] = tmp['Nombre'].values[0]
 
         except Exception as e:
-            notFound.add(idx)
+#             notFound.add(idx)
             print('destiny:',idx,e)   
     
     df.drop(columns=['srcloc','dstloc'],inplace=True)
     
+    df = df[~df.index.isin(list(notFound))]
+    df.reset_index(drop=True, inplace=True)
     df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+    
     return df
 
 
@@ -259,7 +268,7 @@ def fixTime2(df:pd.DataFrame,tiempoMin=15):
     return df
 
 
-# In[38]:
+# In[9]:
 
 
 if __name__ == '__main__':
