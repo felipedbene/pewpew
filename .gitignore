@@ -50,3 +50,4 @@ config.rst
 
 package-lock.json
 *.json
+JS/justgage*/examples/
