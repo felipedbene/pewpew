@@ -24,7 +24,37 @@
         <div class="body wrapper">
             <div class="inner gauge wrapper">
                 <div class="inner-gauge" id="gauge"></div>
-                <div class="inner-gauge table" id="gauge-tabla"></div>
+                <div class="inner-gauge table" id="gauge-tabla">
+                    <tbody>
+                        <tr>
+                            <td id='green'>---</td>
+                            <td>Everything is normal. No significant new threat known.</td>
+                        </tr>
+                        <tr>
+                            <td id='blue'>---</td>
+                            <td>This status is used for testing only. Everything is normal. No significant
+                                new threat known.</td>
+                        </tr>
+                        <tr>
+                            <td id='yellow'>---</td>
+                            <td>We are currently tracking a significant new threat. The impact is either
+                                unknown or expected to be minor to the infrastructure. However, local impact
+                                could be significant. Users are advised to take immediate specific action to
+                                contain the impact. Example: 'MSBlaster' worm outbreak.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id='orange'>---</td>
+                            <td>A major disruption in connectivity is imminent or in progress. Examples:
+                                Code Red on its return, and SQL Slammer worm during its first half day
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id='red'>---</td>
+                            <td>Loss of connectivity across a large part of the internet.</td>
+                        </tr>
+                    </tbody>
+                </div>
             </div>
             <div class="inner graph" id="categorias-frecuentes"></div>
             <div class="inner numero texto" id="ataques-bloqueados">
