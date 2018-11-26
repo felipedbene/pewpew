@@ -1,4 +1,4 @@
-My task:
+ShowRoom:
   ✔ Modo DEMO 26/11/2018: @done(18-11-26 10:48)
     ✔ Criar JS demo @done(18-11-26 10:48)
     ✔ Criar HTML separado: @done(18-11-26 10:47)
@@ -8,10 +8,16 @@ My task:
       ✔ Tela 4 @done(18-11-26 10:47)
   Botar Valores com *erro* em arquivo log:
     ☐ Aprender como fazer para escrever em arquivo por JS
-  Fazer snippet:
-    ☐ Em apartado erros
-    ☐ Sempre que escrever no console "true"
-  ☐ Descentralizar configurações
+    Fazer snippet:
+      ☐ Em apartado erros
+      ☐ Sempre que escrever no console "true"
+  ✔ Descentralizar configurações @done(18-11-26 12:40)
+  Dashboard:
+    Termômetro:
+    Gráficos:
+
+    Investigar Bibliotecas
+
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
   ✔ Consertar Parser 2 Json @done(18-11-20 15:46) @project(My task)
