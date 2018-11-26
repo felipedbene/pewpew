@@ -89,7 +89,6 @@ def xmlParser(file=''):
 
     campi = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
-    # TODO Ler lista Felipe
     campusDevice = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
     notFound = set()

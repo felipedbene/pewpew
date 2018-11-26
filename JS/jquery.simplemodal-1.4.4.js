@@ -378,7 +378,6 @@
                 s.setContainerDimensions();
                 s.d.data.appendTo(s.d.wrap);
 
-                // fix issues with IE
                 if (browser.ie6 || browser.ieQuirks) {
                     s.fixIE();
                 }
@@ -515,7 +514,6 @@
                 }, 10);
             },
             getDimensions: function() {
-                // fix a jQuery bug with determining the window height - use innerHeight if available
                 var s = this,
                     h = typeof window.innerHeight === 'undefined' ? wndw.height() : window.innerHeight;
 
