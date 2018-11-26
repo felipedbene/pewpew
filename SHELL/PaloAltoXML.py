@@ -85,10 +85,6 @@ def xmlParser(file=''):
 
     paises = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/country_centroids_primary.csv'),sep='\t')
 
-    # campi = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec _copy.csv'))
-
-    campi = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
-
     campusDevice = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
 
     notFound = set()
