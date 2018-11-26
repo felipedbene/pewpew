@@ -21,4 +21,37 @@ Project:
   ☐ Aprender Django
   Implementar Django:
     ☐ Bases de Dados
+-----------------------------------------------------------------------------------
+  Junta:
+    Tareas:
+      ☐ *Hacer cambios a los viernes después de las 16h*
 
+      @Felipe:
+        ☐ Autorización (Cambiar) 
+        Basura panorama:
+          ☐ Campos mal mapeados
+        ☐ Entregar el motivo de problemas con el código
+        ☐ Entrega de la revisión del dashboard v2 04/12 (avances)
+        
+    
+      @Gabriel + @Felipe:
+        ☐ Arrancar desde la BIOS a los lunes por la mañana
+        ☐ Creación de scripts de mantenimiento
+      @Gabriel: 
+        ✔ Últimas 3 hrs. <--- (Solución: Hard Code) @done(18-11-26 16:08)
+        ☐ Revisar cortes del mapa -> Viernes 30/11 
+          ☐ (Solución: Reajustar divs para pantalla)
+        ☐ Cron job apagar pantalla viernes 6pm @started(18-11-26 16:12)
+        ✔ Checar disponibilidad de horarios para venir al Tec @started(18-11-26 16:12) @done(18-11-26 16:41) @lasted(29m56s)
+        Errores en pantalla:
+            ✘ pip3 @cancelled(18-11-26 16:11)
+            chromium:
+              ☐ investigar soft shutdown chromium
+            ☐ Troubleshooting guide (documentación)
+      @Grecia + @Pablo:
+        ☐ Qué hacer en caso de que solo se presenten ataques DEL Tec (?)
+        ☐ Wifi desconecta
+        Investigación:
+          ☐ Se requiere nodo?
+    
+        
