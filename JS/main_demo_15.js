@@ -36,14 +36,8 @@ var len = 0;
 var debug = false;
 var queue = 50;
 var show_time = true;
-var show_console = true;
 var estatico = false;
 var demo = true;
-
-if (!show_console) {
-    var tmp = document.getElementById('attackdiv')
-    tmp.style.visibility = 'hidden';
-}
 
 //~ Timer
 var timer = function (name) {
@@ -198,7 +192,7 @@ var attacks = {
         // $('#attackdiv').html('')
         $('#attackdiv').append("<h1>Loading...</h1><br/>");
 
-        readTextFile("XML/LastHour_15min.json", function (text) {
+        readTextFile(documento, function (text) {
             var data = JSON.parse(text);
 
             log = data
@@ -214,9 +208,9 @@ var attacks = {
 
     getData: function () {
         var self = this;
-        if (debug)
+        if (debug) 
             var t = timer("Loop " + count);
-
+        
         //<Parte Gabo>
         var a = log[count];
 
@@ -318,8 +312,7 @@ var attacks = {
             setTimeout(function () {
                 //~ $('#attackdiv').html('Loading')
                 count = 0;
-                // log = [];
-                // location.reload();
+                // log = []; location.reload();
                 attacks.init();
             }, time);
             //location.reload();
