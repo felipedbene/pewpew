@@ -1,11 +1,21 @@
 My task:
-  ✔ Consertar Parser 2 Json @done(18-11-20 15:46)
-  ✔ Criar excessões @done(18-11-20 15:46)
-  ☐ Botar Valores com *erro* em arquivo log
+  Modo DEMO 26/11/2018:
+    ☐ Criar JS demo
+    Criar HTML separado:
+      ☐ Tela 1
+      ☐ Tela 2
+      ☐ Tela 3
+      ☐ Tela 4
+  Botar Valores com *erro* em arquivo log:
+    ☐ Aprender como fazer para escrever em arquivo por JS
+  Fazer snippet:
+    ☐ Em apartado erros
+    ☐ Sempre que escrever no console "true"
   ☐ Descentralizar configurações
-  
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Consertar Parser 2 Json @done(18-11-20 15:46) @project(My task)
+  ✔ Criar excessões @done(18-11-20 15:46) @project(My task)
   ✔ Logos parte superior @done(2018-10-17 15:00) @project(My task)
   ✔ Conseguir imágenes - Grecia @done(2018-10-17 15:00) @project(My task)
   ✔ Ajustar Texto - Agregar 'Sistema' @done(2018-10-17 14:16) @project(My task)
