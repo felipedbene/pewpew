@@ -17,8 +17,8 @@ img.cliente {
 .global_map {
   position: absolute;
   top: 20%;
-  left: 0%;
-  right: 0%;
+  left: 0;
+  right: 0;
   bottom: 5%;
   z-index: 1;
   /* background-color: red; */
@@ -35,24 +35,24 @@ img.cliente {
 
 .subheader {
   position: absolute;
-  top: 3vw;
-  left: 0%;
-  right: 0%;
+  bottom: 77vh;
+  left: 0;
+  right: 0;
   z-index: 2;
   width: 100%;
   text-align: center;
-  font-size: 1.75vw;
+  font-size: 2em;
   background-color: transparent;
 }
 
 .timer {
   color: white;
   position: absolute;
-  bottom: 0vw;
+  bottom: 0;
   right: 0.5vw;
   width: auto;
   /* background-color: green; */
-  font-size: 3vw;
+  font-size: 10vh;
   z-index: 3;
   font-family: arial;
 }
@@ -60,18 +60,18 @@ img.cliente {
 .attack_console {
   position: absolute;
   /* background-color: orange; */
-  height: 30vw;
+  height: 55vh;
   width: 20.5vw;
-  bottom: -1vw;
+  bottom: 0;
   left: 1vw;
   z-index: 3;
-  font-size: 1.5vw;
+  font-size: 1.6em;
   color: white;
   overflow-y: auto;
 }
 
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 0;
   background: transparent;
   /* make scrollbar transparent */
 }
@@ -87,21 +87,21 @@ img.cliente {
 img {
   height: inherit;
 }
-.cliente1{
+.cliente1 {
   left: 0;
 }
-.cliente4{
+.cliente4 {
   right: 0;
 }
-.cliente2{
+.cliente2 {
   left: 30%;
 }
-.cliente3{
+.cliente3 {
   top: -1.5vw;
   height: 8vw;
   right: 22%;
   width: auto;
 }
-.logo{
+.logo {
   position: absolute;
 }
