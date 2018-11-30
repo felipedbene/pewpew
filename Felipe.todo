@@ -1,17 +1,37 @@
 GUI:
-    ✔ Tirar hora console e botar no REAL TIME @done(18-11-30 12:28)
-    ✔ Consertar string hora @done(18-11-30 12:34)
-    ✔ Consertar String HRAS. @done(18-11-30 12:32)
-    ✔ Mapa cortado @started(18-11-30 12:36) @done(18-11-30 12:40) @lasted(4m12s)
-    ✔ Primeira letra Dia semana Mayuscula @done(18-11-30 12:32)
-    ✔ Tamanho 15min hora @done(18-11-30 12:36)
+    ☐ Meter json final ao .html 
+
 PaloAltoXML.py:
-    ☐ Tirar fixTime() [1,2]
-    ☐ Arrumar query
+    ☐ Arrumar query @high
     ☐ Switch em caso de não ter nenhum ataque (0 logs)
-    ☐ Deletar JSON
+        ☐ Qué hacer? @project(Decisiones) @high 
+    ☐ Deletar JSON (seguro?)
+        ☐ Consertar pantallas erro (Texto vermelho) @project(GUI)
+    ☐ Pasar a .py
+
+Decisiones: 
+    ☐ Em caso de 0 logs @Juan @Pablo
+
 GIT:
-    ✔ Controle git sem quebrar telas @done(18-11-30 12:19)
-        1 html para cada tela
-Decisiones:
-    ☐ Em caso de 0 logs @Juan
+    ☐ Merge Demo/release -> master @critical 
+
+------------------------------------------
+Archive:
+  ✔ Pedir query a Felipe @done(18-11-30 13:09) @project(PaloAltoXML.py)
+  ✔ Deleter parte de filtro origin @done(18-11-30 13:19) @project(PaloAltoXML.py)
+  ✔ Mudar o html que inicia em cada arranque @critical @started(18-11-30 13:49) @done(18-11-30 14:11) @lasted(22m48s) @project(Pantallas)
+  ✔ 1 @started(18-11-30 13:49) @done(18-11-30 14:11) @lasted(22m43s) @project(Pantallas)
+  ✔ 2 @done(18-11-30 14:11) @project(Pantallas)
+  ✔ 3 @done(18-11-30 14:11) @project(Pantallas)
+  ✔ 4 @done(18-11-30 14:11) @project(Pantallas)
+  ✔ Adicionar main_slave no autostart @critical @started(18-11-30 13:22) @done(18-11-30 14:11) @lasted(49m54s) @project(Pantallas)
+  ✔ Timeout 60s @done(18-11-30 12:50) @project(PaloAltoXML.py)
+  ✔ Tirar hora console e botar no REAL TIME @done(18-11-30 12:28) @project(GUI)
+  ✔ Consertar string hora @done(18-11-30 12:34) @project(GUI)
+  ✔ Consertar String HRAS. @done(18-11-30 12:32) @project(GUI)
+  ✔ Mapa cortado @started(18-11-30 12:36) @done(18-11-30 12:40) @lasted(4m12s) @project(GUI)
+  ✔ Primeira letra Dia semana Mayuscula @done(18-11-30 12:32) @project(GUI)
+  ✔ Tamanho 15min hora @done(18-11-30 12:36) @project(GUI)
+  ✔ Tirar fixTime @done(18-11-30 12:49) @project(PaloAltoXML.py)
+  ✔ Controle git sem quebrar telas @done(18-11-30 12:19) @project(GIT)
+    1 html para cada tela
