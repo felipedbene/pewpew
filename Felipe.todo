@@ -1,0 +1,17 @@
+GUI:
+    ✔ Tirar hora console e botar no REAL TIME @done(18-11-30 12:28)
+    ✔ Consertar string hora @done(18-11-30 12:34)
+    ✔ Consertar String HRAS. @done(18-11-30 12:32)
+    ✔ Mapa cortado @started(18-11-30 12:36) @done(18-11-30 12:40) @lasted(4m12s)
+    ✔ Primeira letra Dia semana Mayuscula @done(18-11-30 12:32)
+    ✔ Tamanho 15min hora @done(18-11-30 12:36)
+PaloAltoXML.py:
+    ☐ Tirar fixTime() [1,2]
+    ☐ Arrumar query
+    ☐ Switch em caso de não ter nenhum ataque (0 logs)
+    ☐ Deletar JSON
+GIT:
+    ✔ Controle git sem quebrar telas @done(18-11-30 12:19)
+        1 html para cada tela
+Decisiones:
+    ☐ Em caso de 0 logs @Juan

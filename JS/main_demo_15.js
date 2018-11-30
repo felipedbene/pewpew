@@ -19,7 +19,7 @@ function startTime() {
         day: 'numeric'
     };
     var horaMexico = event.toLocaleTimeString('es-MX', options)
-
+    horaMexico = horaMexico[0].toUpperCase() + horaMexico.slice(1)
     document
         .getElementById('container2')
         .innerHTML = horaMexico;
@@ -35,7 +35,7 @@ var time = 500;
 var len = 0;
 var debug = false;
 var queue = 50;
-var show_time = true;
+var show_time = false;
 var estatico = false;
 var demo = true;
 
