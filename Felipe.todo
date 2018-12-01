@@ -1,13 +1,13 @@
 GUI:
-    ☐ Meter json final ao .html 
+    ☐ Meter json final ao .html @low 
 
 PaloAltoXML.py:
-    ☐ Arrumar query @high
-    ☐ Switch em caso de não ter nenhum ataque (0 logs)
+    ✔ Arrumar query @high @done(18-11-30 17:44)
+    ✔ Switch em caso de não ter nenhum ataque (0 logs) @done(18-11-30 18:33)
         ☐ Qué hacer? @project(Decisiones) @high 
     ☐ Deletar JSON (seguro?)
         ☐ Consertar pantallas erro (Texto vermelho) @project(GUI)
-    ☐ Pasar a .py
+    ✔ Pasar a .py @done(18-11-30 18:33)
 
 Decisiones: 
     ☐ Em caso de 0 logs @Juan @Pablo

@@ -60,92 +60,91 @@ def xmlParser(file=''):
     reform = a['response']['result']['log']
     a = pd.DataFrame(reform)
 
-    # total = a['logs']['@count']
-    reform = a['logs']['entry']
-    df = pd.DataFrame(reform)
+    total = a['logs']['@count']
+    print('{} Logs encontrados'.format(total))
+    if(int(total) != 0):
 
-    df = df[['direction','device_name','time_generated',"src",'srcloc','dst','dstloc','subtype','threatid','severity']]
-    df['srcname'] = ''
-    df['srclat'] = ''
-    df['srclong'] = ''
-    df['dstname'] = ''
-    df['dstlat'] = ''
-    df['dstlong'] = ''
-    df['src_alpha2'] = ''
-    df['dst_alpha2'] = ''
-    df['color_ataque'] = ''
 
-    for idx,i in enumerate(df['dstloc']):
-        df['dst_alpha2'][idx] = i['@cc']
-    for idx,i in enumerate(df['srcloc']):
-        df['src_alpha2'][idx] = i['@cc']
-    for idx in range(len(df)):
-        df.iloc[idx]['color_ataque'] = color_code[df.iloc[idx]['severity']]
-    
+        reform = a['logs']['entry']######
+        df = pd.DataFrame(reform)
 
-    paises = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/country_centroids_primary.csv'),sep='\t')
+        df = df[['direction','device_name','time_generated',"src",'srcloc','dst','dstloc','subtype','threatid','severity']]
+        df['srcname'] = ''
+        df['srclat'] = ''
+        df['srclong'] = ''
+        df['dstname'] = ''
+        df['dstlat'] = ''
+        df['dstlong'] = ''
+        df['src_alpha2'] = ''
+        df['dst_alpha2'] = ''
+        df['color_ataque'] = ''
 
-    campusDevice = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
-
-    notFound = set()
-    for idx in range(len(df)):
-        """Nota Gabriel:
-            Para esa parte del código, haremos una modificación en caso de que 
-            tenga el Tec como fuente de ataques. Si es el caso, pondremos el 
-            valor encontrado como fuente y el otro como destino.
-        """
+        for idx,i in enumerate(df['dstloc']):
+            df['dst_alpha2'][idx] = i['@cc']
+        for idx,i in enumerate(df['srcloc']):
+            df['src_alpha2'][idx] = i['@cc']
+        for idx in range(len(df)):
+            df.iloc[idx]['color_ataque'] = color_code[df.iloc[idx]['severity']]
         
-        # Source
-        try:
-                # Checa si el origen es un pais
-            tmp = paises[paises['FIPS10'] == df.iloc[idx]['src_alpha2']] # Intenta con un campo de CSV
-            if len(tmp) == 0: # Intenta con otro campo
-                tmp = paises[paises['ISO3136'] == df.iloc[idx]['src_alpha2']]
-            if len(tmp) != 0: # Si encontró un pais...
-                df.iloc[idx]['srclat'] = tmp['LAT'].values[0]
-                df.iloc[idx]['srclong'] = tmp['LONG'].values[0]
-                df.iloc[idx]['srcname'] = tmp['SHORT_NAME'].values[0]
-            else: # Si no encuentra, la fuente es un campus (Pondremos como MTY el default)
-                tmp = campusDevice[campusDevice['Device'] == 'CP-MTY-1']
-                notFound.add(idx)
-                print('src MTY:',idx)
-                df.iloc[idx]['srclat'] = tmp['latitud'].values[0]
-                df.iloc[idx]['srclong'] = tmp['longitud'].values[0]
-                df.iloc[idx]['srcname'] = tmp['Nombre'].values[0]
-        except Exception as e:
-            notFound.add(idx)
-            print('source:',idx,e)
-        # Destiny
-        try:
-                # Checa si el destino es un pais
-            tmp = paises[paises['FIPS10'] == df.iloc[idx]['dst_alpha2']] # Intenta con un campo de CSV
-            if len(tmp) == 0: # Intenta con otro campo
-                tmp = paises[paises['ISO3136'] == df.iloc[idx]['dst_alpha2']]
-            if len(tmp) != 0: # Si encontró un pais...
-                df.iloc[idx]['dstlat'] = tmp['LAT'].values[0]
-                df.iloc[idx]['dstlong'] = tmp['LONG'].values[0]
-                df.iloc[idx]['dstname'] = tmp['SHORT_NAME'].values[0]
-            else: # Si no encuentra, el destino es un campus (Tabla Felipe)
-                tmp = campusDevice[campusDevice['Device'] == df.iloc[idx]['device_name']]
-                if len(tmp) == 0: # Si no encuentra, pondremos como MTY el default
-                    notFound.add(idx)
-                    print('dst MTY:',idx)   
-                    tmp = campusDevice[campusDevice['Device'] == 'CP-MTY-1'] 
-                df.iloc[idx]['dstlat'] = tmp['latitud'].values[0]
-                df.iloc[idx]['dstlong'] = tmp['longitud'].values[0]
-                df.iloc[idx]['dstname'] = tmp['Nombre'].values[0]
 
-        except Exception as e:
-#             notFound.add(idx)
-            print('destiny:',idx,e)   
-    
-    df.drop(columns=['srcloc','dstloc'],inplace=True)
-    
-    df = df[~df.index.isin(list(notFound))]
-    df.reset_index(drop=True, inplace=True)
-    df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
-    
-    return df
+        paises = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/country_centroids_primary.csv'),sep='\t')
+
+        campusDevice = pd.read_csv(os.path.expanduser('~/NorsePi/CSV/GPSTec.csv'))
+
+        notFound = set()
+        for idx in range(len(df)):
+            """Nota Gabriel:
+                Para esa parte del código, haremos una modificación en caso de que 
+                tenga el Tec como fuente de ataques. Si es el caso, pondremos el 
+                valor encontrado como fuente y el otro como destino.
+            """
+            
+            # Source
+            try:
+                    # Checa si el origen es un pais
+                tmp = paises[paises['FIPS10'] == df.iloc[idx]['src_alpha2']] # Intenta con un campo de CSV
+                if len(tmp) == 0: # Intenta con otro campo
+                    tmp = paises[paises['ISO3136'] == df.iloc[idx]['src_alpha2']]
+                if len(tmp) != 0: # Si encontró un pais...
+                    df.iloc[idx]['srclat'] = tmp['LAT'].values[0]
+                    df.iloc[idx]['srclong'] = tmp['LONG'].values[0]
+                    df.iloc[idx]['srcname'] = tmp['SHORT_NAME'].values[0]
+            except Exception as e:
+                notFound.add(idx)
+                print('source:',idx,e)
+            # Destiny
+            try:
+                    # Checa si el destino es un pais
+                tmp = paises[paises['FIPS10'] == df.iloc[idx]['dst_alpha2']] # Intenta con un campo de CSV
+                if len(tmp) == 0: # Intenta con otro campo
+                    tmp = paises[paises['ISO3136'] == df.iloc[idx]['dst_alpha2']]
+                if len(tmp) != 0: # Si encontró un pais...
+                    df.iloc[idx]['dstlat'] = tmp['LAT'].values[0]
+                    df.iloc[idx]['dstlong'] = tmp['LONG'].values[0]
+                    df.iloc[idx]['dstname'] = tmp['SHORT_NAME'].values[0]
+                else: # Si no encuentra, el destino es un campus (Tabla Felipe)
+                    tmp = campusDevice[campusDevice['Device'] == df.iloc[idx]['device_name']]
+                    if len(tmp) == 0: # Si no encuentra, pondremos como MTY el default
+                        notFound.add(idx)
+                        print('dst MTY:',idx)   
+                        tmp = campusDevice[campusDevice['Device'] == 'CP-MTY-1'] 
+                    df.iloc[idx]['dstlat'] = tmp['latitud'].values[0]
+                    df.iloc[idx]['dstlong'] = tmp['longitud'].values[0]
+                    df.iloc[idx]['dstname'] = tmp['Nombre'].values[0]
+
+            except Exception as e:
+    #             notFound.add(idx)
+                print('destiny:',idx,e)   
+        
+        df.drop(columns=['srcloc','dstloc'],inplace=True)
+        
+        df = df[~df.index.isin(list(notFound))]
+        df.reset_index(drop=True, inplace=True)
+        df.to_json(os.path.expanduser('~/NorsePi/XML/LastHour.json'),orient='index')
+        
+        return df
+    else:
+        print('TBD')
 
 
 # In[3]:
@@ -155,8 +154,8 @@ def getJob(firewall, token, maxlogs, N=15):
     print('Getting last {} minutes job...'.format(N))
     last_hour_date_time = datetime.now() - timedelta(minutes = N)
     last_hour_date_time = last_hour_date_time.strftime('%Y/%m/%d %H:%M:%S')
-    query="(receive_time geq '{}')".format(last_hour_date_time)
-    # print(query)
+    query="(receive_time geq '{}' and !( addr.src in 10.0.0.0/8  ))".format(last_hour_date_time)
+    print(query)
     url = "https://{}/api/".format(firewall)
     querystring = {"type":"log",
                    "log-type":"threat",
@@ -269,7 +268,7 @@ def fixTime2(df:pd.DataFrame,tiempoMin=15):
 if __name__ == '__main__':
     print(sys.argv)
     urllib3.disable_warnings()
-    firewall='10.4.29.122'
+    firewall='10.2.8.121'
     maxlogs=[x for x in sys.argv if 'maxlogs' in x]
     if len(maxlogs) == 0:
         maxlogs = 1000
@@ -278,7 +277,7 @@ if __name__ == '__main__':
         maxlogs = int(maxlogs.split('=')[-1])
     tiempo=[x for x in sys.argv if 'tiempo' in x]
     if len(tiempo) == 0:
-        tiempo = 150
+        tiempo = 15
     else:
         tiempo = tiempo[0]
         tiempo = int(tiempo.split('=')[-1])
