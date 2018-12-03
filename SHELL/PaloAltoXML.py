@@ -220,7 +220,6 @@ if __name__ == '__main__':
     tiempo = getSetTime(5)
     token = getToken(tokenFile)
     # Start do stuff
-
     # Get JobID
     job = getJob(firewall,token,maxlogs,N=tiempo)
 
