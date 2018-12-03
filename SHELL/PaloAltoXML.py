@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import configparser
+import ConfigParser
 import os
 import random
 import sys
