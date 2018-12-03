@@ -232,11 +232,12 @@ if __name__ == '__main__':
         threats = getThreats(firewall,token,job,maxlogs)
         
         # Write all to DB in one shot
-        newThreats = len(threats)
-        print("Writing " + str(newThreats) + " to DB.")
-        if newThreats > 0 :
-            writeToDB(threats)
-        else :
+        try :
+            newThreats = len(threats)
+            print("Writing " + str(newThreats) + " to DB.")
+            if newThreats > 0 :
+                writeToDB(threats)
+        except :
             print("Not writing to DB, no new data")
     
     else :
