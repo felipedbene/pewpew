@@ -1,24 +1,22 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from datetime import datetime, timedelta
-import urllib3
-import numpy as np
-import requests
-import time
+import configparser
+import os
 import random
 import sys
-import xmltodict
-import os
-import pandas as pd
-import configparser
-from sqlalchemy import create_engine
-import sqlalchemy
-import pandas as pd
-import os
+import time
 from datetime import datetime, timedelta
+
+import numpy as np
+import pandas as pd
 import pgcli as psycopg2
+import requests
+import sqlalchemy
+import urllib3
+import xmltodict
 from dateutil import parser
+from sqlalchemy import create_engine
 
 # In[2]:
 
@@ -57,7 +55,8 @@ def getJob(firewall, token, maxlogs, N=15):
     try :    
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
     except :
-        print("I couldn't schedule the job !")
+        print("I couldn't schedule the first job, quitting !")
+        return False
 
     xml = response.text
     jsonDict = xmltodict.parse(xml)
@@ -66,10 +65,6 @@ def getJob(firewall, token, maxlogs, N=15):
     print('Finished.')
     print('#job:{}'.format(job))
     return job
-
-
-# In[4]:
-
 
 def waitXML(firewall, token, job, maxlogs,timeout=60):
     print('Waiting for XML...')
@@ -92,24 +87,23 @@ def waitXML(firewall, token, job, maxlogs,timeout=60):
     while jobstatus != 'FIN' and datetime.now() < a:
         try :
             response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
+            xml = response.text
+            jsonDict = xmltodict.parse(xml)
+
+            resultstatus = jsonDict["response"]["@status"]
+            if resultstatus == "success" :
+                jobstatus = jsonDict["response"]["result"]["job"]["status"]
+                print( "Status:" + str(jobstatus) )
+            else :
+                jobstatus = "fail"
+                return False
+
+            time.sleep(1)
+            if datetime.now() > a:
+                print('Timeout Error!')
+                return False
         except :
-            print("Couldn't get job status")
-            
-        xml = response.text
-        jsonDict = xmltodict.parse(xml)
-
-        resultstatus = jsonDict["response"]["@status"]
-        if resultstatus == "success" :
-            jobstatus = jsonDict["response"]["result"]["job"]["status"]
-            print( "Status:" + str(jobstatus) )
-        else :
-            jobstatus = "fail"
-            return False
-
-        time.sleep(1)
-        if datetime.now() > a:
-            print('Timeout Error!')
-            return True
+            print("Couldn't get job status") 
     print('Status:%\t{}'.format(jobstatus))
     
     #Last get to the get the results:
@@ -117,9 +111,9 @@ def waitXML(firewall, token, job, maxlogs,timeout=60):
 
     return True
 
-def writeToDB(entry):
+def getDBEngine() :
     # Getting requirements
-    config = configparser.ConfigParser()
+    config = configparser.ConfigParser()    # Getting requirements
 
     # Reading config file
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
@@ -133,8 +127,12 @@ def writeToDB(entry):
 
     engine = create_engine('postgres://' + dbUser + ':' + dbPass + "@" + dbHost+ ":"+ dbPort +"/"+ dbName)
     
+    return engine
+
+def writeToDB(entry):
+    engine = getDBEngine()
+    
     #read what is already there
-    db = pd.read_sql("events",con=engine)
     df = pd.DataFrame.from_dict(entry)
     df3 = df[ ["srcloc",'@logid'] ]
     
@@ -143,9 +141,18 @@ def writeToDB(entry):
    
     df2 = df[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid']]
     df4 = pd.concat( [df2,df3],axis=1 )
-#    df5 = pd.concat(df4,db)
-#    df5.drop_duplicates(subset=['src','threatid','time_generated'])
-    df4.to_sql(name="events",con=engine,schema="public",if_exists="replace",index=True)
+    df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=True)
+
+def removeDup() :
+    engine = getDBEngine()
+    # sorting 
+    data = pd.read_sql("events",con=engine)
+    data.sort_values("time_received", inplace = False, ascending=False)
+    data.drop_duplicates(subset = ["time_received","threatid","src","dst"], keep = False, inplace = False)
+
+    #data.to_sql(name="events",con=engine,schema="public",if_exists="replace",index=False)
+    #print(data)
+
 
 
 def getThreats(firewall, token, job, maxlogs):
@@ -181,25 +188,13 @@ def getThreats(firewall, token, job, maxlogs):
     return threats
     print('Finished.')
 
-
-
-
 def timeRandom(tiempo):
     ahora = datetime.now()
     randomTime = timedelta(seconds = random.uniform(0, tiempo*60))
     return ahora - randomTime
 
-
-# In[7]:
-
-
-def stringify(tiempo):
-    return tiempo.strftime('%Y-%m-%d %H:%M:%S')
-
-
 def getSetTime(tiempo = 150):
     return str(tiempo)
-
 
 def getToken(tokenFile):
     with open(tokenFile,'r') as file:
@@ -221,7 +216,7 @@ if __name__ == '__main__':
     tokenFile=os.path.expanduser(config["DEFAULT"]["tokenFile"])
 
     #Calculate remaing Parameters
-    tiempo = getSetTime(15)
+    tiempo = getSetTime(5)
     token = getToken(tokenFile)
     # Start do stuff
 
@@ -231,11 +226,20 @@ if __name__ == '__main__':
     #Send the job and wait it to get done
     if waitXML(firewall,token,job,maxlogs) :
         print ("Done waiting :)")
-        
+
         #This is the sucess part to finally get the results
         threats = getThreats(firewall,token,job,maxlogs)
         
         # Write all to DB in one shot
-        writeToDB(threats)
+        newThreats = len(threats)
+        print("Writing " + str(newThreats) + " to DB.")
+        if newThreats > 0 :
+            writeToDB(threats)
+        else :
+            print("Not writing to DB,no new data")
+    
     else :
-        print("Fail to get XML: Job failed")
+        print("Fail to get XML: Job failed !!!")
+    
+    #Remove Duplicates from Database
+    removeDup()
