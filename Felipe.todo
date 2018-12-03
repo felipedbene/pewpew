@@ -2,12 +2,9 @@ GUI:
     ☐ Meter json final ao .html @low 
 
 PaloAltoXML.py:
-    ✔ Arrumar query @high @done(18-11-30 17:44)
-    ✔ Switch em caso de não ter nenhum ataque (0 logs) @done(18-11-30 18:33)
         ☐ Qué hacer? @project(Decisiones) @high 
     ☐ Deletar JSON (seguro?)
         ☐ Consertar pantallas erro (Texto vermelho) @project(GUI)
-    ✔ Pasar a .py @done(18-11-30 18:33)
 
 Decisiones: 
     ☐ Em caso de 0 logs @Juan @Pablo
@@ -17,6 +14,9 @@ GIT:
 
 ------------------------------------------
 Archive:
+  ✔ Arrumar query @high @done(18-11-30 17:44) @project(PaloAltoXML.py)
+  ✔ Switch em caso de não ter nenhum ataque (0 logs) @done(18-11-30 18:33) @project(PaloAltoXML.py)
+  ✔ Pasar a .py @done(18-11-30 18:33) @project(PaloAltoXML.py)
   ✔ Pedir query a Felipe @done(18-11-30 13:09) @project(PaloAltoXML.py)
   ✔ Deleter parte de filtro origin @done(18-11-30 13:19) @project(PaloAltoXML.py)
   ✔ Mudar o html que inicia em cada arranque @critical @started(18-11-30 13:49) @done(18-11-30 14:11) @lasted(22m48s) @project(Pantallas)
