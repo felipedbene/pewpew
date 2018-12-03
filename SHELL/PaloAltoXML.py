@@ -141,7 +141,9 @@ def writeToDB(entry):
    
     df2 = df[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid']]
     df4 = pd.concat( [df2,df3],axis=1 )
+    df4['time_received'] =  pd.to_datetime(df4.time_received)
     df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=True)
+    return df4
 
 def removeDup() :
     engine = getDBEngine()
@@ -234,8 +236,9 @@ if __name__ == '__main__':
             print("Writing " + str(newThreats) + " to DB.")
             if newThreats > 0 :
                 writeToDB(threats)
-        except :
+        except Exception as e:
             print("Not writing to DB, no new data")
+            print(e)
     
     else :
         print("Fail to get XML: Job failed !!!")
