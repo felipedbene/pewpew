@@ -157,7 +157,7 @@ def removeDup() :
 
 def getThreats(firewall, token, job, maxlogs):
     print('Getting XML...')
-    threats = None
+    threats = {}
     url = "https://{}/api/".format(firewall)
     querystring = {"type":"log",
                    "action":"get",
@@ -183,7 +183,8 @@ def getThreats(firewall, token, job, maxlogs):
         threats = jsonDict["response"]["result"]["log"]["logs"]["entry"]
                               
     else :
-        print("No threats for now")
+        print("No new threats for now")
+        
 
     return threats
     print('Finished.')
@@ -236,7 +237,7 @@ if __name__ == '__main__':
         if newThreats > 0 :
             writeToDB(threats)
         else :
-            print("Not writing to DB,no new data")
+            print("Not writing to DB, no new data")
     
     else :
         print("Fail to get XML: Job failed !!!")
