@@ -149,7 +149,6 @@ def removeDup() :
     data = pd.read_sql("events",con=engine)
     data.sort_values("time_received", inplace = False, ascending=False)
     data.drop_duplicates(subset = ["time_received","threatid","src","dst"], keep = False, inplace = False)
-
     data.to_sql(name="events",con=engine,schema="public",if_exists="replace",index=False)
     #print(data)
 
