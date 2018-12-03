@@ -18,21 +18,12 @@ import os
 from datetime import datetime, timedelta
 import pgcli as psycopg2
 from dateutil import parser
-
+import configparser
 
 # # Read JSON
 
 # In[2]:
 
-
-def readJSON(path:str='~/NorsePi/XML/LastHour.json'):
-    df = pd.read_json(os.path.expanduser(path),orient='index')
-    return df
-
-
-# # Read DB
-
-# In[3]:
 
 
 def readDB(engine,table:str='AtaquesTec'):
@@ -155,19 +146,24 @@ def elimDup(df:pd.DataFrame,columns:list=['src','threatid','time_generated']):
 # In[20]:
 
 
-if __name__ == '__main__':
-    engine = create_engine('postgres://dashboard:U7h2cQ73JH@localhost:5432/logs')
-#     engine = create_engine('postgres://postgres:Microplus@localhost:5432/postgres', echo=False)
-    json = readJSON()
-    try:
-        db = readDB(engine,'tec')
-    except:
-        db = pd.DataFrame() #En caso de que no haya nada o la tabla no exista, olvidar ese paso. 
-            #En cualquier otro caso, poner tabla nueva
-    df = concat(db,json)
-    df = fixDate(df)
-    df = elimDup(df)
-    df = sortDate(df)
-    df = fixDate(df)
-    overDB(df,engine,'tec')
+
+def writeToDB(entry):
+    # Getting requirements
+    config = configparser.ConfigParser()
+
+    # Reading config file
+    config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
+
+    #Setting Parameters based on the config files
+    dbName = config["DB"]['dbName']
+    dbUser= config["DB"]['dbUser']
+    dbPass= config["DB"]['dbPass']
+    dbHost= config["DB"]['dbHost']
+    dbPort= config["DB"]['dbPort']
+
+    engine = create_engine('postgres://' + dbUser + ':' + dbPass + "@" + dbHost+ ":"+ dbPort +"/"+ dbName)
+    db = readDB(engine,'tec')
+    df = pd.DataFrame.from_dict(entry)
+    df.to_sql(name="events",con=engine,if_exists='replace',index=False)
+
 
