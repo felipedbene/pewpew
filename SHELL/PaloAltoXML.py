@@ -142,15 +142,15 @@ def writeToDB(entry):
     df2 = df[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid']]
     df4 = pd.concat( [df2,df3],axis=1 )
     df4['time_received'] =  pd.to_datetime(df4.time_received)
-    df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=True)
-    return df4
+    df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
+    #return df4
 
 def removeDup() :
     engine = getDBEngine()
     # sorting 
     data = pd.read_sql("events",con=engine)
-    data.sort_values("time_received", inplace = False, ascending=False)
-    data.drop_duplicates(subset = ["time_received","threatid","src","dst"], keep = False, inplace = False)
+    data.sort_values("time_received", inplace = True, ascending=True)
+    data.drop_duplicates(subset = ["time_received","threatid","src","dst"], keep = 'first', inplace = True)
     data.to_sql(name="events",con=engine,schema="public",if_exists="replace",index=False)
     #print(data)
 
@@ -189,11 +189,6 @@ def getThreats(firewall, token, job, maxlogs):
 
     return threats
 
-def timeRandom(tiempo):
-    ahora = datetime.now()
-    randomTime = timedelta(seconds = random.uniform(0, tiempo*60))
-    return ahora - randomTime
-
 def getSetTime(tiempo = 150):
     return str(tiempo)
 
@@ -217,7 +212,10 @@ if __name__ == '__main__':
     tokenFile=os.path.expanduser(config["DEFAULT"]["tokenFile"])
 
     #Calculate remaing Parameters
-    tiempo = getSetTime(5)
+    try :
+        tiempo = getSetTime(sys.argv[1])
+    except :
+        tiempo = getSetTime(15)
     token = getToken(tokenFile)
     # Start do stuff
     # Get JobID
@@ -234,8 +232,7 @@ if __name__ == '__main__':
         try :
             newThreats = len(threats)
             print("Writing " + str(newThreats) + " to DB.")
-            if newThreats > 0 :
-                writeToDB(threats)
+            writeToDB(threats)
         except Exception as e:
             print("Not writing to DB, no new data")
             print(e)
