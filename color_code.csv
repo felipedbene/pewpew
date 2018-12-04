@@ -1,0 +1,6 @@
+severity,color
+critical,#ff4660
+high,#f48154
+medium,#d9ff7f
+low,#42ff58
+informational,#54ba8a

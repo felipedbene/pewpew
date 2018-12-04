@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 # In[48]:
@@ -21,14 +21,14 @@ if __name__ == '__main__':
     
     # Reemplazando IP en los documentos necesarios
     result = ""
-    with open(os.path.expanduser('~/NorsePi/SHELL/PaloAltoXML.py')) as f:
+    with open(os.path.expanduser('~/code/NorsePi/SHELL/PaloAltoXML.py')) as f:
         for line in f:
             if 'firewall=' in line:
                 aaa = line.split("'")
                 aaa[1] = ip
                 line = "'".join(aaa)
             result += line + '\n'
-    f = open(os.path.expanduser('~/NorsePi/SHELL/PaloAltoXML.py'),'w')
+    f = open(os.path.expanduser('~/code/NorsePi/SHELL/PaloAltoXML.py'),'w')
     f.write(result)
     f.close()
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     if 'key' in xml:
         print('Key found! Printing to hidden file...')
         Token = xml.split('key')[1].split('>')[1].split('<')[0]
-        with open(os.path.expanduser('~/NorsePi/SHELL/.tok.tmp'),'w') as file:
+        with open(os.path.expanduser('~/code/NorsePi/SHELL/.tok.tmp'),'w') as file:
             file.write(Token)
     else:
         print('key not found. Check if username and password are correct and try again')

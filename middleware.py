@@ -47,11 +47,16 @@ def events(number):
         ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False).head(number)
         country = pd.read_sql("paises",engine)
         campi = pd.read_sql("campi",engine)
+        color = pd.read_sql("color",engine)
         pslat = pd.merge(ev,country,how="inner",on=["srcloc"])
-        final = pd.merge(pslat,campi,how="inner",on=["device_name"])
-        final.drop(['level_0','index_x','@logid','srcloc','index_y','time_received','index','src','dst'],axis=1,inplace=True)
+        sincolor = pd.merge(pslat,campi,how="inner",on=["device_name"])
+        final = pd.merge(sincolor,color,how="inner",on=["severity"])
+        final.drop(['level_0','index_x','@logid','srcloc','index_y','time_received','src','dst'],axis=1,inplace=True)
     else :
-        return 0   
+        return 0
+    print(ev)
+    print(pslat)
+    print(final)
     return(final.to_json(date_format=True,orient='index'))
 
 @route('/sans/<type>')
