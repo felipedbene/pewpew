@@ -20,7 +20,7 @@ body{
 
 .wrapper, div, img{
     padding: 0;
-    border  : 1px #ccc solid;
+    /* border  : 1px #ccc solid; */
 }
 .gauge{
     flex-direction: column;
