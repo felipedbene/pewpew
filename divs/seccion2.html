@@ -7,13 +7,15 @@
         <script src="../JS/canvasjs-2.2/canvasjs.min.js"></script>
         <title>Document</title>
         <style>
-            body {
+            body, .body-wrapper {
+                display: flex;
                 background-color: black;
+                overflow: hidden;
+                height: 100vh;
+                justify-content: flex-end;
+                flex-direction: column;
             }
             .body-wrapper {
-                display: flex;
-                flex-direction: column;
-                height: 90vh;
             }
             .graph {
                 height: 100%;
