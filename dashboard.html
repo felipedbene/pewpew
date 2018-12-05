@@ -4,13 +4,26 @@
     <head>
         <meta charset="utf-8">
         <title>Microplus Attack Map</title>
-        <link rel="stylesheet" type="text/css" href="CSS/master.css">
-        <link rel="shortcut icon" href="img/tab_icon.jpg">
-        <script src="https://d3js.org/d3.v5.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="JS/justgage-1.2.2/raphael-2.1.4.min.js"></script>
-        <script src="JS/justgage-1.2.2/justgage.js"></script>
-        <script src="JS/mainGauge.js"></script>
+        <link rel="stylesheet" type="text/css" href="CSS/master.css"/>
+        <link rel="shortcut icon" href="img/tab_icon.jpg"/>
+        <style>
+            body {
+                overflow: hidden;
+            }
+            div.seccion {
+                width: 24vw;
+                height: 100%;
+            }
+            div.body.wrapper {
+                height: 90vh;
+                display: flex;
+                justify-content: center;
+            }
+            object {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
     </head>
 
     <body>
@@ -22,50 +35,19 @@
         </div>
 
         <div class="body wrapper">
-            <div class="inner gauge wrapper">
-                <div class="inner-gauge" id="gauge"></div>
-                <div class="inner-gauge table" id="gauge-tabla">
-                    <tbody>
-                        <tr>
-                            <td id='green'>---</td>
-                            <td>Everything is normal. No significant new threat known.</td>
-                        </tr>
-                        <tr>
-                            <td id='blue'>---</td>
-                            <td>This status is used for testing only. Everything is normal. No significant
-                                new threat known.</td>
-                        </tr>
-                        <tr>
-                            <td id='yellow'>---</td>
-                            <td>We are currently tracking a significant new threat. The impact is either
-                                unknown or expected to be minor to the infrastructure. However, local impact
-                                could be significant. Users are advised to take immediate specific action to
-                                contain the impact. Example: 'MSBlaster' worm outbreak.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td id='orange'>---</td>
-                            <td>A major disruption in connectivity is imminent or in progress. Examples:
-                                Code Red on its return, and SQL Slammer worm during its first half day
-                            </td>
-                        </tr>
-                        <tr>
-                            <td id='red'>---</td>
-                            <td>Loss of connectivity across a large part of the internet.</td>
-                        </tr>
-                    </tbody>
-                </div>
-            </div>
-            <div class="inner graph" id="categorias-frecuentes"></div>
-            <div class="inner numero texto" id="ataques-bloqueados">
-                <h3>Ataques bloqueados
-                    <br></h3>
-                <h2 id="counter">3,465</h2>
-            </div>
-            <div class="inner table" id="tabla-historica"></div>
-            <div class="inner graph" id="severidades"></div>
-            <div class="inner graph" id="paises-atacantes"></div>
+            <div class="seccion" id="1"></div>
+            <div class="seccion" id="2"></div>
+            <div class="seccion" id="3"></div>
+            <div class="seccion" id="4"></div>
         </div>
+        <script>
+            function load_home() {
+                document
+                    .getElementById("1")
+                    .innerHTML = '<object type="text/html" data="seccion1.html" ></object>';
+            }
+            load_home();
+        </script>
     </body>
 
 </html>
