@@ -22,6 +22,10 @@
                 background: black;
                 color: white;
                 overflow: hidden;
+
+            }
+            div#historial-table {
+                text-align: center;
             }
             .inner-gauge.wrapper {
                 display: flex;
@@ -47,16 +51,29 @@
                         pic = 'img/Gauges/PNG/04_Red.png'
                         break;
                     default:
-                        pic='img/Gauges/PNG/01_Green.png'
+                        pic = 'img/Gauges/PNG/01_Green.png'
                 }
-                document.getElementById("main_gauge").src=pic;
-
+                document
+                    .getElementById("main_gauge")
+                    .src = pic;
             }
             function updateGauge(file) {
                 fetch(file)
                     .then(response => response.text())
                     .then(text => changeGauge(text)) // Mandar o comando por aqui
             };
+            String.prototype.replaceAll = function (search, replacement) {
+                var target = this;
+                return target
+                    .split(search)
+                    .join(replacement);
+            };
+            var Emoji = {
+                'Red': '💓',
+                'Orange': '🧡',
+                'Yellow': '💛',
+                'Green': '💚'
+            }
         </script>
 
     </head>
@@ -295,7 +312,17 @@
 
         </div>
         <script>
-            updateGauge('status.txt');
+            window.setInterval(function () {
+                updateGauge('status.txt')
+            }, 500);
+            a = $('#historial-table');
+            a[0].innerHTML = a[0]
+                .innerHTML
+                .replaceAll('Green', Emoji['Green'])
+                .replaceAll('Yellow', Emoji['Yellow'])
+                .replaceAll('Orange', Emoji['Orange'])
+                .replaceAll('Red', Emoji['Red'])
+            a.inne
         </script>
     </body>
 </html>

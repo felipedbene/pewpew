@@ -1,15 +1,12 @@
 Gauge:
     JS:
-        Algoritmo mudar imagem:
-            ☐ Trigger
-            ✔ Ler arquivo texto @done(18-12-05 12:23)
-            ✔ Selector @done(18-12-05 12:31)
-        ☐ Mudar texto de ataque por cor
+        ☐ Mudar Emoji por Circulo amarelo
 
-
-
-        
 Archive:
+  ✔ Mudar texto de ataque por cor Yellow -> @low @optional @done(18-12-05 13:08) @project(Gauge.JS)
+  ✔ Trigger @done(18-12-05 12:49) @project(Gauge.JS.Algoritmo mudar imagem)
+  ✔ Ler arquivo texto @done(18-12-05 12:23) @project(Gauge.JS.Algoritmo mudar imagem)
+  ✔ Selector @done(18-12-05 12:31) @project(Gauge.JS.Algoritmo mudar imagem)
   ✔ Traducit Columnas @started(18-12-05 12:06) @done(18-12-05 12:07) @lasted(1m13s) @project(Gauge.Tabla)
   ✔ Eliminar barra scroll @done(18-12-05 11:49) @project(Gauge)
   ✔ Traduzir @done(18-12-05 11:41) @project(Gauge.Tabela Sans.Explicacao)
