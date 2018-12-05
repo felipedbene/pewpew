@@ -31,6 +31,33 @@
                 color: aquamarine;
             }
         </style>
+        <script>
+            function changeGauge(color) {
+                switch (color) {
+                    case 'green':
+                        pic = 'img/Gauges/PNG/01_Green.png';
+                        break;
+                    case 'yellow':
+                        pic = 'img/Gauges/PNG/02_Yellow.png';
+                        break;
+                    case 'orange':
+                        pic = 'img/Gauges/PNG/03_Orange.png'
+                        break;
+                    case 'red':
+                        pic = 'img/Gauges/PNG/04_Red.png'
+                        break;
+                    default:
+                        pic='img/Gauges/PNG/01_Green.png'
+                }
+                document.getElementById("main_gauge").src=pic;
+
+            }
+            function updateGauge(file) {
+                fetch(file)
+                    .then(response => response.text())
+                    .then(text => changeGauge(text)) // Mandar o comando por aqui
+            };
+        </script>
 
     </head>
     <body>
@@ -65,18 +92,22 @@
                         <td>Pérdida de conectividad a través de la red.</td>
                     </tr>
                 </table>
-                <div class="title source">Fuente: SANS Institute</div>
+                <div class="title source">
+                    <h4>Fuente: SANS Institute</h4>
+                </div>
             </div>
             <div class="historial">
                 <div class="historial" id="historial-title">
-                    <b>Historial de ataques mundiales</b>
+                    <h1>
+                        <b>Historial de ataques mundiales</b>
+                    </h1>
                 </div>
                 <div class="historial" id="historial-table">
                     <table border="2" cellpadding="3">
                         <tr>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Reason</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Motivo</th>
                         </tr>
                         <tr>
                             <td>May 12th 2017</td>
@@ -263,5 +294,8 @@
             </div>
 
         </div>
+        <script>
+            updateGauge('status.txt');
+        </script>
     </body>
 </html>
