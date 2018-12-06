@@ -40,7 +40,7 @@ def getDBEngine() :
 @route('/events/<number>')
 def events(number):
     number = int(number)
-    if number < 1000 :
+    if number <= 1000 :
         engine = getDBEngine()
         ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False).head(number)
         country = pd.read_sql("paises",engine)
@@ -49,12 +49,9 @@ def events(number):
         pslat = pd.merge(ev,country,how="inner",on=["srcloc"])
         sincolor = pd.merge(pslat,campi,how="inner",on=["device_name"])
         final = pd.merge(sincolor,color,how="inner",on=["severity"])
-        final.drop(['level_0','index_x','@logid','srcloc','index_y','time_received','src','dst'],axis=1,inplace=True)
+        final.drop(['level_0','index_x','@logid','srcloc','index_y','src','dst'],axis=1,inplace=True)
     else :
-        return 0
-    print(ev)
-    print(pslat)
-    print(final)
+        return "{}"
     return(final.to_json(date_format=True,orient='index'))
 
 @route('/sans/<tipo>')
