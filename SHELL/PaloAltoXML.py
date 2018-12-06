@@ -44,7 +44,6 @@ def getJob(firewall, token, maxlogs, N=15):
     print("Doing the query : '" + query + "'")
     url = "https://{}/api/".format(firewall)
 
-
     querystring = {"type":"log",
                    "log-type":"threat",
                    "query":"{}".format(query),

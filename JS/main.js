@@ -194,7 +194,7 @@ var attacks = {
     $('#attackdiv').html('')
     $('#attackdiv').append("<h1>Loading...</h1><br/>");
 
-    readTextFile("http://10.39.0.21:8080/events/100", function(text) {
+    readTextFile("http://10.39.0.21:8080/events/500", function(text) {
       var data = JSON.parse(text);
 
       log = data
