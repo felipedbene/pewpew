@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Microplus Attack Map</title>
+        <link rel="stylesheet" type="text/css" href="CSS/main.css">
+        <link rel="shortcut icon" href="img/tab_icon.jpg">
+        <script src="JS/d3.v3.min.js"></script>
+        <script src="JS/d3.geo.projection.v0.min.js"></script>
+        <script src="JS/topojson.v1.min.js"></script>
+        <script src="JS/datamaps.world.min.js"></script>
+        <script src="JS/jquery-2.1.1.min.js"></script>
+        <script src="JS/jquery.simplemodal-1.4.4.js"></script>
+        <script>
+            var documento = "XML/LastHour.json"
+        </script>
+
+        <style>
+            body {
+                height: 50vh;
+            }
+            #container2 {
+                bottom: -50vh;
+                visibility: visible;
+                font-size: 5vh;
+                position: absolute;
+            }
+            #hora {
+                visibility: hidden;
+            }
+            .attack_console {
+                height: 80vh;
+                visibility: hidden;
+            }
+            .wrapper {
+                height: 50vh;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <div class="global_map" id="container1"></div>
+            <div class="name">
+                <div class="subheader">
+                    <h2>Ciberseguridad
+                        <br>
+                        Mapa de Ataques - Tecnológico de Monterrey</h2>
+                </div>
+            </div>
+            <div class="timer" id="container2"></div>
+            <div class="timer" id="hora">
+                REAL TIME
+            </div>
+            <div class="attack_console" id="attackdiv"></div>
+
+        </div>
+        <script src="templates/mexico.js" charset="utf-8"></script>
+        <script src="JS/main_demo_15.js"></script>
+    </body>
+
+</html>

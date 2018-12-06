@@ -41,7 +41,7 @@ var len = 0;
 var debug = false;
 var queue = 50;
 var show_time = false;
-var show_console = true;
+var show_console = false;
 var estatico = false;
 
 if (!show_console) {

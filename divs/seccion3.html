@@ -36,8 +36,6 @@
 
             function changeNumber(number) {
                 var a = document.getElementById('count');
-                console.log(number);
-                
                 number = number
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
