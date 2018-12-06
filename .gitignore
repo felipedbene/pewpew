@@ -2,6 +2,7 @@
 *.tmp
 *.xml
 2
+*.ini
 *.swp
 *$
 *LastHour.json
