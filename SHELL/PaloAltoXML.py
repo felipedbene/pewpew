@@ -142,7 +142,6 @@ def getDBEngine() :
 
 
 def writeToDB(entry):
-
     engine = getDBEngine()
     #read what is already there
 
@@ -253,17 +252,14 @@ if __name__ == '__main__':
             # Write all to DB in one shot
             try :
                 newThreats = len(threats)
-                print("Writing " + str(newThreats) + " to DB.")
+                print("Got " + str(newThreats) + " candidates .")
                 writeToDB(threats)
                 #Remove Duplicates from Database
                 removeDup()
-
             except Exception as e:
                 print("Not writing to DB, no new data")
                 print(e)
     else :
-        
         print("Fail to get XML: Job failed !!!")
-        return False
 
 
