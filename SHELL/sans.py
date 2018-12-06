@@ -4,7 +4,8 @@
 import configparser
 import requests
 import os
-# In[2]:
+import datetime
+
 
 def getFile(sansURL,sansFile):
 
@@ -18,7 +19,7 @@ def getFile(sansURL,sansFile):
         return False
     level = response.text
     f = open(os.path.expanduser(sansFile),"w")
-    f.writelines(level)
+    f.writelines( level + "," + str( datetime.datetime.now() ))
     f.close()
     return True
 
