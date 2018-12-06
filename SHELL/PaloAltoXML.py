@@ -112,7 +112,8 @@ def waitXML(firewall, token, job, maxlogs,timeout=60):
                 print('Timeout Error!')
                 return False
         except :
-            print("Couldn't get job status") 
+            print("Couldn't get job status")
+            return False
 
     print('Status:%\t{}'.format(jobstatus))
     return True
@@ -156,9 +157,6 @@ def writeToDB(entry):
     df4['time_received'] =  pd.to_datetime(df4.time_received)
     df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
 
-
-
-
 def removeDup() :
     try :
         engine = getDBEngine()
@@ -170,11 +168,6 @@ def removeDup() :
         return True
     except :
         return False
-
-
-
-
-
 
 def getThreats(firewall, token, job, maxlogs):
 
@@ -262,12 +255,15 @@ if __name__ == '__main__':
                 newThreats = len(threats)
                 print("Writing " + str(newThreats) + " to DB.")
                 writeToDB(threats)
+                #Remove Duplicates from Database
+                removeDup()
 
             except Exception as e:
                 print("Not writing to DB, no new data")
                 print(e)
     else :
+        
         print("Fail to get XML: Job failed !!!")
+        return False
 
-    #Remove Duplicates from Database
-    removeDup()
+
