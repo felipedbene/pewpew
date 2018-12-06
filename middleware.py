@@ -15,16 +15,14 @@ import urllib3
 import xmltodict
 from dateutil import parser
 from sqlalchemy import create_engine
+import json
 
 app = Bottle()
-
-
-
+        
 def getDBEngine() :
-    # Getting requirements
-    config = configparser.ConfigParser()    # Getting requirements
 
-    # Reading config file
+    # Getting requirements
+    config = configparser.ConfigParser()    
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
 
     #Setting Parameters based on the config files
@@ -59,8 +57,8 @@ def events(number):
     print(final)
     return(final.to_json(date_format=True,orient='index'))
 
-@route('/sans/<type>')
-def sans(type) :
+@route('/sans/<tipo>')
+def sans(tipo) :
     # Getting requirements
     config = configparser.ConfigParser()    # Getting requirements
 
@@ -71,19 +69,27 @@ def sans(type) :
     sansFile = config["SANS"]['sansPath']
 
     with open(os.path.expanduser(sansFile),"r") as f :
-            level = f.read()
+        level = f.read()
     f.close()
-    
-    if str(type).strip().lower() == "astext" :
-        return level
-    elif str(type).strip().lower() == "asnumber" :
-        if level == "green" :
-            return str(25)
-        elif level == "yellow" :
-            return str(50)
-        elif level == "orange" :
-            return str(75)
-        elif level == "red" :
-            return str(100)
+
+    level = level.split(",")
+    levelDic = { "level" : level[0] , "last-updated" : level[1] }
+
+    if str(tipo).strip().lower() == "astext" :
+        return json.dumps(levelDic,sort_keys=True)
+
+    elif str(tipo).strip().lower() == "asnumber" :
+        
+        if level[0] == "green" :
+            levelDic = { "level" : 25 , "last-updated" : level[1] }
+        elif level[0] == "yellow" :
+            levelDic = { "level" : 50 , "last-updated" : level[1] }
+        elif level[0] == "orange" :
+            levelDic = { "level" : 75 , "last-updated" : level[1] }
+        elif level[0] == "red" :
+            levelDic = { "level" : 100 , "last-updated" : level[1] }
+
+        return( json.dumps(levelDic,sort_keys=True) )
+
 
 run(host='localhost', port=8080, debug=True)

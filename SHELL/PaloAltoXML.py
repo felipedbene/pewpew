@@ -5,35 +5,19 @@
 
 
 import configparser
-
 import os
-
 import random
-
 import sys
-
 import time
-
 from datetime import datetime, timedelta
-
-
-
 import numpy as np
-
 import pandas as pd
-
 import pgcli as psycopg2
-
 import requests
-
 import sqlalchemy
-
 import urllib3
-
 import xmltodict
-
 from dateutil import parser
-
 from sqlalchemy import create_engine
 
 
@@ -44,23 +28,6 @@ from sqlalchemy import create_engine
 
 
 
-def xmlParser(file=''):
-
-    color_code = {'critical':'#ff4660', #red
-
-                  'high':'#f48154',  #orange
-
-                 'medium':'#d9ff7f', #yellow
-
-                 'low':'#42ff58', #green
-
-                 'informational':'#54ba8a'} #blue
-
-
-
-
-
-    print(doc)
 
 
 
@@ -72,16 +39,11 @@ def getJob(firewall, token, maxlogs, N=15):
 
 
 
-    print('Getting last {} minutes job...'.format(N))
-
+    print('Getting last ' + N +'minutes job...')
     last_hour_date_time = datetime.now() - timedelta(minutes = int(N))
-
     last_hour_date_time = last_hour_date_time.strftime('%Y/%m/%d %H:%M:%S')
-
     query="(receive_time geq '{}' and !( addr.src in 10.0.0.0/8 ) )".format(last_hour_date_time)
-
     print("Doing the query : '" + query + "'")
-
     url = "https://{}/api/".format(firewall)
 
 
@@ -111,25 +73,16 @@ def getJob(firewall, token, maxlogs, N=15):
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
 
     except :
-
         print("I couldn't schedule the first job, quitting !")
-
         return False
 
 
-
     xml = response.text
-
     jsonDict = xmltodict.parse(xml)
-
     if jsonDict["response"]["@status"] == "success" :
-
         job = jsonDict["response"]["result"]["job"]
-
     print('Finished.')
-
     print('#job:{}'.format(job))
-
     return job
 
 
@@ -389,9 +342,7 @@ def getSetTime(tiempo = 150):
 def getToken(tokenFile):
 
     with open(tokenFile,'r') as file:
-
         token = file.read()
-
     return token
 
 
@@ -401,25 +352,17 @@ if __name__ == '__main__':
 
 
     # Getting requirements
-
     config = configparser.ConfigParser()
-
     urllib3.disable_warnings()
 
-
-
     # Reading config file
-
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
 
 
 
     #Setting Parameters based on the config files
-
     firewall = config["DEFAULT"]['Panorama']
-
     maxlogs=config["LOGS"]['maxlogs']
-
     tokenFile=os.path.expanduser(config["DEFAULT"]["tokenFile"])
 
 
@@ -427,33 +370,19 @@ if __name__ == '__main__':
     #Calculate remaing Parameters
 
     try :
-
         tiempo = getSetTime(sys.argv[1])
 
     except :
-
         tiempo = getSetTime(15)
 
     token = getToken(tokenFile)
-
     # Start do stuff
-
     # Get JobID
-
     job = getJob(firewall,token,maxlogs,N=tiempo)
-
-
-
     #Send the job and wait it to get done
-
     if waitXML(firewall,token,job,maxlogs) :
-
         print ("Done waiting :)")
-
-
-
         #This is the sucess part to finally get the results
-
         threats = getThreats(firewall,token,job,maxlogs)
 
         
