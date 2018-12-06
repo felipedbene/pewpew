@@ -67,6 +67,8 @@ def getJob(firewall, token, maxlogs, N=15):
     jsonDict = xmltodict.parse(xml)
     if jsonDict["response"]["@status"] == "success" :
         job = jsonDict["response"]["result"]["job"]
+    else :
+        return False
     print('Finished.')
     print('#job:{}'.format(job))
     return job
@@ -243,8 +245,9 @@ if __name__ == '__main__':
     # Start do stuff
     # Get JobID
     job = getJob(firewall,token,maxlogs,N=tiempo)
+
     #Send the job and wait it to get done
-    if waitXML(firewall,token,job,maxlogs) :
+    if job and waitXML(firewall,token,job,maxlogs) :
         print ("Done waiting :)")
         #This is the sucess part to finally get the results
         threats = getThreats(firewall,token,job,maxlogs)
