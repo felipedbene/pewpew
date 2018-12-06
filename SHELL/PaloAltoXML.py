@@ -116,7 +116,7 @@ def waitXML(firewall, token, job, maxlogs,timeout=60):
             print("Couldn't get job status")
             return False
 
-    print('Status:%\t{}'.format(jobstatus))
+    print('.{}'.format(jobstatus))
     return True
 
 
