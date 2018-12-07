@@ -1,0 +1,57 @@
+div#gauge-tabla{
+    color: #ccc;
+    font-family: sans-serif;
+    font-size: 2vh;
+}
+.green .blue .yellow .orange .red{
+    width: 3px;
+}
+.green{
+    background-color: orange;
+}
+body{
+    margin: 0;
+    background-color: black;
+    display: grid;
+}
+.wrapper{
+    display: inline-flex;
+}
+
+.wrapper, div, img{
+    padding: 0;
+    /* border  : 1px #ccc solid; */
+}
+.gauge{
+    flex-direction: column;
+}
+.banner{
+    flex-basis: auto;
+    justify-content: space-around;
+    display: flex;
+}
+.texto{
+    text-align: center;
+    font-size: 5vh;
+    color: white;
+}
+img{
+    height: 10vh;
+}
+.body{
+    justify-content: space-evenly;
+    display:flex;
+    flex-flow: row wrap;
+}
+.inner{
+    height: 45vh;
+    width: 33vh;
+    flex-basis:30%;
+}
+.gauge\ wrapper{
+    display: flex;
+    flex-flow: column;
+}
+.inner-gauge{
+    flex: 1;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Microplus Attack Map</title>
+        <link rel="stylesheet" type="text/css" href="CSS/master.css"/>
+        <link rel="shortcut icon" href="img/tab_icon.jpg"/>
+        <style>
+            body {
+                overflow: hidden;
+            }
+            div.seccion {
+                width: 24vw;
+                height: 100%;
+            }
+            div.half {
+                height: 50%;
+            }
+            div.body.wrapper {
+                height: 90vh;
+                display: flex;
+                justify-content: center;
+            }
+            object {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="banner wrapper">
+            <img class="logo cliente1" src="img/first-logo.png" alt="logo"/>
+            <img class="logo cliente2" src="img/second-logo.png" alt="logo"/>
+            <img class="logo cliente3" src="img/third-logo.png" alt="logo"/>
+            <img class="logo cliente4" src="img/fourth-logo.png" alt="logo"/>
+        </div>
+
+        <div class="body wrapper">
+            <div class="seccion" id="1"></div>
+            <div class="seccion" id="2"></div>
+            <div class="seccion" id="3"></div>
+            <div class="seccion" id="4">
+                <div class="half" id="4-1"></div>
+                <div class="half" id="4-2"></div>
+            </div>
+        </div>
+        <script>
+            function load_home() {
+                document
+                    .getElementById("1")
+                    .innerHTML = '<object type="text/html" data="divs/seccion1.html" ></object>';
+                document
+                    .getElementById("2")
+                    .innerHTML = '<object type="text/html" data="divs/seccion2.html" ></object>';
+                document
+                    .getElementById("3")
+                    .innerHTML = '<object type="text/html" data="divs/seccion3.html" ></object>';
+                document
+                    .getElementById("4-1")
+                    .innerHTML = '<object type="text/html" data="divs/seccion4.html" ></object>';
+                document
+                    .getElementById("4-2")
+                    .innerHTML = '<object type="text/html" data="../mapaAtaques.html" ></object>';
+
+            }
+            window.onload = load_home();
+            // load_home();
+        </script>
+    </body>
+
+</html>

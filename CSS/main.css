@@ -22,6 +22,7 @@ img.cliente {
   bottom: 5%;
   z-index: 1;
   /* background-color: red; */
+  height: 90vh;
 }
 
 .datamap {
@@ -48,11 +49,11 @@ img.cliente {
 .timer {
   color: white;
   position: absolute;
-  bottom: 0vw;
+  bottom: 0;
   right: 0.5vw;
   width: auto;
   /* background-color: green; */
-  font-size: 3vw;
+  font-size: 5vh;
   z-index: 3;
   font-family: arial;
 }
@@ -62,10 +63,10 @@ img.cliente {
   /* background-color: orange; */
   height: 30vw;
   width: 20.5vw;
-  bottom: -1vw;
+  bottom: 0;
   left: 1vw;
   z-index: 3;
-  font-size: 1.5vw;
+  font-size: 2vh;
   color: white;
   overflow-y: auto;
 }

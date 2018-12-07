@@ -52,4 +52,5 @@ config.rst
 
 package-lock.json
 *.json
-JS/justgage-1.2.2/examples/*
+*.svg
+*.xcf
