@@ -257,7 +257,7 @@ if __name__ == '__main__':
                 print("Got " + str(newThreats) + " candidates .")
                 writeToDB(threats)
                 #Remove Duplicates from Database
-                removeDup()
+                #removeDup()
             except Exception as e:
                 print("Not writing to DB, no new data")
                 print(e)

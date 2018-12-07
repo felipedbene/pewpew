@@ -40,7 +40,7 @@ def getDBEngine() :
 @route('/events/<number>')
 def events(number):
     number = int(number)
-    if number <= 1000 :
+    if number <= 5000 :
         engine = getDBEngine()
         ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False).head(number)
         country = pd.read_sql("paises",engine)
@@ -51,7 +51,7 @@ def events(number):
         final = pd.merge(sincolor,color,how="inner",on=["severity"])
         final.drop(['level_0','index_x','@logid','srcloc','index_y','src','dst'],axis=1,inplace=True)
     else :
-        return """{"0":{"severity":"critical","threatid":"Worm\/Win32.docdl.idgaf","device_name":"CP-SLP-1","subtype":"virus","srclat":39,"srclong":22,"name_x":"Greece","dstlat":22.127502,"dstlong":-101.038102,"name_y":"San Luis Potos\u00ed","index":2,"color":"#d9ff7f"}}"""
+        return """{"0":{"severity":"critical","threatid":"Worm\/Win32.docdl.idgaf","device_name":"CP-SLP-1","subtype":"virus","srclat":39,"srclong":22,"name_x":"Greece","dstlat":22.127502,"dstlong":-101.038102,"name_y":"Nuevo Sur","index":2,"color":"#d9ff7f"}}"""
     return(final.to_json(date_format=True,orient='index'))
 
 @route('/sans/<tipo>')
