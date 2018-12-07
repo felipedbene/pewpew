@@ -42,7 +42,7 @@ def events(number):
     number = int(number)
     if number <= 5000 :
         engine = getDBEngine()
-        ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False).drop_duplicates(["src","dst","threatid"]).head(number)
+        ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False).head(number)
         country = pd.read_sql("paises",engine)
         campi = pd.read_sql("campi",engine)
         color = pd.read_sql("color",engine)
