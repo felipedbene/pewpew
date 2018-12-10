@@ -19,20 +19,7 @@ import urllib3
 import xmltodict
 from dateutil import parser
 from sqlalchemy import create_engine
-
-
-
-# In[2]:
-
-
-
-
-
-
-
-
-
-
+import json
 
 
 def getJob(firewall, token, maxlogs, N=15):
@@ -143,9 +130,9 @@ def getDBEngine() :
 
 
 def writeToDB(entry):
+    print(entry)
     engine = getDBEngine()
     #read what is already there
-
     df = pd.DataFrame.from_dict(entry)
     df3 = df[ ["srcloc",'@logid'] ]
  
@@ -155,7 +142,35 @@ def writeToDB(entry):
     df2 = df[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid']]
     df4 = pd.concat( [df2,df3],axis=1 )
     df4['time_received'] =  pd.to_datetime(df4.time_received)
+ 
     df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
+
+def writeToDB2(entry) :
+    engine = getDBEngine()
+    dfev = pd.DataFrame.from_dict(entry)
+    db = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False)
+
+    print("Writing to DB")
+    if not dfev.empty :
+
+        dfev2 =  dfev[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid','srcloc'] ]
+        dftemp = dfev2[ ["srcloc",'@logid'] ]
+        for idx,i in enumerate(dfev['srcloc']):
+            dfev2['srcloc'][idx] = i['@cc']
+        
+        #Compares to see if it exists
+        delta = db[dfev2.isin(db)].dropna()
+        #print (delta)
+        #If intersections are empty => No Duplicates
+        if delta.empty :
+            print("Delta Null")
+            dfev2.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
+            #print(dfev2)
+        else :
+            print("Writing delta")
+            delta.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
+    else :
+        print ("no se")
 
 def removeDup() :
     try :
@@ -191,7 +206,7 @@ def getThreats(firewall, token, job, maxlogs):
         print("Error trying to get the resulting xml")
         return False
  
-
+    
     xml = response.text
     jsonDict = xmltodict.parse(xml)
     total = int(jsonDict["response"]["result"]["log"]["logs"]["@count"])
@@ -200,14 +215,14 @@ def getThreats(firewall, token, job, maxlogs):
         threats = jsonDict["response"]["result"]["log"]["logs"]["entry"]                             
 
     else :
-        threats = {}
-        print("No new threats for now")
-
+        print("No threats returned from query")
+        threats = 0
+    print ("Returning threats...")
     return threats
 
 
 
-def getSetTime(tiempo = 150):
+def getSetTime(tiempo = 15):
     return str(tiempo)
 
 
@@ -253,15 +268,12 @@ if __name__ == '__main__':
         if threats :
             # Write all to DB in one shot
             try :
-                newThreats = len(threats)
-                print("Got " + str(newThreats) + " candidates .")
-                writeToDB(threats)
+                print("Got candidates .")
+                writeToDB2(threats)
                 #Remove Duplicates from Database
                 #removeDup()
             except Exception as e:
                 print("Not writing to DB, no new data")
                 print(e)
     else :
-        print("Fail to get XML: Job failed !!!")
-
-
+        print("Nothing returned from panorama!!!")
