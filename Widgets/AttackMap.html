@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Mapa de Ataques Microplus</title>
+
+        <script src="../Widgets/JS/d3.v3.min.js"></script>
+        <script src="../Widgets/JS/d3.geo.projection.v0.min.js"></script>
+        <script src="../Widgets/JS/topojson.v1.min.js"></script>
+        <script src="../Widgets/JS/datamaps.world.min.js"></script>
+        <script src="../Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+
+        <script>
+            // Error Handling
+            window.onerror = function (msg) {
+                // On error, change title style and waits 3s before reload
+                $('#title').css({'font-style': 'oblique'})
+                console.log(msg);
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+            }
+            $(window).resize(function () {
+                location.reload();
+            })
+        </script>
+
+        <script>
+            // GUI Parameters
+
+            colors = {
+                // TODO Change arc parameters @backend
+                arcs: {
+                    green: "#42ff58",
+                    yellow: "#d9fe7f",
+                    orange: "#f48154",
+                    red: "#ff4660"
+                },
+                background: "black",
+                border: "#079a9a"
+            }
+            time = 500 // delay in ms
+            show_time = false // Shows attack time
+            // TODO change console visibility
+            show_console = true // Show attack console
+
+            world = {
+                zoom: false,
+                center: [
+                    -100, 24
+                ],
+                scale: 3000
+            }
+            //TODO change IP text
+            show_IP = false
+        </script>
+
+        <script>
+
+            // Backend Parameters
+            var estatico = false // shows only 1 event for debugging
+
+            var log = [];
+            var count = 0;
+            var len = 0;
+            var debug = false;
+            var queue = 50;
+        </script>
+
+        <style>
+            #wrapper {
+                position: absolute;
+                left: 0;
+                top: 0;
+
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                flex-direction: column;
+
+            }
+            body,
+            html {
+                margin: 0;
+                height: 100%;
+                overflow: hidden;
+                color: white;
+                background-color: black;
+                font-size: 3vh;
+            }
+            #container1 {
+                width: 100vw;
+                height: 90vh;
+                /* background-color: blue; */
+            }
+            #console {
+                /* background-color: red; */
+                width: 25vw;
+                height: 35vh;
+                z-index: 1;
+                bottom: 0;
+                left: 0;
+                position: absolute;
+            }
+            #title {
+                width: 100vw;
+                height: 10vh;
+                font-size: 4vh;
+                font-weight: bold;
+                text-align: center;
+                /* background-color: green; */
+            }
+        </style>
+    </head>
+    <body>
+        <id id="wrapper">
+            <div id="title">Ciberseguridad
+                <br>
+                Mapa de Ataques - Tecnológico de Monterrey
+            </div>
+            <div id="container1"></div>
+        </id>
+        <div id="console"></div>
+        <script>
+            // Create World
+            $('#console')[0].innerText = 'Loading...'
+            if (!world['zoom']) { // Show whole world
+                var map = new Datamap({
+
+                    scope: 'world',
+                    element: document.getElementById('container1'),
+                    projection: 'mercator',
+                    fills: {
+                        defaultFill: colors['background']
+                    },
+                    geographyConfig: {
+                        dataUrl: null,
+                        hideAntarctica: false,
+                        borderWidth: 2,
+                        borderColor: colors['border'],
+                        popupTemplate: function (geography, data) {
+                            return '<div class="hoverinfo" style="color:white;background:black">' +
+                                    geography.properties.name + '</div>';
+                        }
+                    }
+                })
+            } else { // Show Mexico
+                $('#console').css({'height': '60vh', 'width': '35vw'})
+
+                var map = new Datamap({
+                    scope: 'world',
+                    element: document.getElementById('container1'),
+                    setProjection: function (element) {
+                        var projection = d3
+                            .geo
+                            .mercator()
+                            .center(world['center'])
+                            .rotate([4.4, 0])
+                            .scale(world['scale'])
+                            .translate([
+                                element.offsetWidth / 2,
+                                element.offsetHeight / 2
+                            ]);
+                        var path = d3
+                            .geo
+                            .path()
+                            .projection(projection);
+                        return {path: path, projection: projection};
+                    },
+                    fills: {
+                        defaultFill: colors['background']
+                    },
+                    geographyConfig: {
+                        dataUrl: null,
+                        hideAntarctica: false,
+                        borderWidth: 3,
+                        borderColor: colors['border'],
+                        popupTemplate: function (geography, data) {
+                            return '<div class="hoverinfo" style="color:white;background:black">' +
+                                    geography.properties.name + '</div>';
+                        }
+                    }
+                })
+
+            }
+        </script>
+        <script>
+            // Backend
+        </script>
+    </body>
+</html>
