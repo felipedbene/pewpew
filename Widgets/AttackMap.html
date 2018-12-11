@@ -32,6 +32,14 @@
         <script>
             // GUI Parameters
 
+            world = {
+                zoom: true,
+                center: [
+                    -100, 24
+                ],
+                scale: 1850
+            }
+
             colors = {
                 arcs: {
                     low: "#42ff58", //green
@@ -46,13 +54,6 @@
             show_time = false // Shows attack time
             show_console = true // Show attack console
 
-            world = {
-                zoom: false,
-                center: [
-                    -100, 24
-                ],
-                scale: 3000
-            }
             //TODO change IP text
             show_IP = false
         </script>
@@ -166,6 +167,10 @@
                                 element.offsetWidth / 2,
                                 element.offsetHeight / 2
                             ]);
+                        // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
+                        // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850)
+                        // .translate([         width / 2,         height / 2     ]);
+
                         var path = d3
                             .geo
                             .path()
@@ -345,7 +350,7 @@
                         tiempo = '';
                     }
                     // console.log(strokeColor);
-                    
+
                     $('#console').append(
                         tiempo + "<b>" + srccountry + "</b> " + IP1 + " <span style='color:#FF7474'>att" +
                         "acks</span><br/> <b>" + attackdiv_slatlong + "</b> " + IP2 + " <br> <span styl" +
@@ -359,9 +364,10 @@
 
                     count++;
 
-                    $("#console").animate({ scrollTop: $('#console')[0].scrollHeight}, 1000);
+                    $("#console").animate({
+                        scrollTop: $('#console')[0].scrollHeight
+                    }, 1000);
                     // $('#console').scrollTop($('#console')[0].scrollHeight);
-
 
                     if (count < len) {
                         if (debug) 
