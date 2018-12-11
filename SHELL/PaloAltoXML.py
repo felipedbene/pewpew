@@ -43,7 +43,7 @@ def getJob(firewall, token, maxlogs, N=15):
 
     try :    
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
-
+        print(response.url)
     except :
         print("I couldn't schedule the first job, quitting !")
         return False
@@ -79,7 +79,7 @@ def waitXML(firewall, token, job, maxlogs,timeout=60):
 
     jobstatus = ''
     a = datetime.now() + timedelta(seconds = timeout)
-
+    
     # Wait for the FIN and/or Timeout
     while jobstatus != 'FIN' and datetime.now() < a:
         try :
@@ -87,7 +87,7 @@ def waitXML(firewall, token, job, maxlogs,timeout=60):
             xml = response.text
             jsonDict = xmltodict.parse(xml)
             resultstatus = jsonDict["response"]["@status"]
-
+            print(response.url)
             if resultstatus == "success" :
                 jobstatus = jsonDict["response"]["result"]["job"]["status"]
                 print( "Status:" + str(jobstatus) )
@@ -154,34 +154,28 @@ def writeToDB2(entry) :
     if not dfev.empty :
 
         dfev2 =  dfev[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid','srcloc'] ]
-        dftemp = dfev2[ ["srcloc",'@logid'] ]
-        for idx,i in enumerate(dfev['srcloc']):
+        for idx,i in enumerate(dfev2['srcloc']):
             dfev2['srcloc'][idx] = i['@cc']
         
+        dfev2["time_received"] = pd.to_datetime(dfev2.time_received)
+        db = db[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid','srcloc']  ]
+        print(dfev2.shape)
+        print(db.shape)
         #Compares to see if it exists
         delta = db[dfev2.isin(db)].dropna()
-        #print (delta)
+        print(delta)
         #If intersections are empty => No Duplicates
         if delta.empty :
             print("Delta Null")
+            print(dfev2)
             dfev2.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
             #print(dfev2)
         else :
             print("Writing delta")
-            delta.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
-    else :
-        print ("no se")
-
-def removeDup() :
-    try :
-        engine = getDBEngine()
-        # sorting 
-        data = pd.read_sql("events",con=engine)
-        data.sort_values("time_received", inplace = True, ascending=True)
-        data.drop_duplicates(subset = ["time_received","threatid","src","dst"], keep = 'first', inplace = True)
-        data.to_sql(name="events",con=engine,schema="public",if_exists="replace",index=False)
+            #delta.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
         return True
-    except :
+    else :
+        print ("Empty Thread Dict")
         return False
 
 def getThreats(firewall, token, job, maxlogs):
@@ -201,7 +195,7 @@ def getThreats(firewall, token, job, maxlogs):
 
     try :
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
-
+        print(response.url)
     except :
         print("Error trying to get the resulting xml")
         return False
@@ -253,7 +247,7 @@ if __name__ == '__main__':
         tiempo = getSetTime(sys.argv[1])
 
     except :
-        tiempo = getSetTime(15)
+        tiempo = getSetTime(8)
 
     token = getToken(tokenFile)
     # Start do stuff
@@ -268,12 +262,9 @@ if __name__ == '__main__':
         if threats :
             # Write all to DB in one shot
             try :
-                print("Got candidates .")
+                print("Got candidates, will de-dup and write")
                 writeToDB2(threats)
-                #Remove Duplicates from Database
-                #removeDup()
             except Exception as e:
-                print("Not writing to DB, no new data")
-                print(e)
+                print("Exception writing to db : " + str(e))
     else :
         print("Nothing returned from panorama!!!")
