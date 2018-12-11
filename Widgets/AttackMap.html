@@ -141,7 +141,7 @@
                     },
                     geographyConfig: {
                         dataUrl: null,
-                        hideAntarctica: false,
+                        hideAntarctica: true,
                         borderWidth: 2,
                         borderColor: colors['border'],
                         popupTemplate: function (geography, data) {
@@ -178,7 +178,7 @@
                     },
                     geographyConfig: {
                         dataUrl: null,
-                        hideAntarctica: false,
+                        hideAntarctica: true,
                         borderWidth: 3,
                         borderColor: colors['border'],
                         popupTemplate: function (geography, data) {
@@ -192,7 +192,7 @@
         </script>
         <script>
             // Backend
-
+            $('#console').html('');
             if (!show_console) 
                 $('#console')[0].css({'visibility': 'hidden'})
 
@@ -311,7 +311,7 @@
 
                     which_attack = a["subtype"];
                     var atkname = a["threatid"];
-                    strokeColor = colors.arcs["severity"];
+                    strokeColor = colors['arcs'][a["severity"]];
 
                     hits.push({
                         origin: {
@@ -345,7 +345,8 @@
                     } else {
                         tiempo = '';
                     }
-
+                    // console.log(strokeColor);
+                    
                     $('#console').append(
                         tiempo + "<b>" + srccountry + "</b> " + IP1 + " <span style='color:#FF7474'>att" +
                         "acks</span><br/> <b>" + attackdiv_slatlong + "</b> " + IP2 + " <br> <span styl" +
@@ -359,8 +360,8 @@
 
                     count++;
 
-                    // $("#console").animate({ scrollTop: $('#console')[0].scrollHeight}, 1000);
-                    $('#console').scrollTop($('#console')[0].scrollHeight);
+                    $("#console").animate({ scrollTop: $('#console')[0].scrollHeight}, 1000);
+                    // $('#console').scrollTop($('#console')[0].scrollHeight);
 
 
                     if (count < len) {
