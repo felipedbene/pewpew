@@ -35,10 +35,10 @@
             colors = {
                 // TODO Change arc parameters @backend
                 arcs: {
-                    green: "#42ff58",
-                    yellow: "#d9fe7f",
-                    orange: "#f48154",
-                    red: "#ff4660"
+                    low: "#42ff58", //green
+                    medium: "#d9fe7f", //yellow
+                    high: "#f48154", //orange
+                    critical: "#ff4660" //red
                 },
                 background: "black",
                 border: "#079a9a"
@@ -61,7 +61,6 @@
         <script>
 
             // Backend Parameters
-            // TODO Set link variable as source of attacks
             events_url = 'http://10.39.0.21:8080/events/500'
 
             var estatico = false // shows only 1 event for debugging
@@ -301,8 +300,8 @@
                     var IP1 = "";
                     var IP2 = "";
 
-                    var srccountry = a["srcname"];
-                    var attackdiv_slatlong = a["dstname"];
+                    var srccountry = a["name_x"];
+                    var attackdiv_slatlong = a["name_y"];
 
                     var srclat = a["srclat"];
                     var srclong = a["srclong"];
@@ -311,7 +310,7 @@
 
                     which_attack = a["subtype"];
                     var atkname = a["threatid"];
-                    strokeColor = a["severity"];
+                    strokeColor = colors.arcs["severity"];
 
                     hits.push({
                         origin: {
