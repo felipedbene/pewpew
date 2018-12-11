@@ -45,7 +45,6 @@
             }
             time = 500 // delay in ms
             show_time = false // Shows attack time
-            // TODO change console visibility
             show_console = true // Show attack console
 
             world = {
@@ -62,6 +61,9 @@
         <script>
 
             // Backend Parameters
+            // TODO Set link variable as source of attacks
+            events_url = 'http://10.39.0.21:8080/events/500'
+
             var estatico = false // shows only 1 event for debugging
 
             var log = [];
@@ -190,6 +192,193 @@
         </script>
         <script>
             // Backend
+
+            if (!show_console) 
+                $('#console')[0].css({'visibility': 'hidden'})
+
+            $.extend({
+                getUrlVars: function () {
+                    var vars = [],
+                        hash;
+                    var hashes = window
+                        .location
+                        .href
+                        .slice(window.location.href.indexOf('?') + 1)
+                        .split('&');
+                    for (var i = 0; i < hashes.length; i++) {
+                        hash = hashes[i].split('=');
+                        vars.push(hash[0]);
+                        vars[hash[0]] = hash[1];
+                    }
+                    return vars;
+                },
+                getUrlVar: function (name) {
+                    return $.getUrlVars()[name];
+                }
+            });
+
+            function FixedQueue(size, initialValues) {
+                initialValues = (initialValues || []);
+                var queue = Array.apply(null, initialValues);
+                queue.fixedSize = size;
+                queue.push = FixedQueue.push;
+                queue.splice = FixedQueue.splice;
+                queue.unshift = FixedQueue.unshift;
+                FixedQueue
+                    .trimTail
+                    .call(queue);
+                return (queue);
+            }
+
+            FixedQueue.trimHead = function () {
+                if (this.length <= this.fixedSize) {
+                    return;
+                }
+                Array
+                    .prototype
+                    .splice
+                    .call(this, 0, (this.length - this.fixedSize));
+            };
+
+            FixedQueue.trimTail = function () {
+                if (this.length <= this.fixedSize) {
+                    return;
+                }
+                Array
+                    .prototype
+                    .splice
+                    .call(this, this.fixedSize, (this.length - this.fixedSize));
+            };
+
+            FixedQueue.wrapMethod = function (methodName, trimMethod) {
+                var wrapper = function () {
+                    var method = Array.prototype[methodName];
+                    var result = method.apply(this, arguments);
+                    trimMethod.call(this);
+                    return (result);
+                };
+                return (wrapper);
+            };
+
+            FixedQueue.push = FixedQueue.wrapMethod("push", FixedQueue.trimHead);
+            FixedQueue.splice = FixedQueue.wrapMethod("splice", FixedQueue.trimTail);
+            FixedQueue.unshift = FixedQueue.wrapMethod("unshift", FixedQueue.trimTail);
+
+            var hits = FixedQueue(queue, []);
+            var boom = FixedQueue(queue, []);
+
+            var attacks = {
+                interval: time,
+
+                init: function () {
+                    setTimeout(jQuery.proxy(this.getData, this), this.interval);
+                },
+
+                //usage:
+
+                test: function () {
+                    $('#attackdiv').html('')
+
+                    fetch(events_url)
+                        .then((resp) => resp.json())
+                        .then(function (data) {
+                            log = data;
+                            len = Object
+                                .keys(log)
+                                .length;
+                            attacks.getData();
+
+                        })
+                },
+
+                getData: function () {
+                    var self = this;
+                    if (debug) 
+                        var t = timer("Loop " + count);
+                    
+                    var a = log[count];
+
+                    var IP1 = "";
+                    var IP2 = "";
+
+                    var srccountry = a["srcname"];
+                    var attackdiv_slatlong = a["dstname"];
+
+                    var srclat = a["srclat"];
+                    var srclong = a["srclong"];
+                    var dstlat = a["dstlat"];
+                    var dstlong = a["dstlong"];
+
+                    which_attack = a["subtype"];
+                    var atkname = a["threatid"];
+                    strokeColor = a["severity"];
+
+                    hits.push({
+                        origin: {
+                            latitude: +srclat,
+                            longitude: +srclong
+                        },
+                        destination: {
+                            latitude: +dstlat,
+                            longitude: +dstlong
+                        }
+                    });
+                    map.arc(hits, {
+                        strokeWidth: 3,
+                        strokeColor: strokeColor
+                    });
+
+                    boom.push({
+                        radius: 7,
+                        latitude: +dstlat,
+                        longitude: +dstlong,
+                        fillOpacity: 0.5,
+                        attk: which_attack
+                    });
+                    map.bubbles(boom, {
+                        popupTemplate: function (geo, data) {
+                            return '<div class="hoverinfo">' + data.attk + '</div>';
+                        }
+                    });
+                    if (show_time) {
+                        tiempo = "@" + a['time_generated'] + '<br>';
+                    } else {
+                        tiempo = '';
+                    }
+
+                    $('#attackdiv').append(
+                        tiempo + "<b>" + srccountry + "</b> " + IP1 + " <span style='color:#FF7474'>att" +
+                        "acks</span><br/> <b>" + attackdiv_slatlong + "</b> " + IP2 + " <br> <span styl" +
+                        "e='color:" + strokeColor + "'> " + atkname + "(" + which_attack + ")</span> <b" +
+                        "r/><br/>"
+                    );
+
+                    $('#attackdiv').animate({
+                        scrollTop: $('#attackdiv').prop("scrollHeight")
+                    }, time);
+
+                    count++;
+
+                    if (count < len) {
+                        if (debug) 
+                            t.stop();
+                        
+                        attacks.init();
+                    } else {
+                        setTimeout(function () {
+                            count = 0;
+                            log = [];
+                            if (!stop) {
+                                location.reload();
+                            }
+                            // attacks.test();
+                        }, time);
+                        //location.reload();
+
+                    }
+                }
+            };
+            attacks.test();
         </script>
     </body>
 </html>

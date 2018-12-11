@@ -1,21 +1,4 @@
-// Versión Rapida
-window.onerror = function(msg) {
-  // $('#attackdiv').html('<h1 style="color:red;font-size:1em">' + msg + '</h1>')
-  console.log(msg);
-  setTimeout(function() {
-    location.reload();
-  }, 3000);
-}
-
-
-
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
-
+// >>>>>>>>>>>>>>>>> Relogio
 function startTime() {
   document.getElementById('container2').innerHTML = Date().split(' G')[0];
   t = setTimeout(function() {
@@ -23,7 +6,7 @@ function startTime() {
   }, 500);
 }
 startTime();
-
+// <<<<<<<<<<<<<<<<<<<<
 
 var log = [];
 var count = 0;
