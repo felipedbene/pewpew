@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="../Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+        <title>Hora - Microplus</title>
+
+        <script>
+            var options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+        </script>
+        <style>
+            body {
+                background: black;
+            }
+            .text {
+                font-size: 99vh;
+                color: white;
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="text"></div>
+        <script>
+            function startTime() {
+
+                var event = new Date().toLocaleTimeString('es-MX', options);
+                event = event[0].toLocaleUpperCase() + event.slice(1);
+
+                $('.text')[0].innerText =  event;
+                t = setTimeout(function () {
+                    startTime()
+                }, 500);
+            }
+            startTime();
+        </script>
+    </body>
+</html>
