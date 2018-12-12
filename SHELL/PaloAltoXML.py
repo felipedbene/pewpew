@@ -24,7 +24,7 @@ import json
 
 def getJob(firewall, token, maxlogs, N=15):
 
-    print('Getting last ' + N +'minutes job...')
+    print('Getting last ' + N +' minutes job...')
     last_hour_date_time = datetime.now() - timedelta(minutes = int(N))
     last_hour_date_time = last_hour_date_time.strftime('%Y/%m/%d %H:%M:%S')
     query="(receive_time geq '{}' and !( addr.src in 10.0.0.0/8 ) )".format(last_hour_date_time)
@@ -43,7 +43,7 @@ def getJob(firewall, token, maxlogs, N=15):
 
     try :    
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
-        print(response.url)
+        #print(response.url)
     except :
         print("I couldn't schedule the first job, quitting !")
         return False
@@ -61,10 +61,9 @@ def getJob(firewall, token, maxlogs, N=15):
 
 
 
-def waitXML(firewall, token, job, maxlogs,timeout=60):
+def waitXML(firewall, token, job, maxlogs,timeout=180):
 
     print('Waiting for XML...')
-    progress = 0
     url = "https://{}/api/".format(firewall)
     querystring = {"type":"log",
                    "action":"get",
@@ -87,7 +86,7 @@ def waitXML(firewall, token, job, maxlogs,timeout=60):
             xml = response.text
             jsonDict = xmltodict.parse(xml)
             resultstatus = jsonDict["response"]["@status"]
-            print(response.url)
+            #print(response.url)
             if resultstatus == "success" :
                 jobstatus = jsonDict["response"]["result"]["job"]["status"]
                 print( "Status:" + str(jobstatus) )
@@ -127,56 +126,41 @@ def getDBEngine() :
 
     return engine
 
+def normalizeQr(df) :
+    qr = df[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid','srcloc']]
 
+    for idx,i in enumerate(qr['srcloc']):
+        qr['srcloc'][idx] = i['@cc']
+    
+    qr['time_received'] = pd.to_datetime(df.time_received)
 
-def writeToDB(entry):
-    print(entry)
-    engine = getDBEngine()
-    #read what is already there
-    df = pd.DataFrame.from_dict(entry)
-    df3 = df[ ["srcloc",'@logid'] ]
- 
-    for idx,i in enumerate(df['srcloc']):
-        df3['srcloc'][idx] = i['@cc']
-
-    df2 = df[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid']]
-    df4 = pd.concat( [df2,df3],axis=1 )
-    df4['time_received'] =  pd.to_datetime(df4.time_received)
- 
-    df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
+    return qr
 
 def writeToDB2(entry) :
     engine = getDBEngine()
-    dfev = pd.DataFrame.from_dict(entry)
-    db = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False)
+    qr = pd.DataFrame.from_dict(entry)
+    dfb = pd.read_sql("events",con=engine)
 
     print("Writing to DB")
-    if not dfev.empty :
-
-        dfev2 =  dfev[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid','srcloc'] ]
-        for idx,i in enumerate(dfev2['srcloc']):
-            dfev2['srcloc'][idx] = i['@cc']
-        
-        dfev2["time_received"] = pd.to_datetime(dfev2.time_received)
-        db = db[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid','srcloc']  ]
-        print(dfev2.shape)
-        print(db.shape)
-        #Compares to see if it exists
-        delta = db[dfev2.isin(db)].dropna()
-        print(delta)
-        #If intersections are empty => No Duplicates
-        if delta.empty :
-            print("Delta Null")
-            print(dfev2)
-            dfev2.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
-            #print(dfev2)
-        else :
-            print("Writing delta")
-            #delta.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
+    if not qr.empty :
+        qrdf = normalizeQr(qr)
+        dfbN = dfb.drop(['level_0','index'],axis=1)
+        print("Query not empty, proceed")
+        print( "Qr shape : " +  str(qrdf.shape)  )
+        print( "Dfb shape : " +  str(dfbN.shape)  )
+        qrdf.sort_index(inplace=True)
+        dfbN.sort_index(inplace=True)
+        print( list(qrdf.columns.values)  )
+        print( list(dfbN.columns.values)  )
+        print(dfbN)
+        print(qrdf)
+        delta = qrdf[ dfbN != qrdf ].dropna(how="all")
+        dfbN.append(delta)
         return True
     else :
-        print ("Empty Thread Dict")
+        print("Empty query, not proceeding")
         return False
+
 
 def getThreats(firewall, token, job, maxlogs):
 
@@ -195,7 +179,7 @@ def getThreats(firewall, token, job, maxlogs):
 
     try :
         response = requests.request("GET", url, headers=headers, params=querystring,verify=False)
-        print(response.url)
+        
     except :
         print("Error trying to get the resulting xml")
         return False
@@ -211,7 +195,7 @@ def getThreats(firewall, token, job, maxlogs):
     else :
         print("No threats returned from query")
         threats = 0
-    print ("Returning threats...")
+    print("Returning {} threats...".format(str(total) )) 
     return threats
 
 
@@ -247,7 +231,7 @@ if __name__ == '__main__':
         tiempo = getSetTime(sys.argv[1])
 
     except :
-        tiempo = getSetTime(8)
+        tiempo = getSetTime(360)
 
     token = getToken(tokenFile)
     # Start do stuff
@@ -256,7 +240,7 @@ if __name__ == '__main__':
 
     #Send the job and wait it to get done
     if job and waitXML(firewall,token,job,maxlogs) :
-        print ("Done waiting :)")
+        print ("Done waiting")
         #This is the sucess part to finally get the results
         threats = getThreats(firewall,token,job,maxlogs)
         if threats :
