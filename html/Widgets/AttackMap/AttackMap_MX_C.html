@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Mapa de Ataques Microplus</title>
+
+        <script src="/html/Widgets/JS/Datamaps/d3.v3.min.js"></script>
+        <script src="/html/Widgets/JS/Datamaps/d3.geo.projection.v0.min.js"></script>
+        <script src="/html/Widgets/JS/Datamaps/topojson.v1.min.js"></script>
+        <script src="/html/Widgets/JS/Datamaps/datamaps.world.min.js"></script>
+        <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+
+        <script>
+
+            // ############### Numero de Eventos ##############3
+            events = 500;
+
+            // Error Handling
+            window.onerror = function (msg) {
+                // On error, change title style and waits 3s before reload
+                $('#title').css({'font-style': 'oblique'})
+                console.log(msg);
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+            }
+            $(window).resize(function () {
+                location.reload();
+            })
+        </script>
+
+        <script>
+            // GUI Parameters
+
+            world = {
+                zoom: true,
+                center: [
+                    -100, 24
+                ],
+                scale: 1850
+            }
+
+            colors = {
+                arcs: {
+                    low: "#42ff58", //green
+                    medium: "#d9fe7f", //yellow
+                    high: "#f48154", //orange
+                    critical: "#ff4660" //red
+                },
+                background: "black",
+                border: "#079a9a"
+            }
+            time = 500 // delay in ms
+            show_time = false // Shows attack time
+            show_console = true // Show attack console
+
+            //TODO change IP text
+            show_IP = false
+        </script>
+
+        <script>
+
+            // Backend Parameters
+            events_url = 'http://10.39.0.21/events/' + events
+
+            var estatico = false // shows only 1 event for debugging
+
+            var log = [];
+            var count = 0;
+            var len = 0;
+            var debug = false;
+            var queue = 50;
+        </script>
+
+        <style>
+            #wrapper {
+                position: absolute;
+                left: 0;
+                top: 0;
+
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                flex-direction: column;
+
+            }
+            body,
+            html {
+                margin: 0;
+                height: 100%;
+                overflow: hidden;
+                color: white;
+                background-color: black;
+                font-size: 3vh;
+            }
+            #container1 {
+                width: 100vw;
+                height: 90vh;
+                /* background-color: blue; */
+            }
+            #console {
+                /* background-color: red; */
+                width: 25vw;
+                height: 35vh;
+                z-index: 1;
+                bottom: 0;
+                left: 0;
+                position: absolute;
+                overflow: hidden;
+            }
+            #title {
+                width: 100vw;
+                height: 10vh;
+                font-size: 4vh;
+                font-weight: bold;
+                text-align: center;
+                /* background-color: green; */
+            }
+        </style>
+    </head>
+    <body>
+        <id id="wrapper">
+            <div id="title">Ciberseguridad
+                <br>
+                Mapa de Ataques - Tecnológico de Monterrey
+            </div>
+            <div id="container1"></div>
+        </id>
+        <div id="console"></div>
+        <script>
+            // Create World
+            $('#console')[0].innerText = 'Loading...'
+            if (!world['zoom']) { // Show whole world
+                var map = new Datamap({
+
+                    scope: 'world',
+                    element: document.getElementById('container1'),
+                    projection: 'mercator',
+                    fills: {
+                        defaultFill: colors['background']
+                    },
+                    geographyConfig: {
+                        dataUrl: null,
+                        hideAntarctica: true,
+                        borderWidth: 2,
+                        borderColor: colors['border'],
+                        popupTemplate: function (geography, data) {
+                            return '<div class="hoverinfo" style="color:white;background:black">' +
+                                    geography.properties.name + '</div>';
+                        }
+                    }
+                })
+            } else { // Show Mexico
+                $('#console').css({'height': '60vh', 'width': '35vw'})
+
+                var map = new Datamap({
+                    scope: 'world',
+                    element: document.getElementById('container1'),
+                    setProjection: function (element) {
+                        var projection = d3
+                            .geo
+                            .mercator()
+                            .center(world['center'])
+                            .rotate([4.4, 0])
+                            .scale(world['scale'])
+                            .translate([
+                                element.offsetWidth / 2,
+                                element.offsetHeight / 2
+                            ]);
+                        // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
+                        // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
+                        // width / 2,         height / 2     ]);
+
+                        var path = d3
+                            .geo
+                            .path()
+                            .projection(projection);
+                        return {path: path, projection: projection};
+                    },
+                    fills: {
+                        defaultFill: colors['background']
+                    },
+                    geographyConfig: {
+                        dataUrl: null,
+                        hideAntarctica: true,
+                        borderWidth: 3,
+                        borderColor: colors['border'],
+                        popupTemplate: function (geography, data) {
+                            return '<div class="hoverinfo" style="color:white;background:black">' +
+                                    geography.properties.name + '</div>';
+                        }
+                    }
+                })
+
+            }
+        </script>
+        <script>
+            // Backend
+            $('#console').html('');
+            if (!show_console) 
+                $('#console')[0].css({'visibility': 'hidden'})
+
+            $.extend({
+                getUrlVars: function () {
+                    var vars = [],
+                        hash;
+                    var hashes = window
+                        .location
+                        .href
+                        .slice(window.location.href.indexOf('?') + 1)
+                        .split('&');
+                    for (var i = 0; i < hashes.length; i++) {
+                        hash = hashes[i].split('=');
+                        vars.push(hash[0]);
+                        vars[hash[0]] = hash[1];
+                    }
+                    return vars;
+                },
+                getUrlVar: function (name) {
+                    return $.getUrlVars()[name];
+                }
+            });
+
+            function FixedQueue(size, initialValues) {
+                initialValues = (initialValues || []);
+                var queue = Array.apply(null, initialValues);
+                queue.fixedSize = size;
+                queue.push = FixedQueue.push;
+                queue.splice = FixedQueue.splice;
+                queue.unshift = FixedQueue.unshift;
+                FixedQueue
+                    .trimTail
+                    .call(queue);
+                return (queue);
+            }
+
+            FixedQueue.trimHead = function () {
+                if (this.length <= this.fixedSize) {
+                    return;
+                }
+                Array
+                    .prototype
+                    .splice
+                    .call(this, 0, (this.length - this.fixedSize));
+            };
+
+            FixedQueue.trimTail = function () {
+                if (this.length <= this.fixedSize) {
+                    return;
+                }
+                Array
+                    .prototype
+                    .splice
+                    .call(this, this.fixedSize, (this.length - this.fixedSize));
+            };
+
+            FixedQueue.wrapMethod = function (methodName, trimMethod) {
+                var wrapper = function () {
+                    var method = Array.prototype[methodName];
+                    var result = method.apply(this, arguments);
+                    trimMethod.call(this);
+                    return (result);
+                };
+                return (wrapper);
+            };
+
+            FixedQueue.push = FixedQueue.wrapMethod("push", FixedQueue.trimHead);
+            FixedQueue.splice = FixedQueue.wrapMethod("splice", FixedQueue.trimTail);
+            FixedQueue.unshift = FixedQueue.wrapMethod("unshift", FixedQueue.trimTail);
+
+            var hits = FixedQueue(queue, []);
+            var boom = FixedQueue(queue, []);
+
+            var attacks = {
+                interval: time,
+
+                init: function () {
+                    setTimeout(jQuery.proxy(this.getData, this), this.interval);
+                },
+
+                //usage:
+
+                test: function () {
+                    $('#attackdiv').html('')
+
+                    fetch(events_url)
+                        .then((resp) => resp.json())
+                        .then(function (data) {
+                            log = data;
+                            len = Object
+                                .keys(log)
+                                .length;
+                            attacks.getData();
+
+                        })
+                },
+
+                getData: function () {
+                    var self = this;
+                    if (debug) 
+                        var t = timer("Loop " + count);
+                    
+                    var a = log[count];
+
+                    var IP1 = "";
+                    var IP2 = "";
+
+                    var srccountry = a["name_x"];
+                    var attackdiv_slatlong = a["name_y"];
+
+                    var srclat = a["srclat"];
+                    var srclong = a["srclong"];
+                    var dstlat = a["dstlat"];
+                    var dstlong = a["dstlong"];
+
+                    which_attack = a["subtype"];
+                    var atkname = a["threatid"];
+                    strokeColor = colors['arcs'][a["severity"]];
+
+                    hits.push({
+                        origin: {
+                            latitude: +srclat,
+                            longitude: +srclong
+                        },
+                        destination: {
+                            latitude: +dstlat,
+                            longitude: +dstlong
+                        }
+                    });
+                    map.arc(hits, {
+                        strokeWidth: 3,
+                        strokeColor: strokeColor
+                    });
+
+                    boom.push({
+                        radius: 7,
+                        latitude: +dstlat,
+                        longitude: +dstlong,
+                        fillOpacity: 0.5,
+                        attk: which_attack
+                    });
+                    map.bubbles(boom, {
+                        popupTemplate: function (geo, data) {
+                            return '<div class="hoverinfo">' + data.attk + '</div>';
+                        }
+                    });
+                    if (show_time) {
+                        tiempo = "@" + a['time_generated'] + '<br>';
+                    } else {
+                        tiempo = '';
+                    }
+                    // console.log(strokeColor);
+
+                    $('#console').append(
+                        tiempo + "<b>" + srccountry + "</b> " + IP1 + " <span style='color:#FF7474'>att" +
+                        "acks</span><br/> <b>" + attackdiv_slatlong + "</b> " + IP2 + " <br> <span styl" +
+                        "e='color:" + strokeColor + "'> " + atkname + "(" + which_attack + ")</span> <b" +
+                        "r/><br/>"
+                    );
+
+                    $('#attackdiv').animate({
+                        scrollTop: $('#attackdiv').prop("scrollHeight")
+                    }, time);
+
+                    count++;
+
+                    $("#console").animate({
+                        scrollTop: $('#console')[0].scrollHeight
+                    }, 1000);
+                    // $('#console').scrollTop($('#console')[0].scrollHeight);
+
+                    if (count < len) {
+                        if (debug) 
+                            t.stop();
+                        
+                        attacks.init();
+                    } else {
+                        setTimeout(function () {
+                            count = 0;
+                            log = [];
+                            if (!stop) {
+                                location.reload();
+                            }
+                            attacks.test();
+                        }, time);
+                        //location.reload();
+
+                    }
+                }
+            };
+            attacks.test();
+        </script>
+    </body>
+</html>
