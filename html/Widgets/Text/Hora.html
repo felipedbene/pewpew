@@ -17,12 +17,15 @@
         </script>
         <style>
             body {
+                overflow: hidden;
                 background: transparent;
             }
             .text {
-                font-size: 99vh;
+                font-size: 70vh;
                 color: white;
                 text-align: right;
+                background-color: black;
+                background-color: rgba(0,0,0, 0.8);
             }
         </style>
     </head>
@@ -34,7 +37,7 @@
                 var event = new Date().toLocaleTimeString('es-MX', options);
                 event = event[0].toLocaleUpperCase() + event.slice(1);
 
-                $('.text')[0].innerText =  event;
+                $('.text')[0].innerText = event;
                 t = setTimeout(function () {
                     startTime()
                 }, 500);

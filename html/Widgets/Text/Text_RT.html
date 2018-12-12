@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
-    <title>Texto - Microplus</title>
-    <script>
-        Tec_Text = "TIEMPO REAL"
-    </script>
-    <style>
-        body{
-            background: black;
-        }
-        .text{
-            font-size: 100vh;
-            color: white;
-            text-align: right;
-        }
-    </style>
-</head>
-<body>
-    <div class="text"></div>
-    <script>
-        $('.text')[0].innerText = Tec_Text;
-    </script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+        <title>Texto - Microplus</title>
+        <script>
+            Tec_Text = "TIEMPO REAL"
+        </script>
+        <style>
+            body {
+                background: transparent;
+                overflow: hidden;
+            }
+            .text {
+                font-size: 70vh;
+                color: white;
+                text-align: right;
+                background-color: black;
+                background-color: rgba(0,0,0, 0.8);
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="text"></div>
+        <script>
+            $('.text')[0].innerText = Tec_Text;
+        </script>
+    </body>
 </html>
