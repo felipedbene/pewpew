@@ -1,4 +1,4 @@
-from bottle import Bottle,route, run
+from bottle import Bottle,route, run, default_app
 import configparser
 import os
 import random
@@ -161,5 +161,7 @@ def topcat():
     return(resultado)
 
 
-
-run(host='0.0.0.0', port=8080, debug=True)
+if __name__ == "__main__" :
+    run(host='0.0.0.0', port=8081, debug=True)
+else:
+    application = default_app()
