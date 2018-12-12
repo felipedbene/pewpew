@@ -54,7 +54,7 @@
                 background: "black",
                 border: "#079a9a"
             }
-            time = 500 // delay in ms
+            time = 10 // delay in ms
             show_time = false // Shows attack time
             show_console = false // Show attack console
 
@@ -110,7 +110,7 @@
                 bottom: 0;
                 left: 0;
                 position: absolute;
-                overflow-y: hidden;
+                overflow: hidden;
             }
             #title {
                 width: 100vw;
@@ -385,7 +385,7 @@
                             if (!stop) {
                                 location.reload();
                             }
-                            // attacks.test();
+                            attacks.test();
                         }, time);
                         //location.reload();
 
