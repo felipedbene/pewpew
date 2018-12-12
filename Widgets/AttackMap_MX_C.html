@@ -15,6 +15,10 @@
         <script src="../Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
 
         <script>
+
+            // ############### Numero de Eventos ##############3
+            events = 500;
+
             // Error Handling
             window.onerror = function (msg) {
                 // On error, change title style and waits 3s before reload
@@ -61,7 +65,7 @@
         <script>
 
             // Backend Parameters
-            events_url = 'http://10.39.0.21:8080/events/500'
+            events_url = 'http://10.39.0.21/events/' + events
 
             var estatico = false // shows only 1 event for debugging
 
@@ -168,8 +172,8 @@
                                 element.offsetHeight / 2
                             ]);
                         // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
-                        // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850)
-                        // .translate([         width / 2,         height / 2     ]);
+                        // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
+                        // width / 2,         height / 2     ]);
 
                         var path = d3
                             .geo
