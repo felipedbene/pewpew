@@ -8,11 +8,11 @@
 
         <title>Mapa de Ataques Microplus</title>
 
-        <script src="../Widgets/JS/Datamaps/d3.v3.min.js"></script>
-        <script src="../Widgets/JS/Datamaps/d3.geo.projection.v0.min.js"></script>
-        <script src="../Widgets/JS/Datamaps/topojson.v1.min.js"></script>
-        <script src="../Widgets/JS/Datamaps/datamaps.world.min.js"></script>
-        <script src="../Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="/Widgets/JS/Datamaps/d3.v3.min.js"></script>
+        <script src="/Widgets/JS/Datamaps/d3.geo.projection.v0.min.js"></script>
+        <script src="/Widgets/JS/Datamaps/topojson.v1.min.js"></script>
+        <script src="/Widgets/JS/Datamaps/datamaps.world.min.js"></script>
+        <script src="/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
 
         <script>
 
@@ -37,7 +37,7 @@
             // GUI Parameters
 
             world = {
-                zoom: false,
+                zoom: true,
                 center: [
                     -100, 24
                 ],
@@ -56,7 +56,7 @@
             }
             time = 500 // delay in ms
             show_time = false // Shows attack time
-            show_console = false // Show attack console
+            show_console = true // Show attack console
 
             //TODO change IP text
             show_IP = false
