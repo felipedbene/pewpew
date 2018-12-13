@@ -1,6 +1,21 @@
-Section1:
-    ☐ Consertar proporções
-Section2:
-    ☐ Ler documentação Bottle Felipe
-    ☐ Grafico 1
-    ☐ Grafico 2
+Dashboard:
+    ☐ Documentação (?)
+    ☐ Resolver o problema de leitura com o canvas
+    ☐ Codigo pra refresh de tela
+    Seccion2:
+        ☐ Integração API 2/2
+        ☐ Codigo pra atualizar os gráficos a cada x tempo
+    Seccion 3:
+        ☐ Integração API 2/2
+        ☐ Codigo pra atualizar os gráficos a cada x tempo
+    Mapa:
+        ☐ Consertar os mapas cortados
+        ☐ Arrumar o mapa de baixo (animação ?)
+Archive:
+  ✔ Seccion 1 @started(18-12-13 17:29) @done(18-12-13 17:31) @lasted(2m43s)
+  ✔ Os corações @done(18-12-13 17:31)
+  ✔ Easter Egg @done(18-12-13 17:28)
+  ✔ Integração API 1/2 @done(18-12-13 17:28)
+  ✔ Consertar as porcentagens* @done(18-12-13 17:27)
+  ✔ Cores @done(18-12-13 17:28)
+  ✔ Formato graficos @done(18-12-13 17:28)

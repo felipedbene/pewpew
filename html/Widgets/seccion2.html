@@ -10,6 +10,14 @@
         <script>
             url_sev = 'http://10.39.0.21/topsev/'
             url_cat = 'http://10.39.0.21/topcat/'
+
+            spanishCategories = {
+                "Critical":"Crítica",
+                "High":"Alta",
+                "Medium": "Media",
+                "Low" : "Baja",
+                "Informational" : "Falso positivo"
+            }
         </script>
         <style>
             .body-wrapper,
@@ -64,10 +72,15 @@
             function getFromBottle_1(url) {
                 switch(url){
                     case url_cat:
-                        return [{"y": 48, "label": "Wildfire Virus"}, {"y": 4174, "label": "Vulnerability"}, {"y": 275, "label": "Virus"}, {"y": 137, "label": "spyware"}];
+                        data_cat =  [{"y": 48, "label": "Wildfire Virus"}, {"y": 4174, "label": "Vulnerability"}, {"y": 275, "label": "Virus"}, {"y": 137, "label": "spyware"}];
+                        return data_cat;
                         break;
                     case url_sev:
-                        return [{"y": 776, "label": "Critical"}, {"y": 3228, "label": "High"}, {"y": 630, "label": "Medium"}, {"y": 0, "label": "Low"}, {"y": 0, "label": "Informational"}];
+                        a = data_sev = [{"y": 776, "label": "Critical"}, {"y": 3228, "label": "High"}, {"y": 630, "label": "Medium"}, {"y": 0, "label": "Low"}, {"y": 0, "label": "Informational"}];
+                        for(i=0;i<a.length;i++){
+                            a[i]["label"] = spanishCategories[a[i]["label"]]
+                        };
+                        return data_sev;
                 }            
             }
             function getData(url) {
@@ -148,7 +161,7 @@
                         verticalAlign: "center"
                     },
                     title: {
-                        text: "Categorías más frecuentes",
+                        text: "Categorías de Ataques más frecuentes",
                         fontColor: 'white'
                     },
                     data: getData(url_cat)
