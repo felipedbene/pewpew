@@ -95,16 +95,16 @@ def sans(tipo) :
 
         return( json.dumps(levelDic,sort_keys=True) )
 
-@route('/topatck/')
-def topatck():
+@route('/topatck/<lim>')
+def topatck(lim):
 
     engine = getDBEngine()
     # get the events table
     ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False)
 
     # filter last 24 hours
-    last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
-    
+    #last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
+    last24hev = ev[ev['time_received']>=( datetime(datetime.today().year, datetime.today().month, datetime.today().day, 0, 0, 0) )]
     #group the attacks by source location and count them
     l24gby = last24hev.groupby("srcloc").count()
     
@@ -118,8 +118,17 @@ def topatck():
     merged.sort_values("dst",ascending=False,inplace=True)
 
     #rename the colunms and send to json
-    resultado = merged[["name","dst"]].rename(index=str, columns={"name": "pais", "dst": "#at"}).to_json(orient="records")
-    return(resultado)
+    temp = merged[["name","dst"]].rename(index=str, columns={"name": "pais", "dst": "#at"}).to_dict(orient="records")
+
+    resultado = []
+    lim = int(lim)
+    for i in temp :
+       resultado.append({"y" : i["#at"] , "label" : i["pais"] })
+    if lim < len(resultado):
+        return(json.dumps(resultado[0:lim]))
+    else :
+        resultado = { "error":"invalid number of countries"}
+        return(json.dumps(resultado))
 
 @route('/blkday/')
 def blkday():
@@ -130,35 +139,72 @@ def blkday():
     ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False)
 
     # filter for events since 0:00 of the current day
-    #last24hev = ev[ev['time_received']>=( datetime(datetime.today().year, datetime.today().month, datetime.today().day, 0, 0, 0) )]
-    last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
+    last24hev = ev[ev['time_received']>=( datetime(datetime.today().year, datetime.today().month, datetime.today().day, 0, 0, 0) )]
+    #last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
     #group the attacks by source location and count them
     l24gby = last24hev["dst"].count()
 
-    resultado = "{'#blk' : " + str(l24gby) + "}"
-    return(resultado)
+    resultado = [ { "label" : "País", "y" : 0}]
+    resultado[0]["y"] =  int(l24gby)
+    return( json.dumps(resultado))
 
 @route('/topsev/')
 def topsev():
 
     engine = getDBEngine()
     ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False)
-    last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
+    #last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
+    last24hev = ev[ev['time_received']>=( datetime(datetime.today().year, datetime.today().month, datetime.today().day, 0, 0, 0) )]
     l24gby = last24hev.groupby("severity").count()
-    resultado = l24gby["dst"].to_json()
-    print(resultado)
-    return(resultado)
+    temp = l24gby["dst"].to_dict()
+
+    resultado = [{ "y" : 0, "label" : "Critical" }
+    ,  {"y" : 0, "label" : "High" }
+    ,  {"y" : 0, "label" : "Medium"}
+    ,  {"y" : 0, "label" : "Low"}
+    ,  {"y" : 0, "label" : "Informational"}
+    ]
+
+    if "critical" in temp :
+        resultado[0]["y"] = temp["critical"]
+    if "high" in temp :
+        resultado[1]["y"] = temp["high"]
+    if "medium" in temp :
+        resultado[2]["y"] = temp["medium"]
+    if "low" in temp :
+        resultado[3]["y"] = temp["low"]
+    if "informational" in temp :
+        resultado[4]["y"] = temp["informational"]
+
+    return(json.dumps(resultado))
 
 @route('/topcat/')
 def topcat():
 
     engine = getDBEngine()
     ev = pd.read_sql("events",con=engine).sort_values("time_received",ascending=False)
-    last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
+    #last24hev = ev[ev['time_received']>=(datetime.now()-timedelta(hours=24))]
+    last24hev = ev[ev['time_received']>=( datetime(datetime.today().year, datetime.today().month, datetime.today().day, 0, 0, 0) )]
     l24gby = last24hev.groupby("subtype").count()
-    resultado = l24gby["dst"].to_json()
-    print(resultado)
-    return(resultado)
+    temp = l24gby["dst"].to_dict()
+
+    resultado = [{ "y" : 0, "label" : "Wildfire Virus" }
+    ,  {"y" : 0, "label" : "Vulnerability" }
+    ,  {"y" : 0, "label" : "Virus"}
+    ,  {"y" : 0, "label" : "spyware"}
+    ]
+
+    if "wildfire-virus" in temp :
+        resultado[0]["y"] = temp["wildfire-virus"]
+    if "vulnerability" in temp :
+        resultado[1]["y"] = temp["vulnerability"]
+    if "virus" in temp :
+        resultado[2]["y"] = temp["virus"]
+    if "spyware" in temp :
+        resultado[3]["y"] = temp["spyware"]
+   
+    
+    return(json.dumps(resultado))
 
 
 if __name__ == "__main__" :
