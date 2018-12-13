@@ -12,8 +12,8 @@
             response_1 = []
 
             Attack = {
-                "link": '/html/XML/TotalAttacks.json',
-                // "link": 'http://10.39.0.21/blkday/',
+                // "link": '/html/XML/TotalAttacks.json',
+                "link": 'http://10.39.0.21/blkday/',
                 "header": "y"
             }
             Country = {
@@ -74,6 +74,10 @@
                         // console.log("Request Failed: " + err);
                     });
             };
+            function getFromBottle_1(url) {
+                return [{"y":2478,"label":"United States"},{"y":945,"label":"China"},{"y":233,"label":"Mexico"},{"y":83,"label":"Austria"},{"y":83,"label":"Australia"}];
+                        
+            }
             function getFromBottle(url, country, counter) {
 
                 $
@@ -101,7 +105,7 @@
                         name: "Países",
                         axisYType: "secondary",
                         color: "#014D65",
-                        dataPoints: getFromBottle(url["link"], url["country"], url["count"])
+                        dataPoints: getFromBottle_1(url["link"], url["country"], url["count"])
                     }
                 ]
             }

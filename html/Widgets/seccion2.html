@@ -29,14 +29,65 @@
             function getFromBottle(url) {
                 $
                     .getJSON(url)
-                    .done(function (data) {
-                        return data;
+                    .done(function (json) {
+                        console.log("getFromBottle Success!");
+                        console.log(json);
+                        response = json;
+                        return json;
+
                     })
+                    .fail(function (jqxhr, textStatus, error) {
+                        var err = textStatus + ", " + error;
+                        // In case of error
+                        console.log("Request Failed: " + err);
+                        data = [
+                            {
+                                "y": 776,
+                                "label": "Critical"
+                            }, {
+                                "y": 3128,
+                                "label": "High"
+                            }, {
+                                "y": 599,
+                                "label": "Medium"
+                            }, {
+                                "y": 0,
+                                "label": "Low"
+                            }, {
+                                "y": 0,
+                                "label": "Informational"
+                            }
+                        ];
+                        return data;
+                    });
+            }
+            function getFromBottle_1(url) {
+                return  [
+                            {
+                                "y": 776,
+                                "label": "Critical"
+                            }, {
+                                "y": 3128,
+                                "label": "High"
+                            }, {
+                                "y": 599,
+                                "label": "Medium"
+                            }, {
+                                "y": 0,
+                                "label": "Low"
+                            }, {
+                                "y": 0,
+                                "label": "Informational"
+                            }
+                        ];
+                        
             }
             function getData(url) {
                 // TODO fetch JS
                 switch (url) {
                     case url_cat:
+                        console.log('urlcat');
+
                         return [
                             {
                                 type: "pie",
@@ -45,18 +96,20 @@
                                 indexLabel: "{label}",
                                 legendText: "{label} (#y%)",
                                 indexLabelPlacement: "inside",
-                                dataPoints: getFromBottle(url)
+                                dataPoints: getFromBottle_1(url)
                             }
                         ]
                         break;
                     default:
+                        console.log('default');
+
                         return [
                             {
                                 type: "pie",
                                 startAngle: 240,
                                 yValueFormatString: "##0.00\"%\"",
                                 indexLabel: "{y}",
-                                dataPoints: getFromBottle(url)
+                                dataPoints: getFromBottle_1(url)
                             }
                         ]
                         break;
