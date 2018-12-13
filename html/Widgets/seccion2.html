@@ -62,25 +62,13 @@
                     });
             }
             function getFromBottle_1(url) {
-                return  [
-                            {
-                                "y": 776,
-                                "label": "Critical"
-                            }, {
-                                "y": 3128,
-                                "label": "High"
-                            }, {
-                                "y": 599,
-                                "label": "Medium"
-                            }, {
-                                "y": 0,
-                                "label": "Low"
-                            }, {
-                                "y": 0,
-                                "label": "Informational"
-                            }
-                        ];
-                        
+                switch(url){
+                    case url_cat:
+                        return [{"y": 48, "label": "Wildfire Virus"}, {"y": 4174, "label": "Vulnerability"}, {"y": 275, "label": "Virus"}, {"y": 137, "label": "spyware"}];
+                        break;
+                    case url_sev:
+                        return [{"y": 776, "label": "Critical"}, {"y": 3228, "label": "High"}, {"y": 630, "label": "Medium"}, {"y": 0, "label": "Low"}, {"y": 0, "label": "Informational"}];
+                }            
             }
             function getData(url) {
                 // TODO fetch JS
@@ -92,9 +80,9 @@
                             {
                                 type: "pie",
                                 showInLegend: true,
-                                toolTipContent: "<b>{label}</b>: ${y} (#y%)",
-                                indexLabel: "{label}",
-                                legendText: "{label} (#y%)",
+                                toolTipContent: "<b>{label}</b>: {y}",
+                                indexLabel: "{y} (#percent%)",
+                                legendText: "{label}",
                                 indexLabelPlacement: "inside",
                                 dataPoints: getFromBottle_1(url)
                             }
@@ -106,9 +94,11 @@
                         return [
                             {
                                 type: "pie",
+                                showInLegend: true,
                                 startAngle: 240,
-                                yValueFormatString: "##0.00\"%\"",
-                                indexLabel: "{y}",
+                                indexLabel: "#percent%",
+                                legendText: "{label} ({y})",
+                                percentFormatString: "#0.##",
                                 dataPoints: getFromBottle_1(url)
                             }
                         ]
@@ -139,7 +129,9 @@
                     theme: 'dark2',
                     colorSet: 'green2red',
                     legend: {
-                        fontColor: 'white'
+                        fontColor: 'white',
+                        horizontalAlign: "center",
+                        verticalAlign: "top"
                     },
                     title: {
                         text: "Severidad de ataques Bloqueados",
@@ -150,9 +142,8 @@
                 var chart2 = new CanvasJS.Chart("frecuentes", {
                     animationEnabled: false,
                     backgroundColor: "black",
-                    theme: 'dark2',
+                    theme: 'dark1',
                     legend: {
-                        fontColor: 'white',
                         horizontalAlign: "left",
                         verticalAlign: "center"
                     },
