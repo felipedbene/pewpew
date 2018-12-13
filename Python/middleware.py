@@ -95,8 +95,8 @@ def sans(tipo) :
 
         return( json.dumps(levelDic,sort_keys=True) )
 
-@route('/topatck/')
-def topatck():
+@route('/topatck/<lim>')
+def topatck(lim):
 
     engine = getDBEngine()
     # get the events table
@@ -118,8 +118,17 @@ def topatck():
     merged.sort_values("dst",ascending=False,inplace=True)
 
     #rename the colunms and send to json
-    resultado = merged[["name","dst"]].rename(index=str, columns={"name": "pais", "dst": "#at"}).to_json(orient="records")
-    return(resultado)
+    temp = merged[["name","dst"]].rename(index=str, columns={"name": "pais", "dst": "#at"}).to_dict(orient="records")
+
+    resultado = []
+    lim = int(lim)
+    for i in temp :
+       resultado.append({"y" : i["#at"] , "label" : i["pais"] })
+    if lim < len(resultado):
+        return(json.dumps(resultado[0:lim]))
+    else :
+        resultado = { "error":"invalid number of countries"}
+        return(json.dumps(resultado))
 
 @route('/blkday/')
 def blkday():
@@ -135,8 +144,9 @@ def blkday():
     #group the attacks by source location and count them
     l24gby = last24hev["dst"].count()
 
-    resultado = "{'#blk' : " + str(l24gby) + "}"
-    return(resultado)
+    resultado = [ { "label" : "País", "y" : 0}]
+    resultado[0]["y"] =  l24gby
+    return( json.dumps(str(resultado) ))
 
 @route('/topsev/')
 def topsev():
@@ -177,7 +187,7 @@ def topcat():
     last24hev = ev[ev['time_received']>=( datetime(datetime.today().year, datetime.today().month, datetime.today().day, 0, 0, 0) )]
     l24gby = last24hev.groupby("subtype").count()
     temp = l24gby["dst"].to_dict()
-    
+
     resultado = [{ "y" : 0, "label" : "Wildfire Virus" }
     ,  {"y" : 0, "label" : "Vulnerability" }
     ,  {"y" : 0, "label" : "Virus"}
