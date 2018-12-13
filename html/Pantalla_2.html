@@ -8,8 +8,12 @@
         <title>Pantalla - Microplus</title>
         <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
         <script>
-            map = ''
+            map = '/html/Widgets/AttackMap/AttackMap_MX_C.html'
             text = '/html/Widgets/Text/Hora.html'
+            section1 = '/html/Widgets/seccion1.html'
+            section2 = '/html/Widgets/seccion2.html'
+            section3 = '/html/Widgets/seccion3.html'
+            section4 = '/html/Widgets/seccion4.html'
         </script>
         <style>
             body {
@@ -56,6 +60,13 @@
                 background: purple;
                 height: 50%;
             }
+            .subsect, .subsect2{
+                width: 25vw;
+                height: 90vh;
+            }
+            .subsect2{
+                height: 45vh;;
+            }
         </style>
     </head>
     <body>
@@ -73,7 +84,7 @@
         </div>
         <div class="text"></div>
         <script>
-            function load_home(map, text) {
+            function load_home(text, section1, section2, section3, section4, map) {
                 $('.head').html(
                     '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></obje' +
                     'ct>'
@@ -81,9 +92,25 @@
                 $('.text').html(
                     '<object class="text" type="text/html" data="' + text + '" ></object>'
                 );
+                $('#1').html(
+                    '<object class="subsect" type="text/html" data="' + section1 + '" ></object>'
+                );
+                $('#2').html(
+                    '<object class="subsect" type="text/html" data="' + section2 + '" ></object>'
+                );
+                $('#3').html(
+                    '<object class="subsect" type="text/html" data="' + section3 + '" ></object>'
+                );
+                $('#china').html(
+                    '<object class="subsect2" type="text/html" data="' + section4 + '" ></object>'
+                );
+                $('#map').html(
+                    '<object class="subsect2" type="text/html" data="' + map + '" ></object>'
+                );
+                
             }
 
-            window.onload = load_home(map, text)
+            window.onload = load_home(text, section1, section2, section3, section4, map)
         </script>
     </body>
 </html>
