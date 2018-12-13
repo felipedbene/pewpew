@@ -159,7 +159,7 @@ def writeToDB2(entry) :
         dfbN.append(delta)
         return True
     else :
-        print("Empty query, not proceeding")
+        print("Empty query, quitting")
         return False
 
 
