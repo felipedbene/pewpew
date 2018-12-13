@@ -148,12 +148,13 @@ def writeToDB2(entry) :
         print("Query not empty, proceed")
         print( "Qr shape : " +  str(qrdf.shape)  )
         print( "Dfb shape : " +  str(dfbN.shape)  )
-        qrdf.sort_index(inplace=True)
-        dfbN.sort_index(inplace=True)
+        qrdf.sort_index(inplace=True).sort_index(axis=1)
+        dfbN.sort_index(inplace=True).sort_index(axis=1)
         print( list(qrdf.columns.values)  )
         print( list(dfbN.columns.values)  )
         print(dfbN)
         print(qrdf)
+        print(qrdf == dfbN)
         delta = qrdf[ dfbN != qrdf ].dropna(how="all")
         dfbN.append(delta)
         return True
@@ -231,7 +232,7 @@ if __name__ == '__main__':
         tiempo = getSetTime(sys.argv[1])
 
     except :
-        tiempo = getSetTime(360)
+        tiempo = getSetTime(15)
 
     token = getToken(tokenFile)
     # Start do stuff
