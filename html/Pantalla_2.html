@@ -40,12 +40,36 @@
                 height: 100vh;
                 width: 100vw;
             }
+            .section {
+                width: 25%;
+                background: yellow;
+            }
+            div#4 {
+                display: flex;
+                flex-direction: column;
+            }
+            div#map {
+                background: green;
+                height: 50%;
+            }
+            div#china {
+                background: purple;
+                height: 50%;
+            }
         </style>
     </head>
     <body>
         <div class="wrapper">
             <div class="head"></div>
-            <div class="map"></div>
+            <div class="map">
+                <div class="section" id="1"></div>
+                <div class="section" id="2"></div>
+                <div class="section" id="3"></div>
+                <div class="section" id="4">
+                    <div id="china"></div>
+                    <div id="map"></div>
+                </div>
+            </div>
         </div>
         <div class="text"></div>
         <script>
