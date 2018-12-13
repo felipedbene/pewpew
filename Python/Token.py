@@ -27,7 +27,8 @@ if __name__ == '__main__':
     #             aaa = line.split("'")
     #             aaa[1] = ip
     #             line = "'".join(aaa)
-    #         result += line + '\n'
+    #         result += line
+    #  + '\n'
     # f = open(os.path.expanduser('~/code/NorsePi/SHELL/PaloAltoXML.py'),'w')
     # f.write(result)
     # f.close()
