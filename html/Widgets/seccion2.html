@@ -5,9 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <script src="/html/Widgets/JS/canvasjs-2.2/canvasjs.min.js"></script>
+        <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
         <title>Document</title>
+        <script>
+            url_sev = 'http://10.39.0.21/topsev/'
+            url_cat = 'http://10.39.0.21/topcat/'
+        </script>
         <style>
-            body, .body-wrapper {
+            .body-wrapper,
+            body {
                 display: flex;
                 background-color: black;
                 overflow: hidden;
@@ -21,29 +27,16 @@
         </style>
         <script>
             function getFromBottle(url) {
-                return [
-                    {
-                        y: 79.45,
-                        label: "Critical"
-                    }, {
-                        y: 7.31,
-                        label: "High"
-                    }, {
-                        y: 7.06,
-                        label: "Medium"
-                    }, {
-                        y: 4.91,
-                        label: "Low"
-                    }, {
-                        y: 1.26,
-                        label: "Informational"
-                    }
-                ]
+                $
+                    .getJSON(url)
+                    .done(function (data) {
+                        return data;
+                    })
             }
             function getData(url) {
                 // TODO fetch JS
                 switch (url) {
-                    case 1:
+                    case url_cat:
                         return [
                             {
                                 type: "pie",
@@ -99,7 +92,7 @@
                         text: "Severidad de ataques Bloqueados",
                         fontColor: 'white'
                     },
-                    data: getData('now what')
+                    data: getData(url_sev)
                 });
                 var chart2 = new CanvasJS.Chart("frecuentes", {
                     animationEnabled: false,
@@ -114,7 +107,7 @@
                         text: "Categorías más frecuentes",
                         fontColor: 'white'
                     },
-                    data: getData(1)
+                    data: getData(url_cat)
                 });
                 chart.render();
                 chart2.render();
