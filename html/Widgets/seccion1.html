@@ -4,10 +4,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="../JS/jQuery/jquery-3.3.1.min.js"></script>
-        <script src="../JS/json2html/json2html.min.js"></script>
+        <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="/html/Widgets/JS/json2html/json2html.min.js"></script>
         <title>Document</title>
         <style>
+            h1,
+            h2,
+            h3,
+            h4 {
+                margin: 0;
+            }
             img {
                 height: 5vh;
             }
@@ -60,8 +66,8 @@
             function updateGauge(file) {
                 fetch(file)
                     .then(response => response.json())
-                    // .then(text => console.log(text["level"]))
-                    .then(text => changeGauge(text["level"])) // Mandar o comando por aqui
+                    .then(text => console.log(text["level"]))
+                    .then(text => changeGauge(text)) // Mandar o comando por aqui
             };
             String.prototype.replaceAll = function (search, replacement) {
                 var target = this;
@@ -80,7 +86,9 @@
     </head>
     <body>
         <div class="inner-gauge wrapper" align='center'>
-            <div class="inner-gauge title" id="section_title"><h1>Nivel de ciber-riesgo mundial</h1></div>
+            <div class="inner-gauge title" id="section_title">
+                <h1>Nivel de ciber-riesgo mundial</h1>
+            </div>
             <div class="inner-gauge" id="gauge">
                 <img
                     src="img/Gauges/PNG/01_Green.png"
@@ -315,8 +323,8 @@
         </div>
         <script>
             window.setInterval(function () {
-                updateGauge('http://10.39.0.21:8080/sans/astext')
-            }, 500);
+                updateGauge('http://10.39.0.21/sans/astext')
+            }, 1000*60*5); //ms -> 5 min
             a = $('#historial-table');
             a[0].innerHTML = a[0]
                 .innerHTML

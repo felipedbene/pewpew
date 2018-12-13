@@ -8,8 +8,12 @@
         <title>Pantalla - Microplus</title>
         <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
         <script>
-            map = '/html/Widgets/AttackMap/AttackMap_World_C.html'
+            map = '/html/Widgets/AttackMap/AttackMap_MX_C_mini.html'
             text = '/html/Widgets/Text/Hora.html'
+            section1 = '/html/Widgets/seccion1.html'
+            section2 = '/html/Widgets/seccion2.html'
+            section3 = '/html/Widgets/seccion3.html'
+            section4 = '/html/Widgets/seccion4.html'
         </script>
         <style>
             body {
@@ -23,13 +27,16 @@
             .map {
                 width: 100vw;
                 height: 90vh;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
             }
             .text {
-                width: 55vw;
-                height: 7vh;
+                width: 40vw;
+                height: 5vh;
                 position: absolute;
-                bottom: 0;
-                right: 0;
+                bottom: 22vh;
+                right: 10px;
             }
             .wrapper {
                 display: flex;
@@ -37,24 +44,70 @@
                 height: 100vh;
                 width: 100vw;
             }
+            .section {
+                width: 25%;
+            }
+            div#4 {
+                display: flex;
+                flex-direction: column;
+            }
+            div#map {
+                height: 50%;
+            }
+            div#china {
+                height: 50%;
+            }
+            .subsect, .subsect2{
+                width: 25vw;
+                height: 90vh;
+            }
+            .subsect2{
+                height: 45vh;;
+            }
         </style>
     </head>
     <body>
         <div class="wrapper">
             <div class="head"></div>
-            <div class="map"></div>
+            <div class="map">
+                <div class="section" id="1"></div>
+                <div class="section" id="2"></div>
+                <div class="section" id="3"></div>
+                <div class="section" id="4">
+                    <div id="china"></div>
+                    <div id="map"></div>
+                </div>
+            </div>
         </div>
         <div class="text"></div>
         <script>
-            function load_home(map, text) {
-                $('.head')[0].innerHTML = '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></object>';
-                $('.map')[0].innerHTML = '<object class="map" type="text/html" data="' + map +
-                        '" ></object>';
-                $('.text')[0].innerHTML = '<object class="text" type="text/html" data="' + text + '" ></obje' +
-                        'ct>';
+            function load_home(text, section1, section2, section3, section4, map) {
+                $('.head').html(
+                    '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></obje' +
+                    'ct>'
+                );
+                $('.text').html(
+                    '<object class="text" type="text/html" data="' + text + '" ></object>'
+                );
+                $('#1').html(
+                    '<object class="subsect" type="text/html" data="' + section1 + '" ></object>'
+                );
+                $('#2').html(
+                    '<object class="subsect" type="text/html" data="' + section2 + '" ></object>'
+                );
+                $('#3').html(
+                    '<object class="subsect" type="text/html" data="' + section3 + '" ></object>'
+                );
+                $('#china').html(
+                    '<object class="subsect2" type="text/html" data="' + section4 + '" ></object>'
+                );
+                $('#map').html(
+                    '<object class="subsect2" type="text/html" data="' + map + '" ></object>'
+                );
+                
             }
 
-            window.onload = load_home(map, text)
+            window.onload = load_home(text, section1, section2, section3, section4, map)
         </script>
     </body>
 </html>
