@@ -145,8 +145,8 @@ def blkday():
     l24gby = last24hev["dst"].count()
 
     resultado = [ { "label" : "País", "y" : 0}]
-    resultado[0]["y"] =  l24gby
-    return( json.dumps(str(resultado) ))
+    resultado[0]["y"] =  int(l24gby)
+    return( json.dumps(resultado))
 
 @route('/topsev/')
 def topsev():
