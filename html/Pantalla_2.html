@@ -23,6 +23,9 @@
             .map {
                 width: 100vw;
                 height: 90vh;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
             }
             .text {
                 width: 55vw;
@@ -47,11 +50,13 @@
         <div class="text"></div>
         <script>
             function load_home(map, text) {
-                $('.head')[0].innerHTML = '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></object>';
-                $('.map')[0].innerHTML = '<object class="map" type="text/html" data="' + map +
-                        '" ></object>';
-                $('.text')[0].innerHTML = '<object class="text" type="text/html" data="' + text + '" ></obje' +
-                        'ct>';
+                $('.head').html(
+                    '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></obje' +
+                    'ct>'
+                );
+                $('.text').html(
+                    '<object class="text" type="text/html" data="' + text + '" ></object>'
+                );
             }
 
             window.onload = load_home(map, text)
