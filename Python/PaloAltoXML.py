@@ -136,6 +136,20 @@ def normalizeQr(df) :
 
     return qr
 
+
+def writeToDB(entry) :
+    engine = getDBEngine()
+    #read what is already there
+    df = pd.DataFrame.from_dict(entry)
+    df3 = df[ ["srcloc",'@logid'] ]
+
+    for idx,i in enumerate(df['srcloc']):
+        df3['srcloc'][idx] = i['@cc']
+    df2 = df[ ['time_received','severity','threatid','device_name','src','dst','subtype','@logid']]
+    df4 = pd.concat( [df2,df3],axis=1 )
+    df4['time_received'] =  pd.to_datetime(df4.time_received)
+    df4.to_sql(name="events",con=engine,schema="public",if_exists="append",index=False)
+
 def writeToDB2(entry) :
     engine = getDBEngine()
     qr = pd.DataFrame.from_dict(entry)
@@ -248,7 +262,7 @@ if __name__ == '__main__':
             # Write all to DB in one shot
             try :
                 print("Got candidates, will de-dup and write")
-                writeToDB2(threats)
+                writeToDB(threats)
             except Exception as e:
                 print("Exception writing to db : " + str(e))
     else :
