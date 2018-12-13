@@ -7,6 +7,23 @@
         <script src="/html/Widgets/JS/canvasjs-2.2/canvasjs.min.js"></script>
         <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
         <title>Document</title>
+        <script>
+            var response = []
+            response_1 = []
+
+            Attack = {
+                "link": '/html/XML/TotalAttacks.json',
+                // "link": 'http://10.39.0.21/blkday/',
+                "header": "y"
+            }
+            Country = {
+                "link": '/html/XML/Countries.json',
+                // "link": 'http://10.39.0.21/topatck/5',
+                "country": "label",
+                "count": "y"
+            }
+            timeDelay = 5 * 1000 //ms
+        </script>
         <style>
             body {
                 color: white;
@@ -36,37 +53,46 @@
             }
 
             function changeNumber(number) {
+                // Adds comma decimal places
                 var a = document.getElementById('count');
                 number = number
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 a.innerText = number;
             }
-            function updateNumber(file) {
-                fetch(file)
-                    .then(response => response.json())
-                    .then(text => changeNumber(text["total"])) // Mandar o comando por aqui
+            function updateNumber(url, header) {
+                // Gets attacks from Felipe's API
+                $
+                    .getJSON(url)
+                    .done(function (json) {
+                        console.log("updateNumber Success!");
+                        response_1 = json;
+                        changeNumber(json[0][header]);
+                    })
+                    .fail(function (jqxhr, textStatus, error) {
+                        var err = textStatus + ", " + error;
+                        // console.log("Request Failed: " + err);
+                    });
             };
-            function getFromBottle(url) {
-                return [
-                    {
-                        "y": 80,
-                        "label": "Sweden"
-                    }, {
-                        "y": 808,
-                        "label": "Taiwan"
-                    }, {
-                        "y": 908,
-                        "label": "Russia"
-                    }, {
-                        "y": 108,
-                        "label": "Spain"
-                    }, {
-                        "y": 203,
-                        "label": "Brazil"
-                    }
-                ]
-                // $.get(url,function(data){     console.log(data);     return data; })
+            function getFromBottle(url, country, counter) {
+
+                $
+                    .getJSON(url)
+                    .done(function (json) {
+                        console.log("getFromBottle Success!");
+                        console.log(json);
+                        response = json;
+                        return json;
+                        
+                    })
+                    .fail(function (jqxhr, textStatus, error) {
+                        var err = textStatus + ", " + error;
+                        // In case of error
+                        console.log("Request Failed: " + err);
+                        data = [{"y":2478,"label":"United States"},{"y":945,"label":"China"},{"y":233,"label":"Mexico"},{"y":83,"label":"Austria"},{"y":83,"label":"Australia"}];
+                        return data;
+                    });
+
             }
             function getData(url) {
                 return [
@@ -75,14 +101,15 @@
                         name: "Países",
                         axisYType: "secondary",
                         color: "#014D65",
-                        dataPoints: getFromBottle(url)
+                        dataPoints: getFromBottle(url["link"], url["country"], url["count"])
                     }
                 ]
             }
+
             window.setInterval(function () {
-                // TODO Botar API
-                updateNumber('../XML/TotalAttacks.json')
-            }, 500);
+                // TODO Update Graph
+                updateNumber(Attack["link"], Attack["header"])
+            }, timeDelay);
         </script>
     </head>
     <body>
@@ -93,7 +120,7 @@
         </div>
         <script>
             window.onload = function () {
-
+                updateNumber(Attack["link"], Attack["header"])
                 var chart = new CanvasJS.Chart("paises", {
                     animationEnabled: false,
                     backgroundColor: "black",
@@ -113,13 +140,14 @@
                         gridColor: "rgba(1,77,101,.1)",
                         title: "Número de Ataques"
                     },
-                    data: getData('../XML/Countries.txt')
+                    data: getData(Country)
                 });
                 chart
                     .options
                     .data[0]
                     .dataPoints
                     .sort(compareDataPointYAscend);
+                console.log('Creating chart')
                 chart.render();
             }
         </script>
