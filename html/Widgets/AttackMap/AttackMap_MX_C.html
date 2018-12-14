@@ -36,14 +36,6 @@
         <script>
             // GUI Parameters
 
-            world = {
-                zoom: true,
-                center: [
-                    -100, 24
-                ],
-                scale: 1850
-            }
-
             colors = {
                 arcs: {
                     low: "#42ff58", //green
@@ -134,6 +126,15 @@
         <script>
             // Create World
             $('#console')[0].innerText = 'Loading...'
+            world = {
+                zoom: true,
+                center: [
+                    -100, 24
+                ],
+                scale: ($(document).width() + $(document).width())/2.1
+            }
+
+
             if (!world['zoom']) { // Show whole world
                 var map = new Datamap({
 

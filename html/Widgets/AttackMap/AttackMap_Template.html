@@ -36,13 +36,6 @@
         <script>
             // GUI Parameters
 
-            world = {
-                zoom: false,
-                center: [
-                    -100, 24
-                ],
-                scale: 1850
-            }
 
             colors = {
                 arcs: {
@@ -134,19 +127,53 @@
         <script>
             // Create World
             $('#console')[0].innerText = 'Loading...'
+            var zoom_pant = ($(document).height() + $(document).width())/10; // World zoom 
+            var height_pant = [0,$(document).height()/35]; // Horizontal distance
+
+
+            world = {
+                zoom: false,
+                center: [
+                    -100, 24
+                ],
+                scale: ($(document).width() + $(document).width())/2.1
+            }
+
+
+
             if (!world['zoom']) { // Show whole world
                 var map = new Datamap({
 
                     scope: 'world',
                     element: document.getElementById('container1'),
-                    projection: 'mercator',
+                    setProjection: function (element) {
+                        var projection = d3
+                            .geo
+                            .mercator()
+                            .center(height_pant)
+                            .rotate([0, 0])
+                            .scale(zoom_pant)
+                            .translate([
+                                element.offsetWidth / 2,
+                                element.offsetHeight / 2
+                            ]);
+                        // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
+                        // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
+                        // width / 2,         height / 2     ]);
+
+                        var path = d3
+                            .geo
+                            .path()
+                            .projection(projection);
+                        return {path: path, projection: projection};
+                    },
                     fills: {
                         defaultFill: colors['background']
                     },
                     geographyConfig: {
                         dataUrl: null,
                         hideAntarctica: true,
-                        borderWidth: 2,
+                        borderWidth: 3,
                         borderColor: colors['border'],
                         popupTemplate: function (geography, data) {
                             return '<div class="hoverinfo" style="color:white;background:black">' +

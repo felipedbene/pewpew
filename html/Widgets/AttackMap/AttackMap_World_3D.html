@@ -36,14 +36,6 @@
         <script>
             // GUI Parameters
 
-            world = {
-                zoom: true,
-                center: [
-                    -100, 24
-                ],
-                scale: 700
-            }
-
             colors = {
                 arcs: {
                     low: "#42ff58", //green
@@ -77,7 +69,8 @@
         </script>
 
         <style>
-            #wrapper {
+
+             #wrapper {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -91,17 +84,20 @@
             body,
             html {
                 margin: 0;
-                height: 100%;
+                height: 100vh;
+                width: 100vw;
                 overflow: hidden;
                 color: white;
                 background-color: black;
                 font-size: 3vh;
             }
             #container1 {
+                z-index: 1;
                 width: 100vw;
                 height: 90vh;
-                /* background-color: blue; */
+                background-color: transparent;
             }
+            
             #console {
                 /* background-color: red; */
                 width: 25vw;
@@ -132,21 +128,55 @@
         </id>
         <div id="console"></div>
         <script>
-            // Create World
-            $('#console')[0].innerText = 'Loading...'
+            // Create World $('#ocean_circle').setAttribute('r',zoom_pant);
+            $('#console')[0].innerText = 'Loading...';
+            var zoom_pant = ($(document).height() + $(document).width()) / 4; // World zoom
+            var height_pant = [
+                0, $(document).height() / 140
+            ]; // Horizontal distance
+
+            world = {
+                zoom: false,
+                center: [
+                    -100, 24
+                ],
+                scale: ($(document).width() + $(document).width()) / 2.1
+            }
+
             if (!world['zoom']) { // Show whole world
                 var map = new Datamap({
 
                     scope: 'world',
                     element: document.getElementById('container1'),
-                    projection: 'mercator',
+                    setProjection: function (element) {
+                        var projection = d3
+                            .geo
+                            .orthographic()
+                            .clipAngle(90)
+                            .center(height_pant)
+                            .rotate([110, -20])
+                            .scale(zoom_pant)
+                            .translate([
+                                element.offsetWidth / 2,
+                                element.offsetHeight / 2
+                            ]);
+                        // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
+                        // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
+                        // width / 2,         height / 2     ]);
+
+                        var path = d3
+                            .geo
+                            .path()
+                            .projection(projection);
+                        return {path: path, projection: projection};
+                    },
                     fills: {
                         defaultFill: colors['background']
                     },
                     geographyConfig: {
                         dataUrl: null,
                         hideAntarctica: true,
-                        borderWidth: 2,
+                        borderWidth: 1,
                         borderColor: colors['border'],
                         popupTemplate: function (geography, data) {
                             return '<div class="hoverinfo" style="color:white;background:black">' +
@@ -202,7 +232,7 @@
             // Backend
             $('#console').html('');
             if (!show_console) 
-                $('#console')[0].css({'visibility': 'hidden'})
+                $('#console')[0].hidden = true
 
             $.extend({
                 getUrlVars: function () {
