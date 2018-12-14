@@ -1,9 +1,9 @@
 Dashboard:
-    ☐ Documentação (?)
-    ☐ Codigo pra refresh de tela @hoy
-        ☐ 2.5 minutos
-☐ Mover timer de lugar
+    ☐ nivel ciber-riesgo
 Archive:
+  ✔ Codigo pra refresh de tela @hoy @done(18-12-14 17:33) @project(Dashboard)
+  ✔ 2.5 minutos @done(18-12-14 17:33) @project(Dashboard)
+  ✔ Mover timer de lugar @done(18-12-14 17:33)
   ✔ Resolver o problema de leitura com o canvas @done(18-12-14 16:00) @project(Dashboard)
   ✔ Integração API 2/2 @done(18-12-14 16:00) @project(Dashboard.Seccion2)
   ✘ Codigo pra atualizar os gráficos a cada x tempo @cancelled(18-12-14 16:00) @project(Dashboard.Seccion2)
