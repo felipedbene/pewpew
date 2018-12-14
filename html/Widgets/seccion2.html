@@ -11,12 +11,15 @@
             url_sev = 'http://10.39.0.21/topsev/'
             url_cat = 'http://10.39.0.21/topcat/'
 
+            var response_sev = [];
+            var response_cat = [];
+
             spanishCategories = {
-                "Critical":"Crítica",
-                "High":"Alta",
+                "Critical": "Crítica",
+                "High": "Alta",
                 "Medium": "Media",
-                "Low" : "Baja",
-                "Informational" : "Falso positivo"
+                "Low": "Baja",
+                "Informational": "Falso positivo"
             }
         </script>
         <style>
@@ -41,6 +44,13 @@
                         console.log("getFromBottle Success!");
                         console.log(json);
                         response = json;
+                        if (url == url_cat) {
+                            console.log('getting response_cat');
+                            response_cat = json
+                        } else {
+                            console.log('getting response_sev');
+                            response_sev = json
+                        }
                         return json;
 
                     })
@@ -48,76 +58,8 @@
                         var err = textStatus + ", " + error;
                         // In case of error
                         console.log("Request Failed: " + err);
-                        data = [
-                            {
-                                "y": 776,
-                                "label": "Critical"
-                            }, {
-                                "y": 3128,
-                                "label": "High"
-                            }, {
-                                "y": 599,
-                                "label": "Medium"
-                            }, {
-                                "y": 0,
-                                "label": "Low"
-                            }, {
-                                "y": 0,
-                                "label": "Informational"
-                            }
-                        ];
-                        return data;
                     });
             }
-            function getFromBottle_1(url) {
-                switch(url){
-                    case url_cat:
-                        data_cat =  [{"y": 48, "label": "Wildfire Virus"}, {"y": 4174, "label": "Vulnerability"}, {"y": 275, "label": "Virus"}, {"y": 137, "label": "spyware"}];
-                        return data_cat;
-                        break;
-                    case url_sev:
-                        a = data_sev = [{"y": 776, "label": "Critical"}, {"y": 3228, "label": "High"}, {"y": 630, "label": "Medium"}, {"y": 0, "label": "Low"}, {"y": 0, "label": "Informational"}];
-                        for(i=0;i<a.length;i++){
-                            a[i]["label"] = spanishCategories[a[i]["label"]]
-                        };
-                        return data_sev;
-                }            
-            }
-            function getData(url) {
-                // TODO fetch JS
-                switch (url) {
-                    case url_cat:
-                        console.log('urlcat');
-
-                        return [
-                            {
-                                type: "pie",
-                                showInLegend: true,
-                                toolTipContent: "<b>{label}</b>: {y}",
-                                indexLabel: "{y} (#percent%)",
-                                legendText: "{label}",
-                                indexLabelPlacement: "inside",
-                                dataPoints: getFromBottle_1(url)
-                            }
-                        ]
-                        break;
-                    default:
-                        console.log('default');
-
-                        return [
-                            {
-                                type: "pie",
-                                showInLegend: true,
-                                startAngle: 240,
-                                indexLabel: "#percent%",
-                                legendText: "{label} ({y})",
-                                percentFormatString: "#0.##",
-                                dataPoints: getFromBottle_1(url)
-                            }
-                        ]
-                        break;
-                }
-            };
         </script>
     </head>
     <body>
@@ -150,7 +92,15 @@
                         text: "Severidad de ataques Bloqueados",
                         fontColor: 'white'
                     },
-                    data: getData(url_sev)
+                    data:[ {
+                        type: "pie",
+                        showInLegend: true,
+                        startAngle: 240,
+                        indexLabel: "#percent%",
+                        legendText: "{label} ({y})",
+                        percentFormatString: "#0.##",
+                        dataPoints: []
+                    }] //getData(url_sev)
                 });
                 var chart2 = new CanvasJS.Chart("frecuentes", {
                     animationEnabled: false,
@@ -164,11 +114,40 @@
                         text: "Categorías de Ataques más frecuentes",
                         fontColor: 'white'
                     },
-                    data: getData(url_cat)
+                    data: [
+                        {
+                            type: "pie",
+                            showInLegend: true,
+                            toolTipContent: "<b>{label}</b>: {y}",
+                            indexLabel: "{y} (#percent%)",
+                            legendText: "{label}",
+                            indexLabelPlacement: "inside",
+                            dataPoints: []
+                        }
+                    ] //getData(url_cat)
                 });
-                chart.render();
-                chart2.render();
-
+                var dataPoints1 = [];
+                $.getJSON(url_sev, function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        dataPoints1.push({label: data[i].label, y: data[i].y});
+                    }
+                    chart
+                        .options
+                        .data[0]
+                        .dataPoints = dataPoints1;
+                    chart.render();
+                });
+                var dataPoints2 = [];
+                $.getJSON(url_cat, function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        dataPoints2.push({label: data[i].label, y: data[i].y});
+                    }
+                    chart2
+                        .options
+                        .data[0]
+                        .dataPoints = dataPoints2;
+                    chart2.render();
+                });
             }
         </script>
     </body>
