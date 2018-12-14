@@ -7,6 +7,7 @@
         <title>Pantalla - Microplus</title>
         <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
         <script>
+            timeDelay = 1000*2.5*60;
             map = '/html/Widgets/AttackMap/AttackMap_World_3D.html'
             // text = '/html/Widgets/Text/Hora.html'
             text = ''
@@ -111,6 +112,12 @@
             }
 
             window.onload = load_home(text, section1, section2, section3, section4, map)
+        </script>
+        <script>
+             window.setInterval(function () {
+                // TODO Update Graph
+                location.reload();
+            }, timeDelay);
         </script>
     </body>
 </html>
