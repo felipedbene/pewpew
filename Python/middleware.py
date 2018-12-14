@@ -191,7 +191,7 @@ def topcat():
     resultado = [{ "y" : 0, "label" : "Wildfire Virus" }
     ,  {"y" : 0, "label" : "Vulnerability" }
     ,  {"y" : 0, "label" : "Virus"}
-    ,  {"y" : 0, "label" : "spyware"}
+    ,  {"y" : 0, "label" : "Spyware"}
     ]
 
     if "wildfire-virus" in temp :
