@@ -45,19 +45,19 @@
             function changeGauge(color) {
                 switch (color) {
                     case 'green':
-                        pic = 'img/Gauges/PNG/01_Green.png';
+                        pic = '/html/Widgets/img/Gauges/PNG/01_Green.png';
                         break;
                     case 'yellow':
-                        pic = 'img/Gauges/PNG/02_Yellow.png';
+                        pic = '/html/Widgets/img/Gauges/PNG/02_Yellow.png';
                         break;
                     case 'orange':
-                        pic = 'img/Gauges/PNG/03_Orange.png'
+                        pic = '/html/Widgets/img/Gauges/PNG/03_Orange.png'
                         break;
                     case 'red':
-                        pic = 'img/Gauges/PNG/04_Red.png'
+                        pic = '/html/Widgets/img/Gauges/PNG/04_Red.png'
                         break;
                     default:
-                        pic = 'img/Gauges/PNG/01_Green.png'
+                        pic = '/html/Widgets/img/Gauges/PNG/01_Green.png'
                 }
                 document
                     .getElementById("main_gauge")
@@ -66,8 +66,7 @@
             function updateGauge(file) {
                 fetch(file)
                     .then(response => response.json())
-                    .then(text => console.log(text["level"]))
-                    .then(text => changeGauge(text)) // Mandar o comando por aqui
+                    .then(text => changeGauge(text["level"])) // Mandar o comando por aqui
             };
             String.prototype.replaceAll = function (search, replacement) {
                 var target = this;
@@ -331,6 +330,7 @@
 
         </div>
         <script>
+            updateGauge('http://10.39.0.21/sans/astext')
             window.setInterval(function () {
                 updateGauge('http://10.39.0.21/sans/astext')
             }, 1000*60*5); //ms -> 5 min
@@ -341,7 +341,6 @@
                 .replaceAll('Yellow', Emoji['Yellow'])
                 .replaceAll('Orange', Emoji['Orange'])
                 .replaceAll('Red', Emoji['Red'])
-            a.inne
         </script>
     </body>
 </html>
