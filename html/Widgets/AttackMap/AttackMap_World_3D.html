@@ -70,18 +70,7 @@
 
         <style>
 
-            svg#ocean_circle {
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-            circle {
-                cy: 60%;
-                r: 24%;
-                cx: 50%;
-                y-index: -1;
-            }
-            #wrapper {
+             #wrapper {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -138,23 +127,10 @@
             <div id="container1"></div>
         </id>
         <div id="console"></div>
-        <div id="ocean">
-            <svg id="ocean_circle" height="100vh" width="100vw">
-                <circle
-                    cx="50vw"
-                    cy="50vh"
-                    r="100"
-                    stroke="black"
-                    stroke-width="5"
-                    fill="#000950"/>
-                Sorry, your browser does not support inline SVG.
-            </svg>
-
-        </div>
         <script>
             // Create World $('#ocean_circle').setAttribute('r',zoom_pant);
             $('#console')[0].innerText = 'Loading...';
-            var zoom_pant = ($(document).height() + $(document).width()) / 8; // World zoom
+            var zoom_pant = ($(document).height() + $(document).width()) / 4; // World zoom
             var height_pant = [
                 0, $(document).height() / 140
             ]; // Horizontal distance
@@ -178,7 +154,7 @@
                             .orthographic()
                             .clipAngle(90)
                             .center(height_pant)
-                            .rotate([110, -40])
+                            .rotate([110, -20])
                             .scale(zoom_pant)
                             .translate([
                                 element.offsetWidth / 2,
@@ -200,7 +176,7 @@
                     geographyConfig: {
                         dataUrl: null,
                         hideAntarctica: true,
-                        borderWidth: 3,
+                        borderWidth: 1,
                         borderColor: colors['border'],
                         popupTemplate: function (geography, data) {
                             return '<div class="hoverinfo" style="color:white;background:black">' +
