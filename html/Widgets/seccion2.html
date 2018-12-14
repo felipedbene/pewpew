@@ -107,24 +107,23 @@
                     backgroundColor: "black",
                     theme: 'dark1',
                     legend: {
-                        horizontalAlign: "left",
-                        verticalAlign: "center"
+                        fontColor: 'white',
+                        horizontalAlign: "center",
+                        verticalAlign: "top"
                     },
                     title: {
                         text: "Categorías de Ataques más frecuentes",
                         fontColor: 'white'
                     },
-                    data: [
-                        {
-                            type: "pie",
-                            showInLegend: true,
-                            toolTipContent: "<b>{label}</b>: {y}",
-                            indexLabel: "{y} (#percent%)",
-                            legendText: "{label}",
-                            indexLabelPlacement: "inside",
-                            dataPoints: []
-                        }
-                    ] //getData(url_cat)
+                    data: [ {
+                        type: "pie",
+                        showInLegend: true,
+                        startAngle: 240,
+                        indexLabel: "#percent%",
+                        legendText: "{label} ({y})",
+                        percentFormatString: "#0.##",
+                        dataPoints: []
+                    }] //getData(url_cat)
                 });
                 var dataPoints1 = [];
                 $.getJSON(url_sev, function (data) {
