@@ -32,6 +32,7 @@
                 flex-direction: column;
                 height: 100vh;
                 overflow: hidden;
+                align-content: space-around;
             }
             div {
                 height: 50vh;
@@ -40,6 +41,12 @@
             }
             h1#count {
                 font-size: 10vh;
+            }
+            .text{
+                position: relative;
+                top: 7vh;
+                font-size: 4vh;
+                /* font-weight: bold; */
             }
         </style>
         <script>
@@ -84,7 +91,7 @@
     </head>
     <body>
         <div class="body-wrapper">
-            <div>Ataques bloqueados apartir de las 0 Hrs.<h1 id="count">0</h1>
+            <div class="text">Ataques bloqueados apartir de las 0 Hrs.<h1 id="count">0</h1>
             </div>
             <div class="bar-graph" id="paises"></div>
         </div>

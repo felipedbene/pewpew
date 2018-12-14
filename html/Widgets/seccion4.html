@@ -14,11 +14,10 @@
                 "link": 'http://10.39.0.21/topatck/5',
                 "country": "label"
             }
-            function setCountry(json,errorHandle){
-                if(errorHandle){
+            function setCountry(json, errorHandle) {
+                if (errorHandle) {
                     $("#mayor_pais").text('Greece')
-                }
-                else{
+                } else {
                     $("#mayor_pais").text(json[0][Country["country"]])
                 }
             }
@@ -30,7 +29,7 @@
                         console.log("getFromBottle Success!");
                         console.log(json);
                         response = json;
-                        setCountry(json,false);
+                        setCountry(json, false);
                         // return json;
 
                     })
@@ -38,7 +37,7 @@
                         var err = textStatus + ", " + error;
                         // In case of error
                         console.log("Request Failed: " + err);
-                        setCountry('',true)
+                        setCountry('', true)
                     });
             }
         </script>
@@ -58,15 +57,27 @@
             h1#mayor_pais {
                 font-size: 20vh;
             }
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+            div#test {
+                font-size: 8vh;
+                /* font-weight: bold; */
+            }
         </style>
     </head>
     <body>
-        <div class="text">
-            País con mayor número de ataques dirigidos al tecnológico de Monterrey
-            <h1 id="mayor_pais"></h1>
+        <div class="wrapper">
+            <div class="text">
+                <div id="test">
+                    País con mayor número de ataques dirigidos al tecnológico de Monterrey</div>
+                <h1 id="mayor_pais"></h1>
+            </div>
         </div>
-    <script>
-        window.onload = getFromBottle(Country['link']);
-    </script>
+        <script>
+            window.onload = getFromBottle(Country['link']);
+        </script>
     </body>
 </html>
