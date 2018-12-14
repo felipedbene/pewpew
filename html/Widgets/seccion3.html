@@ -17,8 +17,8 @@
                 "header": "y"
             }
             Country = {
-                "link": '/html/XML/Countries.json',
-                // "link": 'http://10.39.0.21/topatck/5',
+                // "link": '/html/XML/Countries.json',
+                "link": 'http://10.39.0.21/topatck/5',
                 "country": "label",
                 "count": "y"
             }
@@ -75,41 +75,6 @@
                         changeNumber(1337)
                     });
             };
-            function getFromBottle_1(url) {
-                return [{"y":2478,"label":"United States"},{"y":945,"label":"China"},{"y":233,"label":"Mexico"},{"y":83,"label":"Austria"},{"y":83,"label":"Australia"}];
-                        
-            }
-            function getFromBottle(url, country, counter) {
-
-                $
-                    .getJSON(url)
-                    .done(function (json) {
-                        console.log("getFromBottle Success!");
-                        console.log(json);
-                        response = json;
-                        return json;
-                        
-                    })
-                    .fail(function (jqxhr, textStatus, error) {
-                        var err = textStatus + ", " + error;
-                        // In case of error
-                        console.log("Request Failed: " + err);
-                        data = [{"y":2478,"label":"United States"},{"y":945,"label":"China"},{"y":233,"label":"Mexico"},{"y":83,"label":"Austria"},{"y":83,"label":"Australia"}];
-                        return data;
-                    });
-
-            }
-            function getData(url) {
-                return [
-                    {
-                        type: "bar",
-                        name: "Países",
-                        axisYType: "secondary",
-                        color: "#014D65",
-                        dataPoints: getFromBottle_1(url["link"], url["country"], url["count"])
-                    }
-                ]
-            }
 
             window.setInterval(function () {
                 // TODO Update Graph
@@ -145,13 +110,40 @@
                         gridColor: "rgba(1,77,101,.1)",
                         title: "Número de Ataques"
                     },
-                    data: getData(Country)
+                    data: [
+                        {
+                            type: "bar",
+                            name: "Países",
+                            axisYType: "secondary",
+                            color: "#014D65",
+                            dataPoints: []
+                        }
+                    ]
                 });
-                chart
-                    .options
-                    .data[0]
-                    .dataPoints
-                    .sort(compareDataPointYAscend);
+
+                // getFromBottle(url["link"], url["country"], url["count"])
+                dataPoints = []
+                $.getJSON(Country["link"], function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        dataPoints.push({label: data[i].label, y: data[i].y});
+                    }
+                    chart
+                        .options
+                        .data[0]
+                        .dataPoints = dataPoints;
+                    chart
+                        .options
+                        .data[0]
+                        .dataPoints
+                        .sort(compareDataPointYAscend);
+
+                    chart.render();
+                });
+                // chart
+                //     .options
+                //     .data[0]
+                //     .dataPoints
+                //     .sort(compareDataPointYAscend);
                 console.log('Creating chart')
                 chart.render();
             }
