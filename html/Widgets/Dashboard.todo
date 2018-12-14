@@ -1,17 +1,17 @@
 Dashboard:
     ☐ Documentação (?)
     ☐ Resolver o problema de leitura com o canvas
-    ☐ Codigo pra refresh de tela
+    ☐ Codigo pra refresh de tela @hoy
     Seccion2:
         ☐ Integração API 2/2
         ☐ Codigo pra atualizar os gráficos a cada x tempo
     Seccion 3:
         ☐ Integração API 2/2
         ☐ Codigo pra atualizar os gráficos a cada x tempo
-    Mapa:
-        ☐ Consertar os mapas cortados
-        ☐ Arrumar o mapa de baixo (animação ?)
 Archive:
+  ✔ Fazer mapa 3d @hoy @done(18-12-13 20:27) @project(Dashboard.Mapa)
+  ✔ Arrumar o mapa de baixo (animação ?) @done(18-12-13 19:10) @project(Dashboard.Mapa)
+  ✔ Consertar os mapas cortados @done(18-12-13 19:10) @project(Dashboard.Mapa)
   ✔ Seccion 1 @started(18-12-13 17:29) @done(18-12-13 17:31) @lasted(2m43s)
   ✔ Os corações @done(18-12-13 17:31)
   ✔ Easter Egg @done(18-12-13 17:28)
