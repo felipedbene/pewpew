@@ -23,6 +23,20 @@
             }
         </script>
         <style>
+            div#box1, div#box2{
+                position: absolute;
+                bottom: 48%;
+                background-color: black;
+                width: 25%;
+                height: 10%;
+                z-index: 1;
+            }
+            div#box1{
+                left: 0;
+            }
+            div#box2{
+                right: 0;
+            }
             .body-wrapper,
             body {
                 display: flex;
@@ -63,6 +77,11 @@
         </script>
     </head>
     <body>
+        <div class="boxes">
+            <div id="box1"></div>
+            <div id="box2"></div>
+        </div>
+
         <div class="body-wrapper">
             <div class="graph" id="severidad"></div>
             <div class="graph" id="frecuentes"></div>
@@ -92,15 +111,17 @@
                         text: "Severidad de Ataques Bloqueados",
                         fontColor: 'white'
                     },
-                    data:[ {
-                        type: "pie",
-                        showInLegend: true,
-                        startAngle: 240,
-                        indexLabel: "#percent%",
-                        legendText: "{label} ({y})",
-                        percentFormatString: "#0.##",
-                        dataPoints: []
-                    }] //getData(url_sev)
+                    data: [
+                        {
+                            type: "pie",
+                            showInLegend: true,
+                            startAngle: 240,
+                            indexLabel: "#percent%",
+                            legendText: "{label} ({y})",
+                            percentFormatString: "#0.##",
+                            dataPoints: []
+                        }
+                    ] //getData(url_sev)
                 });
                 var chart2 = new CanvasJS.Chart("frecuentes", {
                     animationEnabled: false,
@@ -115,15 +136,17 @@
                         text: "Categorías de Ataques más Frecuentes",
                         fontColor: 'white'
                     },
-                    data: [ {
-                        type: "pie",
-                        showInLegend: true,
-                        startAngle: 240,
-                        indexLabel: "#percent%",
-                        legendText: "{label} ({y})",
-                        percentFormatString: "#0.##",
-                        dataPoints: []
-                    }] //getData(url_cat)
+                    data: [
+                        {
+                            type: "pie",
+                            showInLegend: true,
+                            startAngle: 240,
+                            indexLabel: "#percent%",
+                            legendText: "{label} ({y})",
+                            percentFormatString: "#0.##",
+                            dataPoints: []
+                        }
+                    ] //getData(url_cat)
                 });
                 var dataPoints1 = [];
                 $.getJSON(url_sev, function (data) {
