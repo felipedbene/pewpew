@@ -8,6 +8,9 @@
         <script src="/html/Widgets/JS/json2html/json2html.min.js"></script>
         <title>Document</title>
         <style>
+            td {
+                font-size: 2vh;
+            }
             div#gauge {
                 margin-top: 10%;
             }
@@ -66,7 +69,7 @@
             var gaugeDict = {
                 "green": {
                     "pic": '/html/Widgets/img/Gauges/PNG/01_Green.png',
-                    "text": 'Todo se ve bien. No hay amenazas significativa descubiertas.'
+                    "text": 'Todo se ve bien. No hay amenazas significativas descubiertas.'
                 },
                 "yellow": {
                     "pic": '/html/Widgets/img/Gauges/PNG/02_Yellow.png',
@@ -91,8 +94,9 @@
                 console.log(color);
 
                 $("#main_gauge").src = gaugeDict[color].pic;
-                $("#descripcion")[0].innerHTML = '<tr><td><img src="' + gaugeDict[color].pic +
-                        '"></td><td>' + gaugeDict[color].text + '</td></tr>';
+                image = '<tr><td><img src="' + gaugeDict[color].pic + '"></td>'
+                text = '<td>' + gaugeDict[color].text + '</td></tr>'
+                $("#descripcion")[0].innerHTML = text;
             }
             function updateGauge(file) {
                 fetch(file)
@@ -136,7 +140,7 @@
                         id="main_gauge">
                 </div>
                 <div class="inner-gauge table" id="gauge-table">
-                    <table border="1" id="descripcion"></table>
+                    <table id="descripcion"></table>
                     <div class="title source">
                         <h4>Fuente: SANS Institute</h4>
                     </div>
