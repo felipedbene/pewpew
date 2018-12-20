@@ -14,7 +14,7 @@
             h4 {
                 margin: 0;
             }
-            h1{
+            h1 {
                 font-size: 4vh;
                 font-weight: normal;
             }
@@ -46,26 +46,37 @@
             }
         </style>
         <script>
-            function changeGauge(color) {
-                switch (color) {
-                    case 'green':
-                        pic = '/html/Widgets/img/Gauges/PNG/01_Green.png';
-                        break;
-                    case 'yellow':
-                        pic = '/html/Widgets/img/Gauges/PNG/02_Yellow.png';
-                        break;
-                    case 'orange':
-                        pic = '/html/Widgets/img/Gauges/PNG/03_Orange.png'
-                        break;
-                    case 'red':
-                        pic = '/html/Widgets/img/Gauges/PNG/04_Red.png'
-                        break;
-                    default:
-                        pic = '/html/Widgets/img/Gauges/PNG/01_Green.png'
+
+            var gaugeDict = {
+                "green": {
+                    "pic": '/html/Widgets/img/Gauges/PNG/01_Green.png',
+                    "text": 'Todo se ve bien. No hay amenazas significativa descubiertas.'
+                },
+                "yellow": {
+                    "pic": '/html/Widgets/img/Gauges/PNG/02_Yellow.png',
+                    "text": "Estamos en el proceso de rastreo de una nueva amenaza posiblemente significati" +
+                            "va. Se recomienda que los usuarios tomen providencias inmediatas para contener" +
+                            " el impacto."
+                },
+                "orange": {
+                    "pic": '/html/Widgets/img/Gauges/PNG/03_Orange.png',
+                    "text": 'Una interrupción importante en la conectividad es inminente o en progreso.'
+                },
+                "red": {
+                    "pic": '/html/Widgets/img/Gauges/PNG/04_Red.png',
+                    "text": 'Pérdida de conectividad a través de la red.'
+                },
+                "": {
+                    "pic": '/html/Widgets/img/Gauges/PNG/01_Green.png',
+                    "text": 'OK'
                 }
-                document
-                    .getElementById("main_gauge")
-                    .src = pic;
+            }
+            function changeGauge(color) {
+                console.log(color);
+                var image = '<tr><td><img src="' + gaugeDict[color].pic + '">'
+                var textDesc = '</td><td>' + gaugeDict[color].text + '</td></tr>'
+                $("#main_gauge").src = gaugeDict[color].pic;
+                $("#descripcion")[0].innerHTML = textDesc;
             }
             function updateGauge(file) {
                 fetch(file)
@@ -80,18 +91,18 @@
             };
 
             spanishCategories = {
-                "Critical":"Crítica",
-                "High":"Alta",
+                "Critical": "Crítica",
+                "High": "Alta",
                 "Medium": "Media",
-                "Low" : "Baja",
-                "Informational" : "Falso positivo"
+                "Low": "Baja",
+                "Informational": "Falso positivo"
             }
             var Emoji = {
                 'Red': 'Crítica',
                 'Orange': 'Alta',
                 'Yellow': 'Media',
                 'Green': 'Baja',
-                "Blue" :"Falso positivo"
+                "Blue": "Falso positivo"
             }
         </script>
 
@@ -108,29 +119,7 @@
                     id="main_gauge">
             </div>
             <div class="inner-gauge table" id="gauge-table">
-                <table border="1">
-                    <tr>
-                        <td><img src="img/Gauges/PNG/01_Green.png"></td>
-                        <td>Todo se ve bien. No hay amenazas significativa descubiertas.</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/Gauges/PNG/02_Yellow.png"></td>
-                        <td>Estamos en el proceso de rastreo de una nueva amenaza posiblemente
-                            significativa. Se recomienda que los usuarios tomen providencias inmediatas para
-                            contener el impacto.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/Gauges/PNG/03_Orange.png"></td>
-                        <td>
-                            Una interrupción importante en la conectividad es inminente o en progreso.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/Gauges/PNG/04_Red.png"></td>
-                        <td>Pérdida de conectividad a través de la red.</td>
-                    </tr>
-                </table>
+                <table border="1" id="descripcion"></table>
                 <div class="title source">
                     <h4>Fuente: SANS Institute</h4>
                 </div>
@@ -196,7 +185,7 @@
             updateGauge('http://10.39.0.21/sans/astext')
             window.setInterval(function () {
                 updateGauge('http://10.39.0.21/sans/astext')
-            }, 1000*60*5); //ms -> 5 min
+            }, 1000 * 60 * 5); //ms -> 5 min
             a = $('#historial-table');
             a[0].innerHTML = a[0]
                 .innerHTML
