@@ -8,6 +8,18 @@
         <script src="/html/Widgets/JS/json2html/json2html.min.js"></script>
         <title>Document</title>
         <style>
+            div#gauge {
+                margin-top: 10%;
+            }
+            div#historial-wrapper {
+                top: 50%;
+                position: absolute;
+            }
+            div,
+            table {
+                width: 90vw;
+                height: auto;
+            }
             h1,
             h2,
             h3,
@@ -22,7 +34,8 @@
                 height: 5vh;
             }
             img#main_gauge {
-                height: 20vh;
+                width: 90vw;
+                height: auto;
             }
 
             .title.source {
@@ -32,7 +45,8 @@
                 background: black;
                 color: white;
                 overflow: hidden;
-
+                font-family: Calibri, Arial, Georgia, serif;
+                font-weight: normal;
             }
             div#historial-table {
                 text-align: center;
@@ -40,6 +54,8 @@
             .inner-gauge.wrapper {
                 display: flex;
                 flex-direction: column;
+                justify-content: space-around;
+                height: 100%;
             }
             a {
                 color: aquamarine;
@@ -73,10 +89,10 @@
             }
             function changeGauge(color) {
                 console.log(color);
-                var image = '<tr><td><img src="' + gaugeDict[color].pic + '">'
-                var textDesc = '</td><td>' + gaugeDict[color].text + '</td></tr>'
+
                 $("#main_gauge").src = gaugeDict[color].pic;
-                $("#descripcion")[0].innerHTML = textDesc;
+                $("#descripcion")[0].innerHTML = '<tr><td><img src="' + gaugeDict[color].pic +
+                        '"></td><td>' + gaugeDict[color].text + '</td></tr>';
             }
             function updateGauge(file) {
                 fetch(file)
@@ -109,22 +125,24 @@
     </head>
     <body>
         <div class="inner-gauge wrapper" align='center'>
-            <div class="inner-gauge title" id="section_title">
-                <h1>Nivel de Ciber-riesgo Mundial</h1>
-            </div>
-            <div class="inner-gauge" id="gauge">
-                <img
-                    src="img/Gauges/PNG/01_Green.png"
-                    alt="Gauge Value (source - https://isc.sans.edu/infocon.html)"
-                    id="main_gauge">
-            </div>
-            <div class="inner-gauge table" id="gauge-table">
-                <table border="1" id="descripcion"></table>
-                <div class="title source">
-                    <h4>Fuente: SANS Institute</h4>
+            <div class="topper">
+                <div class="inner-gauge title" id="section_title">
+                    <h1>Nivel de Ciber-riesgo Mundial</h1>
+                </div>
+                <div class="inner-gauge" id="gauge">
+                    <img
+                        src="img/Gauges/PNG/01_Green.png"
+                        alt="Gauge Value (source - https://isc.sans.edu/infocon.html)"
+                        id="main_gauge">
+                </div>
+                <div class="inner-gauge table" id="gauge-table">
+                    <table border="1" id="descripcion"></table>
+                    <div class="title source">
+                        <h4>Fuente: SANS Institute</h4>
+                    </div>
                 </div>
             </div>
-            <div class="historial">
+            <div class="historial" id="historial-wrapper">
                 <div class="historial" id="historial-title">
                     <h1>
                         Historial de Ataques Mundiales
@@ -138,7 +156,7 @@
                             <th>Motivo</th>
                         </tr>
                         <tr>
-                            <td>12 de Maio de 2017</td>
+                            <td>12 de Mayo de 2017</td>
                             <td>Yellow</td>
                             <td>
                                 <a

@@ -33,6 +33,8 @@
                 height: 100vh;
                 overflow: hidden;
                 align-content: space-around;
+                font-family: Calibri, Arial, Georgia, serif;
+                font-weight: normal;
             }
             div {
                 height: 50vh;
@@ -41,10 +43,12 @@
             }
             h1#count {
                 font-size: 10vh;
-            }
-            .text{
+                top: 10%;
                 position: relative;
-                top: 7vh;
+            }
+            .text {
+                position: relative;
+                /* top: 7vh; */
                 font-size: 4vh;
                 /* font-weight: bold; */
             }
@@ -84,9 +88,8 @@
             };
 
             // window.setInterval(function () {
-            //     // TODO Update Graph
-            //     updateNumber(Attack["link"], Attack["header"])
-            // }, timeDelay);
+            // TODO Update Graph     updateNumber(Attack["link"], Attack["header"]) },
+            // timeDelay);
         </script>
     </head>
     <body>
@@ -146,11 +149,8 @@
 
                     chart.render();
                 });
-                // chart
-                //     .options
-                //     .data[0]
-                //     .dataPoints
-                //     .sort(compareDataPointYAscend);
+                // chart     .options     .data[0]     .dataPoints
+                // .sort(compareDataPointYAscend);
                 console.log('Creating chart')
                 chart.render();
             }
