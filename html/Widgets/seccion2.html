@@ -151,7 +151,7 @@
                 var dataPoints1 = [];
                 $.getJSON(url_sev, function (data) {
                     for (var i = 0; i < data.length; i++) {
-                        dataPoints1.push({label: data[i].label, y: data[i].y});
+                        dataPoints1.push({label: spanishCategories[data[i].label], y: data[i].y});
                     }
                     chart
                         .options
