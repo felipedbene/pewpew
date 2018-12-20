@@ -17,9 +17,6 @@
             section4 = '/html/Widgets/seccion4.html'
         </script>
         <style>
-            div#1{
-                background-color: red;
-            }
             body {
                 background: black;
                 overflow: hidden;
@@ -80,10 +77,10 @@
                 <div class="section" id="1"></div>
                 <div class="section" id="2"></div>
                 <div class="section" id="3"></div>
-                <!-- <div class="section" id="4">
+                <div class="section" id="4">
                     <div id="china"></div>
                     <div id="map"></div>
-                </div> -->
+                </div>
             </div>
         </div>
         <div class="text"></div>
@@ -105,12 +102,12 @@
                 $('#3').html(
                     '<object class="subsect" type="text/html" data="' + section3 + '" ></object>'
                 );
-                // $('#china').html(
-                //     '<object class="subsect2" type="text/html" data="' + section4 + '" ></object>'
-                // );
-                // $('#map').html(
-                //     '<object class="subsect2" type="text/html" data="' + map + '" ></object>'
-                // );
+                $('#china').html(
+                    '<object class="subsect2" type="text/html" data="' + section4 + '" ></object>'
+                );
+                $('#map').html(
+                    '<object class="subsect2" type="text/html" data="' + map + '" ></object>'
+                );
                 
             }
 
