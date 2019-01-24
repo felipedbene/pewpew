@@ -4,24 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="#"/>
         <title>Pantalla - Microplus</title>
         <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
         <script>
-            timeDelay = 1000*2.5*60;
-            map = '/html/Widgets/AttackMap/AttackMap_World_3D.html'
-            // text = '/html/Widgets/Text/Hora.html'
-            text = ''
-            section1 = '/html/Widgets/seccion1.html'
-            section2 = '/html/Widgets/seccion2.html'
-            section3 = '/html/Widgets/seccion3.html'
-            section4 = '/html/Widgets/seccion4.html'
+            $(window).resize(function(){location.reload();});
+            map = '/html/Widgets/AttackMap/AttackMap_World_C.html'
+            text = '/html/Widgets/Text/Hora.html'
         </script>
         <style>
-            div#1{
-                background-color: red;
-            }
             body {
-                background: black;
+                background: #212121;
                 overflow: hidden;
             }
             .head {
@@ -31,19 +24,13 @@
             .map {
                 width: 100vw;
                 height: 90vh;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                justify-content: space-around;
-                flex-flow: wrap;
-                flex-basis: auto;
             }
             .text {
-                width: 40vw;
-                height: 5vh;
+                width: 55vw;
+                height: 7vh;
                 position: absolute;
-                bottom: 22vh;
-                right: 10px;
+                bottom: 0;
+                right: 0;
             }
             .wrapper {
                 display: flex;
@@ -51,25 +38,19 @@
                 height: 100vh;
                 width: 100vw;
             }
-            .section {
-                width: 25%;
+            iframe.kibana{
+                border: 0;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                overflow: hidden;
             }
-            div#4 {
-                display: flex;
-                flex-direction: column;
-            }
-            div#map {
-                height: 50%;
-            }
-            div#china {
-                height: 50%;
-            }
-            .subsect, .subsect2{
+            .subsect{
                 width: 25vw;
-                height: 90vh;
-            }
-            .subsect2{
-                height: 45vh;;
+                height: 85vh;
+                position: absolute;
+                top: 15vh;
+                left: 5vw;
             }
         </style>
     </head>
@@ -77,50 +58,20 @@
         <div class="wrapper">
             <div class="head"></div>
             <div class="map">
-                <div class="section" id="1"></div>
-                <div class="section" id="2"></div>
-                <div class="section" id="3"></div>
-                <!-- <div class="section" id="4">
-                    <div id="china"></div>
-                    <div id="map"></div>
-                </div> -->
+                <object class="subsect" type="text/html" data="/html/Widgets/seccion1.html" ></object>
+                <iframe class="kibana" src="http://172.16.39.51:5601/app/kibana#/dashboard/1598be40-1fee-11e9-97f1-8dfff5233ffa?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow%2Fd%2Cmode%3Aquick%2Cto%3Anow))" height="600" width="800"></iframe>
             </div>
         </div>
         <div class="text"></div>
         <script>
-            function load_home(text, section1, section2, section3, section4, map) {
-                $('.head').html(
-                    '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></obje' +
-                    'ct>'
-                );
-                $('.text').html(
-                    '<object class="text" type="text/html" data="' + text + '" ></object>'
-                );
-                $('#1').html(
-                    '<object class="subsect" type="text/html" data="' + section1 + '" ></object>'
-                );
-                $('#2').html(
-                    '<object class="subsect" type="text/html" data="' + section2 + '" ></object>'
-                );
-                $('#3').html(
-                    '<object class="subsect" type="text/html" data="' + section3 + '" ></object>'
-                );
-                // $('#china').html(
-                //     '<object class="subsect2" type="text/html" data="' + section4 + '" ></object>'
-                // );
-                // $('#map').html(
-                //     '<object class="subsect2" type="text/html" data="' + map + '" ></object>'
-                // );
-                
+            function load_home(map, text) {
+                $('.head')[0].innerHTML = '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></object>';
+                kibanaFrame = $('.kibana')[0]
+                kibanaFrame.height = document.documentElement.clientHeight*0.85
+                kibanaFrame.width = document.documentElement.clientWidth*0.65
             }
 
-            window.onload = load_home(text, section1, section2, section3, section4, map)
-        </script>
-        <script>
-             window.setInterval(function () {
-                // TODO Update Graph
-                location.reload();
-            }, timeDelay);
+            window.onload = load_home(map, text)
         </script>
     </body>
 </html>
