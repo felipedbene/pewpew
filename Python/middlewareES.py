@@ -38,7 +38,7 @@ def getEvFromEs(size=100):
       ],
         "query" : {
             "bool" : {
-                "must_not" : [{"match" : {"srcloc.keyword": "10.0.0.0-10.255.255.255"}}]
+                "must_not" : [{"match" : {"\\\"srcloc\\\"" + ".keyword": "10.0.0.0-10.255.255.255"}}]
             }
         }
     })
@@ -47,7 +47,7 @@ def getEvFromEs(size=100):
     line = dict()
 
     for hit in response['hits']['hits'] :
-        line["name"] = hit["_source"]["srcloc"] 
+        line["name"] = hit["_source"]['\\"srcloc\\"'] 
         line["timereceived"]  = hit["_source"]["timereceived"]
         line["device_name"] = hit["_source"]["device_name"] 
         line["threatid"] =  hit["_source"]["threatid"] 
@@ -56,7 +56,8 @@ def getEvFromEs(size=100):
         line["src"] = hit["_source"]["src"] 
         line["dst"] = hit["_source"]["dst"]
         resultado.append(line)
-    print(resultado)
+        line = dict()
+    #print(resultado)
     return json.dumps(resultado)
 
 
@@ -91,12 +92,12 @@ def events(number):
         campi = pd.read_sql("campi",engine)
         color = pd.read_sql("color",engine)
         pslat = pd.merge(ev,country,how="inner",on=["name"])
+        #print(pslat)
         sincolor = pd.merge(pslat,campi,how="inner",on=["device_name"])
+        #print(sincolor)
         final = pd.merge(sincolor,color,how="inner",on=["severity"])
-        final.drop(['index_x','srcloc','index_y','src','dst'],axis=1,inplace=True)
-    else :
-        return r"""{"0":{"severity":"critical","threatid":"Worm\/Win32.docdl.idgaf","device_name":"CP-SLP-1","subtype":"virus","srclat":39,"srclong":22,"name_x":"Greece","dstlat":22.127502,"dstlong":-101.038102,"name_y":"Nuevo Sur","index":2,"color":"#d9ff7f"}}"""       
-    
+        #print(final)
+        final.drop(['index_x','index_y','src','dst'],axis=1,inplace=True)
     return(final.to_json(date_format=True,orient='index'))
 
 if __name__ == "__main__" :
