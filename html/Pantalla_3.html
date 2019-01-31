@@ -6,10 +6,10 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="shortcut icon" href="#"/>
         <title>Pantalla - Microplus</title>
-        <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="./Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
         <script>
-            map = '/html/Widgets/AttackMap/AttackMap_World_NC.html'
-            text = '/html/Widgets/Text/Text_3h.html'
+            map = './Widgets/AttackMap/AttackMap_World_NC.html'
+            text = './Widgets/Text/Text_3h.html'
         </script>
         <style>
             body {
@@ -47,7 +47,7 @@
         <div class="text"></div>
         <script>
             function load_home(map, text) {
-                $('.head')[0].innerHTML = '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></object>';
+                $('.head')[0].innerHTML = '<object  class="head" type="text/html" data="./Widgets/Logos.html" ></object>';
                 $('.map')[0].innerHTML = '<object class="map" type="text/html" data="' + map +
                         '" ></object>';
                 $('.text')[0].innerHTML = '<object class="text" type="text/html" data="' + text + '" ></obje' +

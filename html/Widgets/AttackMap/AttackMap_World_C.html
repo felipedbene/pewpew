@@ -8,11 +8,11 @@
 
         <title>Mapa de Ataques Microplus</title>
 
-        <script src="/html/Widgets/JS/Datamaps/d3.v3.min.js"></script>
-        <script src="/html/Widgets/JS/Datamaps/d3.geo.projection.v0.min.js"></script>
-        <script src="/html/Widgets/JS/Datamaps/topojson.v1.min.js"></script>
-        <script src="/html/Widgets/JS/Datamaps/datamaps.world.min.js"></script>
-        <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="https://d3js.org/d3.geo.projection.v0.min.js"></script>
+        <script src="https://d3js.org/topojson.v1.min.js"></script>
+        <script src="../JS/Datamaps/datamaps.world.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <script>
 
@@ -65,7 +65,8 @@
         <script>
 
             // Backend Parameters
-            events_url = 'http://10.39.0.21/events/' + events
+            // events_url = 'http://10.39.0.21/events/' + events
+            events_url = '../../JSON/500.json'
 
             var estatico = false // shows only 1 event for debugging
 

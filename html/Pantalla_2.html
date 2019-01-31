@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="#" />
     <title>Pantalla - Microplus</title>
-    <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="./Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
     <script>
         $(window).resize(function(){location.reload();});
-            map = '/html/Widgets/AttackMap/AttackMap_World_C.html'
-            text = '/html/Widgets/Text/Hora.html'
+            map = './Widgets/AttackMap/AttackMap_World_C.html'
+            text = './Widgets/Text/Hora.html'
         </script>
     <style>
         body {
@@ -60,7 +60,7 @@
     <div class="wrapper">
         <div class="head"></div>
         <div class="map">
-            <object class="subsect" type="text/html" data="/html/Widgets/seccion1.html"></object>
+            <object class="subsect" type="text/html" data="./Widgets/seccion1.html"></object>
             <iframe class="kibana" src="http://172.16.39.51:5601/app/kibana#/dashboard/1598be40-1fee-11e9-97f1-8dfff5233ffa?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow%2Fd%2Cmode%3Aquick%2Cto%3Anow))"
                 height="600" width="800"></iframe>
         </div>
@@ -69,11 +69,11 @@
     <script>
         function load_home(map, text) {
             $('.head')[0].innerHTML =
-                '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></object>';
+                '<object  class="head" type="text/html" data="./Widgets/Logos.html" ></object>';
             kibanaFrame = $('.kibana')[0]
             kibanaFrame.height = document.documentElement.clientHeight * 0.85
             kibanaFrame.width = document.documentElement.clientWidth * 0.65
-            $('.filter-bar.filter-panel')[0].style.visibility = 'hidden'
+            // $('.filter-bar.filter-panel')[0].style.visibility = 'hidden'
         }
 
         window.onload = load_home(map, text)
