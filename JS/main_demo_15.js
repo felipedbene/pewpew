@@ -221,8 +221,8 @@ var attacks = {
             var IP1 = "";
             var IP2 = "";
 
-            var srccountry = a["srcname"];
-            var attackdiv_slatlong = a["dstname"];
+            var srccountry = a["name_x"];
+            var attackdiv_slatlong = a["name_y"];
             /*
       		if (typeof b === 'undefined' || b === null)
       		{
@@ -240,7 +240,7 @@ var attacks = {
 
             which_attack = a["subtype"];
             var atkname = a["threatid"];
-            strokeColor = a["color_ataque"];
+            strokeColor = a["color"];
 
             hits.push({
                 origin: {
