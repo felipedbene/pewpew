@@ -25,7 +25,7 @@ def getEvFromEs(size=100):
     config = configparser.ConfigParser()    
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
     #elastic = config["elastic"]
-    client = Elasticsearch([ "10.97.28.4" ])
+    client = Elasticsearch( [ "10.97.28.4" ] )
     response = client.search(
     index="palogs*",
     body={"size" : size,
@@ -38,7 +38,7 @@ def getEvFromEs(size=100):
       ],
         "query" : {
             "bool" : {
-                "must_not" : [{"match" : {"\\\"srcloc\\\"" + ".keyword": "10.0.0.0-10.255.255.255"}}]
+                "must_not" : [{"match" : {"SourceLocation" + ".keyword": "10.0.0.0-10.255.255.255"}}]
             }
         }
     })
@@ -47,14 +47,14 @@ def getEvFromEs(size=100):
     line = dict()
 
     for hit in response['hits']['hits'] :
-        line["name"] = hit["_source"]['\\"srcloc\\"'] 
-        line["timereceived"]  = hit["_source"]["timereceived"]
-        line["device_name"] = hit["_source"]["device_name"] 
-        line["threatid"] =  hit["_source"]["threatid"] 
-        line["subtype"] = hit["_source"]["subtype"] 
-        line["severity"] = hit["_source"]["severity"]
-        line["src"] = hit["_source"]["src"] 
-        line["dst"] = hit["_source"]["dst"]
+        line["name"] = hit["_source"]["SourceLocation"] 
+        line["timereceived"]  = hit["_source"]["ReceiveTime"]
+        line["device_name"] = hit["_source"]["DeviceName"] 
+        line["threatid"] =  hit["_source"]["Threatid"] 
+        line["subtype"] = hit["_source"]["ThreatType"] 
+        line["severity"] = hit["_source"]["Severity"]
+        line["src"] = hit["_source"]["SourceIP"] 
+        line["dst"] = hit["_source"]["DestinationIP"]
         resultado.append(line)
         line = dict()
     #print(resultado)
