@@ -25,7 +25,7 @@ def getEvFromEs(size=100):
     config = configparser.ConfigParser()    
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
     #elastic = config["elastic"]
-    client = Elasticsearch([ "172.16.39.51" ])
+    client = Elasticsearch([ "10.97.28.4" ])
     response = client.search(
     index="palogs*",
     body={"size" : size,
