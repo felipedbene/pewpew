@@ -1,0 +1,244 @@
+name,srclat,srclong,srcloc,srcloc3
+Albania,41,20,AL,ALB
+Algeria,28,3,DZ,DZA
+American Samoa,-14.3333,-170,AS,ASM
+Andorra,42.5,1.6,AD,AND
+Angola,-12.5,18.5,AO,AGO
+Anguilla,18.25,-63.1667,AI,AIA
+Antarctica,-90,0,AQ,ATA
+Antigua and Barbuda,17.05,-61.8,AG,ATG
+Argentina,-34,-64,AR,ARG
+Armenia,40,45,AM,ARM
+Aruba,12.5,-69.9667,AW,ABW
+Australia,-27,133,AU,AUS
+Austria,47.3333,13.3333,AT,AUT
+Azerbaijan,40.5,47.5,AZ,AZE
+Bahamas,24.25,-76,BS,BHS
+Bahrain,26,50.55,BH,BHR
+Bangladesh,24,90,BD,BGD
+Barbados,13.1667,-59.5333,BB,BRB
+Belarus,53,28,BY,BLR
+Belgium,50.8333,4,BE,BEL
+Belize,17.25,-88.75,BZ,BLZ
+Benin,9.5,2.25,BJ,BEN
+Bermuda,32.3333,-64.75,BM,BMU
+Bhutan,27.5,90.5,BT,BTN
+Bolivia Plurinational State Of,-17,-65,BO,BOL
+Bosnia And Herzegovina,44,18,BA,BIH
+Botswana,-22,24,BW,BWA
+Bouvet Island,-54.4333,3.4,BV,BVT
+Brazil,-10,-55,BR,BRA
+British Indian Ocean Territory,-6,71.5,IO,IOT
+Brunei Darussalam,4.5,114.6667,BN,BRN
+Bulgaria,43,25,BG,BGR
+Burkina Faso,13,-2,BF,BFA
+Burundi,-3.5,30,BI,BDI
+Cambodia,13,105,KH,KHM
+Cameroon,6,12,CM,CMR
+Canada,60,-95,CA,CAN
+Cape Verde,16,-24,CV,CPV
+Cayman Islands,19.5,-80.5,KY,CYM
+Central African Republic,7,21,CF,CAF
+Chad,15,19,TD,TCD
+Chile,-30,-71,CL,CHL
+China,35,105,CN,CHN
+Christmas Island,-10.5,105.6667,CX,CXR
+Cocos (Keeling) Islands,-12.5,96.8333,CC,CCK
+Colombia,4,-72,CO,COL
+Comoros,-12.1667,44.25,KM,COM
+Congo,-1,15,CG,COG
+Congo the Democratic Republic Of the,0,25,CD,COD
+Cook Islands,-21.2333,-159.7667,CK,COK
+Costa Rica,10,-84,CR,CRI
+Côte d'Ivoire,8,-5,CI,CIV
+Croatia,45.1667,15.5,HR,HRV
+Cuba,21.5,-80,CU,CUB
+Cyprus,35,33,CY,CYP
+Czech Republic,49.75,15.5,CZ,CZE
+Denmark,56,10,DK,DNK
+Djibouti,11.5,43,DJ,DJI
+Dominica,15.4167,-61.3333,DM,DMA
+Dominican Republic,19,-70.6667,DO,DOM
+Ecuador,-2,-77.5,EC,ECU
+Egypt,27,30,EG,EGY
+El Salvador,13.8333,-88.9167,SV,SLV
+Equatorial Guinea,2,10,GQ,GNQ
+Eritrea,15,39,ER,ERI
+Estonia,59,26,EE,EST
+Ethiopia,8,38,ET,ETH
+Falkland Islands (Malvinas),-51.75,-59,FK,FLK
+Faroe Islands,62,-7,FO,FRO
+Fiji,-18,175,FJ,FJI
+Finland,64,26,FI,FIN
+France,46,2,FR,FRA
+French Guiana,4,-53,GF,GUF
+French Polynesia,-15,-140,PF,PYF
+French Southern Territories,-43,67,TF,ATF
+Gabon,-1,11.75,GA,GAB
+Gambia,13.4667,-16.5667,GM,GMB
+Georgia,42,43.5,GE,GEO
+Germany,51,9,DE,DEU
+Ghana,8,-2,GH,GHA
+Gibraltar,36.1833,-5.3667,GI,GIB
+Greece,39,22,GR,GRC
+Greenland,72,-40,GL,GRL
+Grenada,12.1167,-61.6667,GD,GRD
+Guadeloupe,16.25,-61.5833,GP,GLP
+Guam,13.4667,144.7833,GU,GUM
+Guatemala,15.5,-90.25,GT,GTM
+Guernsey,49.5,-2.56,GG,GGY
+Guinea,11,-10,GN,GIN
+Guinea-Bissau,12,-15,GW,GNB
+Guyana,5,-59,GY,GUY
+Haiti,19,-72.4167,HT,HTI
+Heard Island And McDonald Islands,-53.1,72.5167,HM,HMD
+Holy See (Vatican City State),41.9,12.45,VA,VAT
+Honduras,15,-86.5,HN,HND
+Hong Kong,22.25,114.1667,HK,HKG
+Hungary,47,20,HU,HUN
+Iceland,65,-18,IS,ISL
+India,20,77,IN,IND
+Indonesia,-5,120,ID,IDN
+Iran Islamic Republic Of,32,53,IR,IRN
+Iraq,33,44,IQ,IRQ
+Ireland,53,-8,IE,IRL
+Isle Of Man,54.23,-4.55,IM,IMN
+Israel,31.5,34.75,IL,ISR
+Italy,42.8333,12.8333,IT,ITA
+Jamaica,18.25,-77.5,JM,JAM
+Japan,36,138,JP,JPN
+Jersey,49.21,-2.13,JE,JEY
+Jordan,31,36,JO,JOR
+Kazakhstan,48,68,KZ,KAZ
+Kenya,1,38,KE,KEN
+Kiribati,1.4167,173,KI,KIR
+Korea Democratic People's Republic Of,40,127,KP,PRK
+Korea Republic Of,37,127.5,KR,KOR
+Kuwait,29.3375,47.6581,KW,KWT
+Kyrgyzstan,41,75,KG,KGZ
+Lao People's Democratic Republic,18,105,LA,LAO
+Latvia,57,25,LV,LVA
+Lebanon,33.8333,35.8333,LB,LBN
+Lesotho,-29.5,28.5,LS,LSO
+Liberia,6.5,-9.5,LR,LBR
+Libyan Arab Jamahiriya,25,17,LY,LBY
+Liechtenstein,47.1667,9.5333,LI,LIE
+Lithuania,56,24,LT,LTU
+Luxembourg,49.75,6.1667,LU,LUX
+Macao,22.1667,113.55,MO,MAC
+Macedonia The Former Yugoslav Republic Of,41.8333,22,MK,MKD
+Madagascar,-20,47,MG,MDG
+Malawi,-13.5,34,MW,MWI
+Malaysia,2.5,112.5,MY,MYS
+Maldives,3.25,73,MV,MDV
+Mali,17,-4,ML,MLI
+Malta,35.8333,14.5833,MT,MLT
+Marshall Islands,9,168,MH,MHL
+Martinique,14.6667,-61,MQ,MTQ
+Mauritania,20,-12,MR,MRT
+Mauritius,-20.2833,57.55,MU,MUS
+Mayotte,-12.8333,45.1667,YT,MYT
+Mexico,23,-102,MX,MEX
+Micronesia Federated States Of,6.9167,158.25,FM,FSM
+Moldova Republic Of,47,29,MD,MDA
+Monaco,43.7333,7.4,MC,MCO
+Mongolia,46,105,MN,MNG
+Montenegro,42,19,ME,MNE
+Montserrat,16.75,-62.2,MS,MSR
+Morocco,32,-5,MA,MAR
+Mozambique,-18.25,35,MZ,MOZ
+Myanmar,22,98,MM,MMR
+Namibia,-22,17,NA,NAM
+Nauru,-0.5333,166.9167,NR,NRU
+Nepal,28,84,NP,NPL
+Netherlands,52.5,5.75,NL,NLD
+Netherlands Antilles,12.25,-68.75,AN,ANT
+New Caledonia,-21.5,165.5,NC,NCL
+New Zealand,-41,174,NZ,NZL
+Nicaragua,13,-85,NI,NIC
+Niger,16,8,NE,NER
+Nigeria,10,8,NG,NGA
+Niue,-19.0333,-169.8667,NU,NIU
+Norfolk Island,-29.0333,167.95,NF,NFK
+Northern Mariana Islands,15.2,145.75,MP,MNP
+Norway,62,10,NO,NOR
+Oman,21,57,OM,OMN
+Pakistan,30,70,PK,PAK
+Palau,7.5,134.5,PW,PLW
+Palestinian Territory Occupied,32,35.25,PS,PSE
+Panama,9,-80,PA,PAN
+Papua New Guinea,-6,147,PG,PNG
+Paraguay,-23,-58,PY,PRY
+Peru,-10,-76,PE,PER
+Philippines,13,122,PH,PHL
+Pitcairn,-24.7,-127.4,PN,PCN
+Poland,52,20,PL,POL
+Portugal,39.5,-8,PT,PRT
+Puerto Rico,18.25,-66.5,PR,PRI
+Qatar,25.5,51.25,QA,QAT
+Réunion,-21.1,55.6,RE,REU
+Romania,46,25,RO,ROU
+Russian Federation,60,100,RU,RUS
+Rwanda,-2,30,RW,RWA
+Saint Helena Ascension And Tristan da Cunha,-15.9333,-5.7,SH,SHN
+Saint Kitts And Nevis,17.3333,-62.75,KN,KNA
+Saint Lucia,13.8833,-61.1333,LC,LCA
+Saint Pierre And Miquelon,46.8333,-56.3333,PM,SPM
+Saint Vincent And the Grenadines,13.25,-61.2,VC,VCT
+Samoa,-13.5833,-172.3333,WS,WSM
+San Marino,43.7667,12.4167,SM,SMR
+Sao Tome And Principe,1,7,ST,STP
+Saudi Arabia,25,45,SA,SAU
+Senegal,14,-14,SN,SEN
+Serbia,44,21,RS,SRB
+Seychelles,-4.5833,55.6667,SC,SYC
+Sierra Leone,8.5,-11.5,SL,SLE
+Singapore,1.3667,103.8,SG,SGP
+Slovakia,48.6667,19.5,SK,SVK
+Slovenia,46,15,SI,SVN
+Solomon Islands,-8,159,SB,SLB
+Somalia,10,49,SO,SOM
+South Africa,-29,24,ZA,ZAF
+South Georgia And The South Sandwich Islands,-54.5,-37,GS,SGS
+Spain,40,-4,ES,ESP
+Sri Lanka,7,81,LK,LKA
+Sudan,15,30,SD,SDN
+Suriname,4,-56,SR,SUR
+Svalbard And Jan Mayen,78,20,SJ,SJM
+Swaziland,-26.5,31.5,SZ,SWZ
+Sweden,62,15,SE,SWE
+Switzerland,47,8,CH,CHE
+Syrian Arab Republic,35,38,SY,SYR
+Taiwan Province Of China,23.5,121,TW,TWN
+Tajikistan,39,71,TJ,TJK
+Tanzania United Republic Of,-6,35,TZ,TZA
+Thailand,15,100,TH,THA
+Timor-Leste,-8.55,125.5167,TL,TLS
+Togo,8,1.1667,TG,TGO
+Tokelau,-9,-172,TK,TKL
+Tonga,-20,-175,TO,TON
+Trinidad and Tobago,11,-61,TT,TTO
+Tunisia,34,9,TN,TUN
+Turkey,39,35,TR,TUR
+Turkmenistan,40,60,TM,TKM
+Turks And Caicos Islands,21.75,-71.5833,TC,TCA
+Tuvalu,-8,178,TV,TUV
+Uganda,1,32,UG,UGA
+Ukraine,49,32,UA,UKR
+United Arab Emirates,24,54,AE,ARE
+United Kingdom,54,-2,GB,GBR
+United States,38,-97,US,USA
+United States Minor Outlying Islands,19.2833,166.6,UM,UMI
+Uruguay,-33,-56,UY,URY
+Uzbekistan,41,64,UZ,UZB
+Vanuatu,-16,167,VU,VUT
+Venezuela Bolivarian Republic Of,8,-66,VE,VEN
+Viet Nam,16,106,VN,VNM
+Virgin Islands British,18.5,-64.5,VG,VGB
+Virgin Islands U.S.,18.3333,-64.8333,VI,VIR
+Wallis and Futuna,-13.3,-176.2,WF,WLF
+Western Sahara,24.5,-13,EH,ESH
+Yemen,15,48,YE,YEM
+Zambia,-15,30,ZM,ZMB
+Zimbabwe,-20,30,ZW,ZWE
+Afghanistan,33,65,AF,AFG

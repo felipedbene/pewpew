@@ -9,7 +9,6 @@ import time
 from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
-import pgcli as psycopg2
 import requests
 import sqlalchemy
 import urllib3
@@ -24,10 +23,12 @@ def getEvFromEs(size=100):
     # Getting requirements
     config = configparser.ConfigParser()    
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
-    #elastic = config["elastic"]
-    client = Elasticsearch( [ "10.97.28.4" ] )
+    elastic = list()
+    elastic.append( config["ELASTIC"]["elkHost"] )
+    indeces = config["ELASTIC"]["index"]
+    client = Elasticsearch( elastic )
     response = client.search(
-    index="palogs*",
+    index = "palogs*",
     body={"size" : size,
       "sort": [
         {
@@ -57,46 +58,38 @@ def getEvFromEs(size=100):
         line["dst"] = hit["_source"]["DestinationIP"]
         resultado.append(line)
         line = dict()
-    #print(resultado)
+    print(line)
     return json.dumps(resultado)
 
 
 
 app = Bottle()
         
-def getDBEngine() :
+@route('/events/<number>')
+def events(number):
+    number = int(number)
 
     # Getting requirements
     config = configparser.ConfigParser()    
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
 
-    #Setting Parameters based on the config files
-    dbName = config["DB"]['dbName']
-    dbUser= config["DB"]['dbUser']
-    dbPass= config["DB"]['dbPass']
-    dbHost= config["DB"]['dbHost']
-    dbPort= config["DB"]['dbPort']
+    fileCampi = config["CSV"]["campi"]
+    filePaises = config["CSV"]["paises"]
+    fileColor = config["CSV"]["color"]
 
-    engine = create_engine('postgres://' + dbUser + ':' + dbPass + "@" + dbHost+ ":"+ dbPort +"/"+ dbName)
-    
-    return engine
-
-
-@route('/events/<number>')
-def events(number):
-    number = int(number)
     if number <= 5000 :
-        engine = getDBEngine()
+        #Event Data from ES
         ev = pd.read_json( getEvFromEs(number) )
-        country = pd.read_sql("paises",engine)
-        campi = pd.read_sql("campi",engine)
-        color = pd.read_sql("color",engine)
+
+        #Event campi,country,color data
+        country = pd.read_csv(filePaises,",")
+        campi = pd.read_csv(fileCampi,",")
+        color = pd.read_csv(fileColor,",")
+
+        # Inner join the data
         pslat = pd.merge(ev,country,how="inner",on=["name"])
-        #print(pslat)
         sincolor = pd.merge(pslat,campi,how="inner",on=["device_name"])
-        #print(sincolor)
         final = pd.merge(sincolor,color,how="inner",on=["severity"])
-        #print(final)
         final.drop(['index_x','index_y','src','dst'],axis=1,inplace=True)
     return(final.to_json(date_format=True,orient='index'))
 
