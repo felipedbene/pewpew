@@ -28,7 +28,7 @@ def getEvFromEs(size=100):
     indeces = config["ELASTIC"]["index"]
     client = Elasticsearch( elastic )
     response = client.search(
-    index = "palogs*",
+    index = indeces,
     body={"size" : size,
       "sort": [
         {
