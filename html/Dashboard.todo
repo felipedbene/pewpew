@@ -1,6 +1,6 @@
 ✔ Slowness @done(19-02-28 10:56)
 ✔ Full width Kibana @done(19-02-28 10:56)
-☐ Postgres
-☐ Hardening
+✔ Postgres @done(19-02-28 12:47)
 ☐ Arcos Repetidos
 ☐ *Real* real time
+☐ Hardening
