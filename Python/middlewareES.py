@@ -25,7 +25,8 @@ def getEvFromEs(size=100):
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
     elastic = list()
     elastic.append( config["ELASTIC"]["elkHost"] )
-    indeces = config["ELASTIC"]["index"]
+    indeces = str(config["ELASTIC"]["index"])
+    print (indeces)
     client = Elasticsearch( elastic )
     response = client.search(
     index = "palogs*",
@@ -48,17 +49,19 @@ def getEvFromEs(size=100):
     line = dict()
 
     for hit in response['hits']['hits'] :
-        line["name"] = hit["_source"]["SourceLocation"] 
-        line["timereceived"]  = hit["_source"]["ReceiveTime"]
-        line["device_name"] = hit["_source"]["DeviceName"] 
-        line["threatid"] =  hit["_source"]["Threatid"] 
-        line["subtype"] = hit["_source"]["ThreatType"] 
-        line["severity"] = hit["_source"]["Severity"]
-        line["src"] = hit["_source"]["SourceIP"] 
-        line["dst"] = hit["_source"]["DestinationIP"]
-        resultado.append(line)
-        line = dict()
-    print(line)
+        #print(hit)
+        if "SourceLocation" in  hit['_source'].keys() :
+          line["name"] = hit["_source"]["SourceLocation"] 
+          line["timereceived"]  = hit["_source"]["ReceiveTime"]
+          line["device_name"] = hit["_source"]["DeviceName"] 
+          line["threatid"] =  hit["_source"]["Threatid"] 
+          line["subtype"] = hit["_source"]["ThreatType"] 
+          line["severity"] = hit["_source"]["Severity"]
+          line["src"] = hit["_source"]["SourceIP"] 
+          line["dst"] = hit["_source"]["DestinationIP"]
+          resultado.append(line)
+          line = dict()
+    
     return json.dumps(resultado)
 
 
