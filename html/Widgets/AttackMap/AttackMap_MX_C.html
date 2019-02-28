@@ -7,15 +7,15 @@
 
     <title>Mapa de Ataques Microplus</title>
 
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://d3js.org/d3.geo.projection.v0.min.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
-    <script src="https://d3js.org/datamaps.world.min.js"></script>
-    <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="../JS/Datamaps/datamaps.world.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
       // ############### Numero de Eventos ##############3
-      events = 100;
+      events = 500;
       ipAddr = "10.2.40.130";
 
       // Error Handling
@@ -39,15 +39,36 @@
         return list;
       }
       function displayListIntoConsole(list) {
-        $("#console")[0].innerText = "";
+        $("#console")[0].innerHTML = "";
+        list.reverse();
         list.forEach(element => {
           $("#console").append(element);
         });
+        list.reverse();
+      }
+      var AttackSetObject = [];
+      function increaseArcSize(srccountry, which_attack, TmpAttackSet) {
+        if (
+          srccountry == TmpAttackSet["name_x"] &&
+          which_attack == TmpAttackSet["subtype"]
+        ) {
+          ArcSize++;
+        } else {
+          ArcSize = 0;
+        }
+
+        return ArcSize;
       }
     </script>
 
     <script>
       // GUI Parameters
+
+      world = {
+        zoom: false,
+        center: [-100, 24],
+        scale: 1850
+      };
 
       colors = {
         arcs: {
@@ -69,11 +90,11 @@
 
     <script>
       // Backend Parameters
-      events_url = 'http://' + ipAddr + '/events/' + events
-      // events_url = "../../JSON/500.json";
+      events_url = "http://" + ipAddr + "/events/" + events;
+      //   events_url = "../../JSON/500.json";
 
       var estatico = false; // shows only 1 event for debugging
-
+      var ArcSize = 0;
       var log = [];
       var count = 0;
       var len = 0;
@@ -140,25 +161,34 @@
     <script>
       // Create World
       $("#console")[0].innerText = "Loading...";
-      world = {
-        zoom: true,
-        center: [-100, 24],
-        scale: ($(document).width() + $(document).width()) / 2.1
-      };
-
+      var zoom_pant = ($(document).height() + $(document).width()) / 10; // World zoom
+      var height_pant = [0, $(document).height() / 35]; // Horizontal distance
       if (!world["zoom"]) {
         // Show whole world
         var map = new Datamap({
           scope: "world",
           element: document.getElementById("container1"),
-          projection: "mercator",
+          setProjection: function(element) {
+            var projection = d3.geo
+              .mercator()
+              .center(height_pant)
+              .rotate([0, 0])
+              .scale(zoom_pant)
+              .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+            // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
+            // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
+            // width / 2,         height / 2     ]);
+
+            var path = d3.geo.path().projection(projection);
+            return { path: path, projection: projection };
+          },
           fills: {
             defaultFill: colors["background"]
           },
           geographyConfig: {
             dataUrl: null,
             hideAntarctica: true,
-            borderWidth: 2,
+            borderWidth: 3,
             borderColor: colors["border"],
             popupTemplate: function(geography, data) {
               return (
@@ -334,16 +364,30 @@
               longitude: +dstlong
             }
           });
+          insertIntoSet(AttackSetObject, a);
+          try {
+            ArcSize = increaseArcSize(
+              srccountry,
+              which_attack,
+              AttackSetObject[1]
+            );
+          } catch (error) {
+            ArcSize = increaseArcSize(
+              srccountry,
+              which_attack,
+              AttackSetObject[0]
+            );
+          }
           map.arc(hits, {
             strokeWidth: 3,
             strokeColor: strokeColor
           });
 
           boom.push({
-            radius: 7,
+            radius: 7+ArcSize*0.5,
             latitude: +dstlat,
             longitude: +dstlong,
-            fillOpacity: 0.5,
+            fillOpacity: 0,
             attk: which_attack
           });
           map.bubbles(boom, {
@@ -357,6 +401,11 @@
             tiempo = "";
           }
           // console.log(strokeColor);
+          if (ArcSize > 1) {
+            AttackCount = "×" + ArcSize;
+          } else {
+            AttackCount = "";
+          }
 
           newEntry =
             tiempo +
@@ -368,6 +417,7 @@
             "acks</span><br/> <b>" +
             attackdiv_slatlong +
             "</b> " +
+            AttackCount +
             IP2 +
             " <br> <span styl" +
             "e='color:" +

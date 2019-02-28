@@ -12,9 +12,10 @@
     <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script src="../JS/Datamaps/datamaps.world.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script>
       // ############### Numero de Eventos ##############3
-      events = 100;
+      events = 500;
       ipAddr = "10.2.40.130";
 
       // Error Handling
@@ -38,10 +39,25 @@
         return list;
       }
       function displayListIntoConsole(list) {
-        $("#console")[0].innerText = "";
+        $("#console")[0].innerHTML = "";
+        list.reverse();
         list.forEach(element => {
           $("#console").append(element);
         });
+        list.reverse();
+      }
+      var AttackSetObject = [];
+      function increaseArcSize(srccountry, which_attack, TmpAttackSet) {
+        if (
+          srccountry == TmpAttackSet["name_x"] &&
+          which_attack == TmpAttackSet["subtype"]
+        ) {
+          ArcSize++;
+        } else {
+          ArcSize = 0;
+        }
+
+        return ArcSize;
       }
     </script>
 
@@ -68,11 +84,11 @@
 
     <script>
       // Backend Parameters
-      events_url = 'http://' + ipAddr + '/events/' + events
-      // events_url = "../../JSON/500.json";
+      events_url = "http://" + ipAddr + "/events/" + events;
+      //   events_url = "../../JSON/500.json";
 
       var estatico = false; // shows only 1 event for debugging
-
+      var ArcSize = 0;
       var log = [];
       var count = 0;
       var len = 0;
@@ -141,8 +157,8 @@
       $("#console")[0].innerText = "Loading...";
       var zoom_pant = ($(document).height() + $(document).width()) / 10; // World zoom
       var height_pant = [0, $(document).height() / 35]; // Horizontal distance
-
-      world = {
+      
+        world = {
         zoom: false,
         center: [-100, 24],
         scale: ($(document).width() + $(document).width()) / 2.1
@@ -227,7 +243,7 @@
     <script>
       // Backend
       $("#console").html("");
-      if (!show_console) $("#console")[0].hidden = true;
+      if (!show_console) $("#console")[0].css({ visibility: "hidden" });
 
       $.extend({
         getUrlVars: function() {
@@ -349,16 +365,30 @@
               longitude: +dstlong
             }
           });
+          insertIntoSet(AttackSetObject, a);
+          try {
+            ArcSize = increaseArcSize(
+              srccountry,
+              which_attack,
+              AttackSetObject[1]
+            );
+          } catch (error) {
+            ArcSize = increaseArcSize(
+              srccountry,
+              which_attack,
+              AttackSetObject[0]
+            );
+          }
           map.arc(hits, {
             strokeWidth: 3,
             strokeColor: strokeColor
           });
 
           boom.push({
-            radius: 7,
+            radius: 7+ArcSize*0.5,
             latitude: +dstlat,
             longitude: +dstlong,
-            fillOpacity: 0.5,
+            fillOpacity: 0,
             attk: which_attack
           });
           map.bubbles(boom, {
@@ -372,6 +402,12 @@
             tiempo = "";
           }
           // console.log(strokeColor);
+          if (ArcSize > 1) {
+            AttackCount = "×" + ArcSize;
+          } else {
+            AttackCount = "";
+          }
+
           newEntry =
             tiempo +
             "<b>" +
@@ -382,6 +418,7 @@
             "acks</span><br/> <b>" +
             attackdiv_slatlong +
             "</b> " +
+            AttackCount +
             IP2 +
             " <br> <span styl" +
             "e='color:" +
