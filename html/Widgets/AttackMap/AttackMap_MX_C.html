@@ -15,6 +15,7 @@
 
     <script>
       // ############### Numero de Eventos ##############3
+      demoMode = false;
       events = 500;
       ipAddr = "10.2.40.130";
 
@@ -90,8 +91,11 @@
 
     <script>
       // Backend Parameters
-      events_url = "http://" + ipAddr + "/events/" + events;
-      //   events_url = "../../JSON/500.json";
+      if (demoMode) {
+        events_url = "../../JSON/500.json";
+      } else {
+        events_url = "http://" + ipAddr + "/events/" + events;
+      }
 
       var estatico = false; // shows only 1 event for debugging
       var ArcSize = 0;
