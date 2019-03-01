@@ -18,7 +18,7 @@ def getFile(sansURL,sansFile):
         print("I couldn't get the info, quitting !")
         return False
     level = response.text
-    #level = "red"
+    #level = "yellow"
     return level
 
 def writeToES(info) :
@@ -30,7 +30,7 @@ def writeToES(info) :
     doc = {
     'source': 'sans',
     'level': info,
-    'timestamp': datetime.datetime.now(),
+    'time': datetime.datetime.now(),
     }
     client = Elasticsearch( elastic )
     client.index(index=indeces,doc_type="tslevel",body=doc )
