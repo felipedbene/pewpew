@@ -26,7 +26,7 @@ def writeToES(info) :
     config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
     elastic = list()
     elastic.append( config["ELASTIC"]["elkHost"] )
-    indeces = str(config["SANS"]["esIndex"])
+    indeces = config["SANS"]["esIndex"]
     doc = {
     'source': 'sans',
     'level': info,
