@@ -30,7 +30,7 @@ def writeToES(info) :
     doc = {
     'source': 'sans',
     'level': info,
-    'time': datetime.datetime.now(),
+    'time': datetime.datetime.now() + datetime.timedelta(hours=6),
     }
     client = Elasticsearch( elastic )
     client.index(index=indeces,doc_type="tslevel",body=doc )
