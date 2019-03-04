@@ -48,13 +48,20 @@
         list.reverse();
       }
       var AttackSetObject = [];
-      function increaseArcSize(newLog, TmpAttackSet) {
-        if (newLog === TmpAttackSet) {
-          ArcSize++;
-        } else {
-          ArcSize = 0;
+      function increaseArcSize(TmpAttackSet) {
+        if (TmpAttackSet.length >= 2) {
+          a = TmpAttackSet[0];
+          b = TmpAttackSet[1];
+          if (
+            (a.name_x === b.name_x) &
+            (a.name_y === a.name_y) &
+            (a.threatid === b.threatid)
+          ) {
+            ++ArcSize;
+          } else {
+            ArcSize = 0;
+          }
         }
-
         return ArcSize;
       }
     </script>
@@ -368,11 +375,7 @@
             }
           });
           insertIntoSet(AttackSetObject, a);
-          try {
-            ArcSize = increaseArcSize(a, AttackSetObject[1]);
-          } catch (error) {
-            ArcSize = increaseArcSize(a, AttackSetObject[0]);
-          }
+          ArcSize = increaseArcSize(AttackSetObject);
           map.arc(hits, {
             strokeWidth: 3,
             strokeColor: strokeColor
