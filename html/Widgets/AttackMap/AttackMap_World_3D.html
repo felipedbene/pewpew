@@ -48,11 +48,8 @@
         list.reverse();
       }
       var AttackSetObject = [];
-      function increaseArcSize(srccountry, which_attack, TmpAttackSet) {
-        if (
-          srccountry == TmpAttackSet["name_x"] &&
-          which_attack == TmpAttackSet["subtype"]
-        ) {
+      function increaseArcSize(newLog, TmpAttackSet) {
+        if (newLog === TmpAttackSet) {
           ArcSize++;
         } else {
           ArcSize = 0;
@@ -126,8 +123,8 @@
         height: 100vh;
         background-color: transparent;
       }
-      
-            #console {
+
+      #console {
         /* background-color: red; */
         width: 25vw;
         height: 35vh;
@@ -373,17 +370,9 @@
             }
           });
           try {
-            ArcSize = increaseArcSize(
-              srccountry,
-              which_attack,
-              AttackSetObject[1]
-            );
+            ArcSize = increaseArcSize(a, AttackSetObject[1]);
           } catch (error) {
-            ArcSize = increaseArcSize(
-              srccountry,
-              which_attack,
-              AttackSetObject[0]
-            );
+            ArcSize = increaseArcSize(a, AttackSetObject[0]);
           }
           map.arc(hits, {
             strokeWidth: 3,

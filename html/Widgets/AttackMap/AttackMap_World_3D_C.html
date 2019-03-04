@@ -48,11 +48,8 @@
         list.reverse();
       }
       var AttackSetObject = [];
-      function increaseArcSize(srccountry, which_attack, TmpAttackSet) {
-        if (
-          srccountry == TmpAttackSet["name_x"] &&
-          which_attack == TmpAttackSet["subtype"]
-        ) {
+      function increaseArcSize(newLog, TmpAttackSet) {
+        if (newLog === TmpAttackSet) {
           ArcSize++;
         } else {
           ArcSize = 0;
@@ -149,11 +146,11 @@
   </head>
   <body>
     <id id="wrapper">
-        <!-- <div id="title">Ciberseguridad
+      <!-- <div id="title">Ciberseguridad
                   <br>
                   Mapa de Ataques - Tecnológico de Monterrey
               </div> -->
-        <div id="container1"></div>
+      <div id="container1"></div>
     </id>
     <div id="console"></div>
     <script>
@@ -372,17 +369,9 @@
           });
           insertIntoSet(AttackSetObject, a);
           try {
-            ArcSize = increaseArcSize(
-              srccountry,
-              which_attack,
-              AttackSetObject[1]
-            );
+            ArcSize = increaseArcSize(a, AttackSetObject[1]);
           } catch (error) {
-            ArcSize = increaseArcSize(
-              srccountry,
-              which_attack,
-              AttackSetObject[0]
-            );
+            ArcSize = increaseArcSize(a, AttackSetObject[0]);
           }
           map.arc(hits, {
             strokeWidth: 3,
