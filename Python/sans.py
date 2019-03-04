@@ -27,10 +27,23 @@ def writeToES(info) :
     elastic = list()
     elastic.append( config["ELASTIC"]["elkHost"] )
     indeces = config["SANS"]["esIndex"]
+    
+    if info == "green" :
+        reason = "Everything is normal. No significant new threat known."
+    elif info == "yellow" :
+        reason = "We are currently tracking a significant new threat. The impact is either unknown or expected to be minor to the infrastructure. However, local impact could be significant. Users are advised to take immediate specific action to contain the impact."
+    elif info == "orange" :
+        reason = "A major disruption in connectivity is imminent or in progress. Examples: Code Red on its return, and SQL Slammer worm during its first half day"
+    else :
+        reason = "Loss of connectivity across a large part of the internet."
+ 
+    
+    
     doc = {
     'source': 'sans',
     'level': info,
     'time': datetime.datetime.now() + datetime.timedelta(hours=6),
+    'reason' : reason
     }
     client = Elasticsearch( elastic )
     client.index(index=indeces,doc_type="tslevel",body=doc )
