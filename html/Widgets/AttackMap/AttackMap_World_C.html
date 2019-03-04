@@ -48,16 +48,20 @@
         list.reverse();
       }
       var AttackSetObject = [];
-      function increaseArcSize(srccountry, which_attack, TmpAttackSet) {
-        if (
-          srccountry == TmpAttackSet["name_x"] &&
-          which_attack == TmpAttackSet["subtype"]
-        ) {
-          ArcSize++;
-        } else {
-          ArcSize = 0;
+      function increaseArcSize(TmpAttackSet) {
+        if (TmpAttackSet.length >= 2) {
+          a = TmpAttackSet[0];
+          b = TmpAttackSet[1];
+          if (
+            (a.name_x === b.name_x) &
+            (a.name_y === a.name_y) &
+            (a.threatid === b.threatid)
+          ) {
+            ++ArcSize;
+          } else {
+            ArcSize = 0;
+          }
         }
-
         return ArcSize;
       }
     </script>
@@ -368,26 +372,14 @@
             }
           });
           insertIntoSet(AttackSetObject, a);
-          try {
-            ArcSize = increaseArcSize(
-              srccountry,
-              which_attack,
-              AttackSetObject[1]
-            );
-          } catch (error) {
-            ArcSize = increaseArcSize(
-              srccountry,
-              which_attack,
-              AttackSetObject[0]
-            );
-          }
+          ArcSize = increaseArcSize(AttackSetObject);
           map.arc(hits, {
             strokeWidth: 3,
             strokeColor: strokeColor
           });
 
           boom.push({
-            radius: 7,
+            radius: 7+ArcSize*0.05,
             latitude: +dstlat,
             longitude: +dstlong,
             fillOpacity: 0,
