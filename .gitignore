@@ -55,3 +55,4 @@ package-lock.json
 *.svg
 *.xcf
 Widgets/JS/chartist/*
+node_modules
