@@ -19,7 +19,7 @@ img.cliente {
   top: 20%;
   left: 0;
   right: 0;
-  bottom:0%;
+  bottom: 0%;
   z-index: 1;
   /* background-color: red; */
 }
@@ -30,7 +30,7 @@ img.cliente {
 
 .name {
   color: white;
-  font-family: arial;
+  /* font-family: arial; */
 }
 
 .subheader {
@@ -54,7 +54,7 @@ img.cliente {
   /* background-color: green; */
   font-size: 5vh;
   z-index: 3;
-  font-family: arial;
+  /* font-family: arial; */
 }
 
 .attack_console {
