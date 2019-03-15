@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Microplus Arial';
+  src: url('Arial.ttf');
+}
+
 .wrapper {
   position: absolute;
   width: 100%;
@@ -30,7 +35,7 @@ img.cliente {
 
 .name {
   color: white;
-  /* font-family: arial; */
+  font-family: 'Microplus Arial';
 }
 
 .subheader {
@@ -54,7 +59,7 @@ img.cliente {
   /* background-color: green; */
   font-size: 5vh;
   z-index: 3;
-  /* font-family: arial; */
+  font-family: 'Microplus Arial';
 }
 
 .attack_console {
