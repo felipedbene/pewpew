@@ -15,7 +15,7 @@
 
     <script>
       // ############### Numero de Eventos ##############3
-      demoMode = false;
+      demoMode = true;
       events = 500;
       ipAddr = '10.2.40.130';
 
@@ -69,12 +69,6 @@
     <script>
       // GUI Parameters
 
-      world = {
-        zoom: false,
-        center: [-100, 24],
-        scale: 1850
-      };
-
       colors = {
         arcs: {
           low: '#42ff58', //green
@@ -85,9 +79,9 @@
         background: '#212121',
         border: '#079a9a'
       };
-      time = 10; // delay in ms
+      time = 500; // delay in ms
       show_time = false; // Shows attack time
-      show_console = false; // Show attack console
+      show_console = true; // Show attack console
 
       //TODO change IP text
       show_IP = false;
@@ -157,11 +151,6 @@
   </head>
   <body>
     <id id="wrapper">
-      <div id="title">
-        Ciberseguridad
-        <br />
-        Mapa de Ataques - Tecnológico de Monterrey
-      </div>
       <div id="container1"></div>
     </id>
     <div id="console"></div>
@@ -170,6 +159,13 @@
       $('#console')[0].innerText = 'Loading...';
       var zoom_pant = ($(document).height() + $(document).width()) / 10; // World zoom
       var height_pant = [0, $(document).height() / 35]; // Horizontal distance
+
+      world = {
+        zoom: false,
+        center: [-100, 24],
+        scale: ($(document).width() + $(document).width()) / 2.1
+      };
+
       if (!world['zoom']) {
         // Show whole world
         var map = new Datamap({
@@ -249,7 +245,7 @@
     <script>
       // Backend
       $('#console').html('');
-      if (!show_console) $('#console')[0].hidden = true;
+      if (!show_console) $('#console')[0].css({ visibility: 'hidden' });
 
       $.extend({
         getUrlVars: function() {

@@ -15,7 +15,7 @@
 
     <script>
       // ############### Numero de Eventos ##############3
-      demoMode = false;
+      demoMode = true;
       events = 500;
       ipAddr = '10.2.40.130';
 
@@ -69,6 +69,12 @@
     <script>
       // GUI Parameters
 
+      world = {
+        zoom: true,
+        center: [-100, 24],
+        scale: 1850
+      };
+
       colors = {
         arcs: {
           low: '#42ff58', //green
@@ -94,6 +100,7 @@
       } else {
         events_url = 'http://' + ipAddr + '/events/' + events;
       }
+
       var estatico = false; // shows only 1 event for debugging
       var ArcSize = 0;
       var log = [];
@@ -117,20 +124,17 @@
       body,
       html {
         margin: 0;
-        height: 100vh;
-        width: 100vw;
+        height: 100%;
         overflow: hidden;
         color: white;
         background-color: #212121;
         font-size: 3vh;
       }
       #container1 {
-        z-index: 1;
         width: 100vw;
-        height: 100vh;
-        background-color: transparent;
+        height: 90vh;
+        /* background-color: blue; */
       }
-
       #console {
         /* background-color: red; */
         width: 25vw;
@@ -140,7 +144,6 @@
         left: 0;
         position: absolute;
         overflow: hidden;
-        visibility: hidden;
       }
       #title {
         width: 100vw;
@@ -155,25 +158,14 @@
   </head>
   <body>
     <id id="wrapper">
-      <!-- <div id="title">Ciberseguridad
-                <br>
-                Mapa de Ataques - Tecnológico de Monterrey 
-      </div> -->
       <div id="container1"></div>
     </id>
     <div id="console"></div>
     <script>
-      // Create World $('#ocean_circle').setAttribute('r',zoom_pant);
+      // Create World
       $('#console')[0].innerText = 'Loading...';
-      var zoom_pant = ($(document).height() + $(document).width()) / 4; // World zoom
-      var height_pant = [0, $(document).height() / 140]; // Horizontal distance
-
-      world = {
-        zoom: false,
-        center: [-100, 24],
-        scale: ($(document).width() + $(document).width()) / 2.1
-      };
-
+      var zoom_pant = ($(document).height() + $(document).width()) / 10; // World zoom
+      var height_pant = [0, $(document).height() / 35]; // Horizontal distance
       if (!world['zoom']) {
         // Show whole world
         var map = new Datamap({
@@ -181,10 +173,9 @@
           element: document.getElementById('container1'),
           setProjection: function(element) {
             var projection = d3.geo
-              .orthographic()
-              .clipAngle(90)
+              .mercator()
               .center(height_pant)
-              .rotate([110, -20])
+              .rotate([0, 0])
               .scale(zoom_pant)
               .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
             // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
@@ -200,7 +191,7 @@
           geographyConfig: {
             dataUrl: null,
             hideAntarctica: true,
-            borderWidth: 1,
+            borderWidth: 3,
             borderColor: colors['border'],
             popupTemplate: function(geography, data) {
               return (
@@ -213,7 +204,7 @@
         });
       } else {
         // Show Mexico
-        $('#console').css({ height: '60vh', width: '35vw' });
+        $('#console').css({ width: '35vw' });
 
         var map = new Datamap({
           scope: 'world',
@@ -254,7 +245,7 @@
     <script>
       // Backend
       $('#console').html('');
-      if (!show_console) $('#console')[0].hidden = true;
+      if (!show_console) $('#console')[0].css({ visibility: 'hidden' });
 
       $.extend({
         getUrlVars: function() {
@@ -376,7 +367,8 @@
               longitude: +dstlong
             }
           });
-          ArcSize = increaseArcSize(a, AttackSetObject[1]);
+          insertIntoSet(AttackSetObject, a);
+          ArcSize = increaseArcSize(AttackSetObject);
           map.arc(hits, {
             strokeWidth: 3,
             strokeColor: strokeColor

@@ -15,7 +15,7 @@
 
     <script>
       // ############### Numero de Eventos ##############3
-      demoMode = false;
+      demoMode = true;
       events = 500;
       ipAddr = '10.2.40.130';
 
@@ -130,6 +130,7 @@
         height: 100vh;
         background-color: transparent;
       }
+
       #console {
         /* background-color: red; */
         width: 25vw;
@@ -139,6 +140,7 @@
         left: 0;
         position: absolute;
         overflow: hidden;
+        visibility: hidden;
       }
       #title {
         width: 100vw;
@@ -153,16 +155,11 @@
   </head>
   <body>
     <id id="wrapper">
-      <div id="title">
-        Ciberseguridad
-        <br />
-        Mapa de Ataques - Tecnológico de Monterrey
-      </div>
       <div id="container1"></div>
     </id>
     <div id="console"></div>
     <script>
-      // Create World
+      // Create World $('#ocean_circle').setAttribute('r',zoom_pant);
       $('#console')[0].innerText = 'Loading...';
       var zoom_pant = ($(document).height() + $(document).width()) / 4; // World zoom
       var height_pant = [0, $(document).height() / 140]; // Horizontal distance
@@ -375,8 +372,7 @@
               longitude: +dstlong
             }
           });
-          insertIntoSet(AttackSetObject, a);
-          ArcSize = increaseArcSize(AttackSetObject);
+          ArcSize = increaseArcSize(a, AttackSetObject[1]);
           map.arc(hits, {
             strokeWidth: 3,
             strokeColor: strokeColor

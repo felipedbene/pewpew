@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pantalla 2</title>
-</head>
-<body>
-    <iframe src="http://10.39.0.21/html/Pantalla_1.html" frameborder="0"></iframe>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>Pantalla 2 - Microplus</title>
+    <script src="Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+      $(window).resize(function() {
+        location.reload();
+      });
+      map = "Widgets/AttackMap/AttackMap_World_C.html";
+      text = "Widgets/Text/Hora.html";
+    </script>
+    <style>
+      html {
+        overflow: hidden;
+      }
+      body {
+        background: #212121;
+        overflow: hidden;
+      }
+      .head {
+        width: 100vw;
+        height: 10vh;
+      }
+      .map {
+        width: 100vw;
+        height: 90vh;
+      }
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+      }
+      iframe.kibana {
+        border: 0;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="head"></div>
+      <div class="map">
+        <iframe
+          class="kibana"
+          src="Widgets/img/kibana.png"
+          height="600"
+          width="800"
+        ></iframe>
+      </div>
+    </div>
+    <div class="text"></div>
+    <script>
+      function load_home(map) {
+        $(".head")[0].innerHTML =
+          '<object  class="head" type="text/html" data="Widgets/Logos.html" ></object>';
+        kibanaFrame = $(".kibana")[0];
+        kibanaFrame.height = document.documentElement.clientHeight * 0.75;
+        kibanaFrame.width = document.documentElement.clientWidth;
+      }
+      window.onload = load_home(map);
+    </script>
+  </body>
 </html>
