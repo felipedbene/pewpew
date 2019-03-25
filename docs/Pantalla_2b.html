@@ -1,84 +1,91 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="shortcut icon" href="favicon.ico" />
     <title>Pantalla 2-b - Microplus</title>
     <script src="/html/Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
     <script>
-        $(window).resize(function(){location.reload();});
-            map = '/html/Widgets/AttackMap/AttackMap_World_C.html'
-            text = '/html/Widgets/Text/Hora.html'
-        </script>
+      $(window).resize(function() {
+        location.reload();
+      });
+      map = '/html/Widgets/AttackMap/AttackMap_World_C.html';
+      text = '/html/Widgets/Text/Hora.html';
+    </script>
     <style>
-        body {
-                background: #212121;
-                overflow: hidden;
-            }
-            .head {
-                width: 100vw;
-                height: 10vh;
-            }
-            .map {
-                width: 100vw;
-                height: 90vh;
-            }
-            .text {
-                width: 55vw;
-                height: 7vh;
-                position: absolute;
-                bottom: 0;
-                right: 0;
-            }
-            .wrapper {
-                display: flex;
-                flex-direction: column;
-                height: 100vh;
-                width: 100vw;
-            }
-            iframe.kibana{
-                border: 0;
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                overflow: hidden;
-            }
-            .subsect{
-                width: 25vw;
-                height: 85vh;
-                position: absolute;
-                top: 15vh;
-                left: 5vw;
-            }
-        </style>
-</head>
+      body {
+        background: #212121;
+        overflow: hidden;
+      }
+      .head {
+        width: 100vw;
+        height: 10vh;
+      }
+      .map {
+        width: 100vw;
+        height: 90vh;
+      }
+      .text {
+        width: 55vw;
+        height: 7vh;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+      }
+      iframe.kibana {
+        border: 0;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+      }
+      .subsect {
+        width: 25vw;
+        height: 85vh;
+        position: absolute;
+        top: 15vh;
+        left: 5vw;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
-        <div class="head"></div>
-        <div class="map">
-            <object class="subsect" type="text/html" data="/html/Widgets/seccion1.html"></object>
-            <iframe class="kibana" src="http://10.97.28.4/app/kibana#/dashboard/53d930e0-3ebb-11e9-b620-e9196fb896b1?embed=false&_g=(refreshInterval:(pause:!f,value:5000),time:(from:now%2Fd,mode:quick,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(darkTheme:!t,hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(),gridData:(h:15,i:'1',w:24,x:0,y:0),id:'88eaedc0-3b9e-11e9-b257-13ba6fc2918b',panelIndex:'1',type:visualization,version:'6.6.1'),(embeddableConfig:(),gridData:(h:16,i:'2',w:24,x:0,y:15),id:d9446300-3b9e-11e9-b257-13ba6fc2918b,panelIndex:'2',type:visualization,version:'6.6.1'),(embeddableConfig:(),gridData:(h:15,i:'3',w:24,x:24,y:0),id:f4a5f820-3b9e-11e9-b257-13ba6fc2918b,panelIndex:'3',type:visualization,version:'6.6.1'),(embeddableConfig:(),gridData:(h:16,i:'4',w:24,x:24,y:15),id:'63df05b0-3b9f-11e9-b257-13ba6fc2918b',panelIndex:'4',type:visualization,version:'6.6.1')),query:(language:lucene,query:''),timeRestore:!t,title:'Dashboard%20Publico%202',viewMode:view)"
-                height="600" width="800"></iframe>
-        </div>
+      <div class="head"></div>
+      <div class="map">
+        <object
+          class="subsect"
+          type="text/html"
+          data="/html/Widgets/seccion1.html"
+        ></object>
+        <iframe
+          class="kibana"
+          src="http://10.97.28.4/app/kibana#/dashboard/53d930e0-3ebb-11e9-b620-e9196fb896b1?embed=true&_g=(refreshInterval%3A(pause%3A!f%2Cvalue%3A5000)%2Ctime%3A(from%3Anow-24h%2Cmode%3Arelative%2Cto%3Anow))"
+          height="600"
+          width="800"
+        ></iframe>
+      </div>
     </div>
     <div class="text"></div>
     <script>
-        function load_home(map, text) {
-            $('.head')[0].innerHTML =
-                '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></object>';
-            kibanaFrame = $('.kibana')[0]
-            kibanaFrame.height = document.documentElement.clientHeight * 0.85
-            kibanaFrame.width = document.documentElement.clientWidth * 0.65
-            $('.filter-bar.filter-panel')[0].style.visibility = 'hidden'
-        }
+      function load_home(map, text) {
+        $('.head')[0].innerHTML =
+          '<object  class="head" type="text/html" data="/html/Widgets/Logos.html" ></object>';
+        kibanaFrame = $('.kibana')[0];
+        kibanaFrame.height = document.documentElement.clientHeight * 0.85;
+        kibanaFrame.width = document.documentElement.clientWidth * 0.65;
+        $('.filter-bar.filter-panel')[0].style.visibility = 'hidden';
+      }
 
-        window.onload = load_home(map, text)
+      window.onload = load_home(map, text);
     </script>
-</body>
-
+  </body>
 </html>

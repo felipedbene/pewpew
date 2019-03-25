@@ -17,12 +17,12 @@
       // ############### Numero de Eventos ##############3
       demoMode = true;
       events = 500;
-      ipAddr = "10.2.40.130";
+      ipAddr = '10.2.40.130';
 
       // Error Handling
       window.onerror = function(msg) {
         // On error, change title style and waits 3s before reload
-        $("#title").css({ "font-style": "oblique" });
+        $('#title').css({ 'font-style': 'oblique' });
         console.log(msg);
         setTimeout(function() {
           location.reload();
@@ -40,10 +40,10 @@
         return list;
       }
       function displayListIntoConsole(list) {
-        $("#console")[0].innerHTML = "";
+        $('#console')[0].innerHTML = '';
         list.reverse();
         list.forEach(element => {
-          $("#console").append(element);
+          $('#console').append(element);
         });
         list.reverse();
       }
@@ -71,13 +71,13 @@
 
       colors = {
         arcs: {
-          low: "#42ff58", //green
-          medium: "#d9fe7f", //yellow
-          high: "#f48154", //orange
-          critical: "#ff4660" //red
+          low: '#42ff58', //green
+          medium: '#d9fe7f', //yellow
+          high: '#f48154', //orange
+          critical: '#ff4660' //red
         },
-        background: "#212121",
-        border: "#079a9a"
+        background: '#212121',
+        border: '#079a9a'
       };
       time = 500; // delay in ms
       show_time = false; // Shows attack time
@@ -90,9 +90,9 @@
     <script>
       // Backend Parameters
       if (demoMode) {
-        events_url = "../../JSON/500.json";
+        events_url = '../../JSON/500.json';
       } else {
-        events_url = "http://" + ipAddr + "/events/" + events;
+        events_url = 'http://' + ipAddr + '/events/' + events;
       }
       var estatico = false; // shows only 1 event for debugging
       var ArcSize = 0;
@@ -160,7 +160,7 @@
     <div id="console"></div>
     <script>
       // Create World $('#ocean_circle').setAttribute('r',zoom_pant);
-      $("#console")[0].innerText = "Loading...";
+      $('#console')[0].innerText = 'Loading...';
       var zoom_pant = ($(document).height() + $(document).width()) / 4; // World zoom
       var height_pant = [0, $(document).height() / 140]; // Horizontal distance
 
@@ -170,11 +170,11 @@
         scale: ($(document).width() + $(document).width()) / 2.1
       };
 
-      if (!world["zoom"]) {
+      if (!world['zoom']) {
         // Show whole world
         var map = new Datamap({
-          scope: "world",
-          element: document.getElementById("container1"),
+          scope: 'world',
+          element: document.getElementById('container1'),
           setProjection: function(element) {
             var projection = d3.geo
               .orthographic()
@@ -191,35 +191,35 @@
             return { path: path, projection: projection };
           },
           fills: {
-            defaultFill: colors["background"]
+            defaultFill: colors['background']
           },
           geographyConfig: {
             dataUrl: null,
             hideAntarctica: true,
             borderWidth: 1,
-            borderColor: colors["border"],
+            borderColor: colors['border'],
             popupTemplate: function(geography, data) {
               return (
                 '<div class="hoverinfo" style="color:white;background:#212121">' +
                 geography.properties.name +
-                "</div>"
+                '</div>'
               );
             }
           }
         });
       } else {
         // Show Mexico
-        $("#console").css({ height: "60vh", width: "35vw" });
+        $('#console').css({ height: '60vh', width: '35vw' });
 
         var map = new Datamap({
-          scope: "world",
-          element: document.getElementById("container1"),
+          scope: 'world',
+          element: document.getElementById('container1'),
           setProjection: function(element) {
             var projection = d3.geo
               .mercator()
-              .center(world["center"])
+              .center(world['center'])
               .rotate([4.4, 0])
-              .scale(world["scale"])
+              .scale(world['scale'])
               .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
             // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
             // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
@@ -229,18 +229,18 @@
             return { path: path, projection: projection };
           },
           fills: {
-            defaultFill: colors["background"]
+            defaultFill: colors['background']
           },
           geographyConfig: {
             dataUrl: null,
             hideAntarctica: true,
             borderWidth: 3,
-            borderColor: colors["border"],
+            borderColor: colors['border'],
             popupTemplate: function(geography, data) {
               return (
                 '<div class="hoverinfo" style="color:white;background:#212121">' +
                 geography.properties.name +
-                "</div>"
+                '</div>'
               );
             }
           }
@@ -249,18 +249,18 @@
     </script>
     <script>
       // Backend
-      $("#console").html("");
-      if (!show_console) $("#console")[0].hidden = true;
+      $('#console').html('');
+      if (!show_console) $('#console')[0].hidden = true;
 
       $.extend({
         getUrlVars: function() {
           var vars = [],
             hash;
           var hashes = window.location.href
-            .slice(window.location.href.indexOf("?") + 1)
-            .split("&");
+            .slice(window.location.href.indexOf('?') + 1)
+            .split('&');
           for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split("=");
+            hash = hashes[i].split('=');
             vars.push(hash[0]);
             vars[hash[0]] = hash[1];
           }
@@ -310,10 +310,10 @@
         return wrapper;
       };
 
-      FixedQueue.push = FixedQueue.wrapMethod("push", FixedQueue.trimHead);
-      FixedQueue.splice = FixedQueue.wrapMethod("splice", FixedQueue.trimTail);
+      FixedQueue.push = FixedQueue.wrapMethod('push', FixedQueue.trimHead);
+      FixedQueue.splice = FixedQueue.wrapMethod('splice', FixedQueue.trimTail);
       FixedQueue.unshift = FixedQueue.wrapMethod(
-        "unshift",
+        'unshift',
         FixedQueue.trimTail
       );
 
@@ -330,7 +330,7 @@
         //usage:
 
         test: function() {
-          $("#attackdiv").html("");
+          $('#attackdiv').html('');
 
           fetch(events_url)
             .then(resp => resp.json())
@@ -343,24 +343,24 @@
 
         getData: function() {
           var self = this;
-          if (debug) var t = timer("Loop " + count);
+          if (debug) var t = timer('Loop ' + count);
 
           var a = log[count];
 
-          var IP1 = "";
-          var IP2 = "";
+          var IP1 = '';
+          var IP2 = '';
 
-          var srccountry = a["name_x"];
-          var attackdiv_slatlong = a["name_y"];
+          var srccountry = a['name_x'];
+          var attackdiv_slatlong = a['name_y'];
 
-          var srclat = a["srclat"];
-          var srclong = a["srclong"];
-          var dstlat = a["dstlat"];
-          var dstlong = a["dstlong"];
+          var srclat = a['srclat'];
+          var srclong = a['srclong'];
+          var dstlat = a['dstlat'];
+          var dstlong = a['dstlong'];
 
-          which_attack = a["subtype"];
-          var atkname = a["threatid"];
-          strokeColor = colors["arcs"][a["severity"]];
+          which_attack = a['subtype'];
+          var atkname = a['threatid'];
+          strokeColor = colors['arcs'][a['severity']];
 
           hits.push({
             origin: {
@@ -387,58 +387,59 @@
           });
           map.bubbles(boom, {
             popupTemplate: function(geo, data) {
-              return '<div class="hoverinfo">' + data.attk + "</div>";
+              return '<div class="hoverinfo">' + data.attk + '</div>';
             }
           });
           if (show_time) {
-            tiempo = "@" + a["time_generated"] + "<br>";
+            tiempo = '@' + a['time_generated'] + '<br>';
           } else {
-            tiempo = "";
+            tiempo = '';
           }
+          AttackCount = '';
           // console.log(strokeColor);
-          if (ArcSize > 1) {
-            AttackCount = "×" + ArcSize;
-          } else {
-            AttackCount = "";
-          }
+          // if (ArcSize > 1) {
+          //   AttackCount = "×" + ArcSize;
+          // } else {
+          //   AttackCount = "";
+          // }
 
           newEntry =
             tiempo +
-            "<b>" +
+            '<b>' +
             srccountry +
-            "</b> " +
+            '</b> ' +
             IP1 +
             " <span style='color:#FF7474'>att" +
-            "acks</span><br/> <b>" +
+            'acks</span><br/> <b>' +
             attackdiv_slatlong +
-            "</b> " +
+            '</b> ' +
             AttackCount +
             IP2 +
-            " <br> <span styl" +
+            ' <br> <span styl' +
             "e='color:" +
             strokeColor +
             "'> " +
             atkname +
-            "(" +
+            '(' +
             which_attack +
-            ")</span> <b" +
-            "r/><br/>";
+            ')</span> <b' +
+            'r/><br/>';
 
           insertIntoSet(AttackSet, newEntry);
           displayListIntoConsole(AttackSet);
 
-          $("#attackdiv").animate(
+          $('#attackdiv').animate(
             {
-              scrollTop: $("#attackdiv").prop("scrollHeight")
+              scrollTop: $('#attackdiv').prop('scrollHeight')
             },
             time
           );
 
           count++;
 
-          $("#console").animate(
+          $('#console').animate(
             {
-              scrollTop: $("#console")[0].scrollHeight
+              scrollTop: $('#console')[0].scrollHeight
             },
             time
           );
