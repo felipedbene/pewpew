@@ -1,9 +1,4 @@
-# NorsePi (Mapa de ataques de Palo Alto)
-Copiar setup.sh al directorio principal y ejecutarlo. Te va pedir:
-- IP Palo Alto
-- Usuario Palo Alto
-- Contraseña de Palo Alto
+# NorsePi Demo Release
+This is statical version of the code which displays what is on XML/500.json json file.
 
-En seguida, iniciar xscreensaver y desactivar bloqueo de pantalla
-
-Reiniciar la computadora
+This is meant to run as a docker container described in the Dockerfile on port 3247 or as otherwise described in the start_slave.sh

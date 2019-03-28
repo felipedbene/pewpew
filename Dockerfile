@@ -8,4 +8,8 @@ WORKDIR /usr/share/nginx/html
 # using WORKDIR is preferred to using 'RUN cd /some/path'
 
 COPY . .
-# I don't have to specify EXPOSE or CMD because they're in my FROM
+
+ARG version
+ARG version=15min.html
+
+RUN cp $version index.html
