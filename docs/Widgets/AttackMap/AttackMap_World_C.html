@@ -12,12 +12,20 @@
     <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script src="../JS/Datamaps/datamaps.world.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $.ajaxSetup({
+        timeout: 5000 // in milliseconds
+      });
+    </script>
 
     <script>
       // ############### Numero de Eventos ##############3
-      demoMode = true;
+      demoMode = false;
       events = 500;
       ipAddr = '10.2.40.130';
+
+      json_url = '../../JSON/500.json';
+      events_url = 'http://' + ipAddr + '/events/' + events;
 
       // Error Handling
       window.onerror = function(msg) {
@@ -95,11 +103,6 @@
 
     <script>
       // Backend Parameters
-      if (demoMode) {
-        events_url = '../../JSON/500.json';
-      } else {
-        events_url = 'http://' + ipAddr + '/events/' + events;
-      }
       var estatico = false; // shows only 1 event for debugging
       var ArcSize = 0;
       var log = [];
@@ -177,9 +180,6 @@
               .rotate([0, 0])
               .scale(zoom_pant)
               .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
-            // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
-            // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
-            // width / 2,         height / 2     ]);
 
             var path = d3.geo.path().projection(projection);
             return { path: path, projection: projection };
@@ -215,9 +215,6 @@
               .rotate([4.4, 0])
               .scale(world['scale'])
               .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
-            // var projection = d3     .geo     .conicConformal()     .rotate([102, 0])
-            // .center([0, 24])     .parallels([17.5, 29.5])     .scale(1850) .translate([
-            // width / 2,         height / 2     ]);
 
             var path = d3.geo.path().projection(projection);
             return { path: path, projection: projection };
@@ -326,12 +323,38 @@
         test: function() {
           $('#attackdiv').html('');
 
-          fetch(events_url)
-            .then(resp => resp.json())
-            .then(function(data) {
+          $.get(events_url, function(data) {
+            console.log('started Get');
+          })
+            .done(function(data) {
+              data = $.parseJSON(data);
               log = data;
               len = Object.keys(log).length;
-              attacks.getData();
+
+              if (len === 0) {
+                console.log('Demo mode');
+                $.getJSON(json_url).done(function(data) {
+                  log = data;
+                  console.log(data[0]['timereceived']);
+
+                  len = Object.keys(log).length;
+                  attacks.getData();
+                });
+              } else {
+                console.log('Live mode');
+                console.log(data[0]['timereceived']);
+                attacks.getData();
+              }
+            })
+            .fail(function(data) {
+              console.log('Demo mode');
+              $.getJSON(json_url).done(function(data) {
+                console.log(data[0]['timereceived']);
+
+                log = data;
+                len = Object.keys(log).length;
+                attacks.getData();
+              });
             });
         },
 
@@ -391,12 +414,6 @@
             tiempo = '';
           }
           AttackCount = '';
-          // console.log(strokeColor);
-          // if (ArcSize > 1) {
-          //   AttackCount = "×" + ArcSize;
-          // } else {
-          //   AttackCount = "";
-          // }
 
           newEntry =
             tiempo +
@@ -438,7 +455,6 @@
             },
             time
           );
-          // $('#console').scrollTop($('#console')[0].scrollHeight);
 
           if (count < len) {
             if (debug) t.stop();
@@ -449,11 +465,9 @@
               count = 0;
               log = [];
               if (!stop) {
-                // location.reload();
               }
               attacks.test();
             }, time);
-            // location.reload();
           }
         }
       };
