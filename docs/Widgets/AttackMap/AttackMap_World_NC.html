@@ -251,7 +251,7 @@
     </script>
     <script>
       // Backend
-      $('#console').html('');
+      $('#console').html('<h1>Loading…</h1>');
       if (!show_console) $('#console')[0].hidden = true;
 
       $.extend({
@@ -332,7 +332,7 @@
         //usage:
 
         test: function() {
-          $('#attackdiv').html('');
+          $('#attackdiv').html('<h1>Loading…</h1>');
 
           $.get(events_url, function(data) {
             console.log('started Get');
