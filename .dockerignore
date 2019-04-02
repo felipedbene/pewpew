@@ -1,0 +1,10 @@
+Dockerfile
+Python/
+csv/
+.vscode/
+Pipfile
+Pipfile.lock
+_config.yml
+docs/CNAME
+docs/.Pantalla_Template.html
+docs/Dashboard.todo
