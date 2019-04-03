@@ -11,15 +11,10 @@
       $(window).resize(function() {
         location.reload();
       });
-      map = 'Widgets/AttackMap/AttackMap_World_C.html';
-      text = 'Widgets/Text/Hora.html';
+      map = "Widgets/AttackMap/AttackMap_World_C.html";
+      text = "Widgets/Text/Hora.html";
     </script>
     <style>
-      @font-face {
-        font-family: 'Microplus Arial';
-        src: url('CSS/Arial.ttf');
-      }
-
       html {
         overflow: hidden;
       }
@@ -65,9 +60,9 @@
     <div class="text"></div>
     <script>
       function load_home(map) {
-        $('.head')[0].innerHTML =
+        $(".head")[0].innerHTML =
           '<object  class="head" type="text/html" data="Widgets/Logos.html" ></object>';
-        kibanaFrame = $('.kibana')[0];
+        kibanaFrame = $(".kibana")[0];
         kibanaFrame.height = document.documentElement.clientHeight * 0.75;
         kibanaFrame.width = document.documentElement.clientWidth;
       }
