@@ -21,7 +21,14 @@
     <script>
       // ############### Numero de Eventos ##############3
       demoMode = false;
-      events = 500;
+      events = 5000;
+      time = 50; // delay in ms
+      show_time = false; // Shows attack time
+      show_console = false; // Show attack console
+
+      //TODO change IP text
+      show_IP = false;
+
       ipAddr = '10.2.40.130';
 
       json_url = '../../JSON/500.json';
@@ -93,12 +100,6 @@
         background: '#212121',
         border: '#079a9a'
       };
-      time = 10; // delay in ms
-      show_time = false; // Shows attack time
-      show_console = false; // Show attack console
-
-      //TODO change IP text
-      show_IP = false;
     </script>
 
     <script>
