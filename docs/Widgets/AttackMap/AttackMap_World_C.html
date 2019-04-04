@@ -152,7 +152,7 @@
         overflow: hidden;
         font-family: 'Microplus Arial';
       }
-      #title {
+      .title {font-size:4rem;
         width: 100vw;
         height: 10vh;
         font-size: 4vh;
@@ -244,7 +244,7 @@
     </script>
     <script>
       // Backend
-      $('#console').html('<h1>Loading…</h1>');
+      $('#console').html('<span>Loading…</span>');
       if (!show_console) $('#console')[0].css({ visibility: 'hidden' });
 
       $.extend({
@@ -325,7 +325,7 @@
         //usage:
 
         test: function() {
-          $('#attackdiv').html('<h1>Loading…</h1>');
+          $('#attackdiv').html('<span>Loading…</span>');
 
           $.get(events_url, function(data) {
             console.log('started Get');
