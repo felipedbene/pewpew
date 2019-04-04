@@ -20,20 +20,35 @@
         src: url('CSS/Arial.ttf');
       }
 
-      html {
-        overflow: hidden;
-      }
+      html,
       body {
         background: #212121;
         overflow: hidden;
+        color: white;
+        font-family: 'Microplus Arial';
       }
       .head {
         width: 100vw;
         height: 10vh;
       }
+      .title {
+        z-index: 7;
+        text-align: center;
+        /* font-size: 2rem; */
+      }
       .map {
         width: 100vw;
-        height: 90vh;
+        height: 85vh;
+        position: absolute;
+        top: 15vh;
+      }
+      .text {
+        width: 55vw;
+        height: 7vh;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-family: 'Microplus Arial';
       }
       .wrapper {
         display: flex;
@@ -41,18 +56,16 @@
         height: 100vh;
         width: 100vw;
       }
-      iframe.kibana {
-        border: 0;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-      }
     </style>
   </head>
 
   <body>
     <div class="wrapper">
       <div class="head"></div>
+      <div class="title">
+        <h1>Ciberseguridad</h1>
+        <h1>Mapa de Ataques - Tecnológico de Monterrey</h1>
+      </div>
       <div class="map">
         <iframe
           class="kibana"
