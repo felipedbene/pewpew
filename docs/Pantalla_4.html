@@ -16,17 +16,28 @@
         font-family: 'Microplus Arial';
         src: url('CSS/Arial.ttf');
       }
+
+      html,
       body {
         background: #212121;
         overflow: hidden;
+        color: white;
+        font-family: 'Microplus Arial';
       }
       .head {
         width: 100vw;
         height: 10vh;
       }
+      .title {
+        z-index: 7;
+        text-align: center;
+        /* font-size: 2rem; */
+      }
       .map {
         width: 100vw;
-        height: 90vh;
+        height: 85vh;
+        position: absolute;
+        top: 15vh;
       }
       .text {
         width: 55vw;
@@ -47,6 +58,10 @@
   <body>
     <div class="wrapper">
       <div class="head"></div>
+      <div class="title">
+        <h1>Ciberseguridad</h1>
+        <h1>Mapa de Ataques - Tecnológico de Monterrey</h1>
+      </div>
       <div class="map"></div>
     </div>
     <div class="text"></div>

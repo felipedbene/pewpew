@@ -112,6 +112,10 @@
     </script>
 
     <style>
+      @font-face {
+        font-family: 'Microplus Arial';
+        src: url('../../CSS/Arial.ttf');
+      }
       #wrapper {
         position: absolute;
         left: 0;
@@ -125,20 +129,17 @@
       body,
       html {
         margin: 0;
-        height: 100vh;
-        width: 100vw;
+        height: 100%;
         overflow: hidden;
         color: white;
         background-color: #212121;
         font-size: 3vh;
       }
       #container1 {
-        z-index: 1;
         width: 100vw;
-        height: 100vh;
-        background-color: transparent;
+        height: 90vh;
+        /* background-color: blue; */
       }
-
       #console {
         /* background-color: red; */
         width: 25vw;
@@ -148,7 +149,7 @@
         left: 0;
         position: absolute;
         overflow: hidden;
-        visibility: hidden;
+        font-family: 'Microplus Arial';
       }
       #title {
         width: 100vw;
@@ -157,7 +158,6 @@
         font-weight: bold;
         text-align: center;
         /* background-color: green; */
-        font-family: "Microplus Arial";
       }
     </style>
   </head>
