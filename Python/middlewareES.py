@@ -10,11 +10,9 @@ from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 import requests
-import sqlalchemy
 import urllib3
 import xmltodict
 from dateutil import parser
-from sqlalchemy import create_engine
 import json
 
 
@@ -22,7 +20,7 @@ import json
 def getEvFromEs(size=100):
     # Getting requirements
     config = configparser.ConfigParser()    
-    config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
+    config.read(os.path.expanduser('config.ini'))
     elastic = list()
     elastic.append( config["ELASTIC"]["elkHost"] )
     indeces = str(config["ELASTIC"]["index"])
@@ -33,7 +31,7 @@ def getEvFromEs(size=100):
     body={"size" : size,
       "sort": [
         {
-          "@timestamp": {
+          "ReceiveTime": {
             "order": "desc"
           }
         }
@@ -74,7 +72,7 @@ def events(number):
 
     # Getting requirements
     config = configparser.ConfigParser()    
-    config.read(os.path.expanduser('~/code/NorsePi/config.ini'))
+    config.read(os.path.expanduser('config.ini'))
 
     fileCampi = config["CSV"]["campi"]
     filePaises = config["CSV"]["paises"]

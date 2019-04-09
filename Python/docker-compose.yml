@@ -1,0 +1,14 @@
+version: '3'
+services:
+  front:
+    image: fdebene/norsepi:20190403
+    container_name: norsepi-front
+    restart: always
+    ports :
+      - "80:80"
+    networks: 
+     
+  backend:
+    image: fdebene/middleware:beta-3-alpine
+    container_name: backend
+    restart: always
