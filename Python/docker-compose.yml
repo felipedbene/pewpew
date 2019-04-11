@@ -1,13 +1,13 @@
 version: '3'
 services:
   front:
-    image: fdebene/norsepi
+    image: fdebene/norsepi:beta-3
     container_name: norsepi-front
     restart: always
     ports :
       - "80:80"
      
   backend:
-    image: fdebene/middleware:beta-3-alpine
+    image: fdebene/middleware:beta-3
     container_name: backend
     restart: always
