@@ -20,16 +20,15 @@ import json
 def getEvFromEs(size=100):
     # Getting requirements
     config = configparser.ConfigParser()    
-    config.read(os.path.expanduser('config.ini'))
+    config.read( os.path.expanduser("~/code/NorsePi/Python/config.ini") )
     elastic = list()
     elastic.append( config["ELASTIC"]["elkHost"] )
     indeces = str(config["ELASTIC"]["index"])
     print (indeces)
     client = Elasticsearch( elastic )
     response = client.search(
-    index = "palogs*",
-    body={"size" : size,
-      "sort": [
+    index = "palogs-*",
+    body={"size":size,"sort": [
         {
           "ReceiveTime": {
             "order": "desc"
@@ -72,8 +71,7 @@ def events(number):
 
     # Getting requirements
     config = configparser.ConfigParser()    
-    config.read(os.path.expanduser('config.ini'))
-
+    config.read( os.path.expanduser("~/code/NorsePi/Python/config.ini") )
     fileCampi = config["CSV"]["campi"]
     filePaises = config["CSV"]["paises"]
     fileColor = config["CSV"]["color"]
@@ -92,9 +90,9 @@ def events(number):
         sincolor = pd.merge(pslat,campi,how="inner",on=["device_name"])
         final = pd.merge(sincolor,color,how="inner",on=["severity"])
         final.drop(['index_x','index_y','src','dst'],axis=1,inplace=True)
-    return(final.to_json(date_format=True,orient='index'))
+    return(final.to_json(date_format=True,orient="records"))
 
 if __name__ == "__main__" :
-    run(host='0.0.0.0', port=8081, debug=True)
+    run(host='0.0.0.0', port=3031, debug=True)
 else:
     application = default_app()
