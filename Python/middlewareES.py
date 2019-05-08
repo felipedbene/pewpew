@@ -16,11 +16,10 @@ from dateutil import parser
 import json
 
 
-
 def getEvFromEs(size=100):
     # Getting requirements
-    config = configparser.ConfigParser()    
-    config.read( os.path.expanduser("~/code/NorsePi/Python/config.ini") )
+    config = configparser.ConfigParser()
+    config.read( "/usr/src/app/config.ini" )
     elastic = list()
     elastic.append( config["ELASTIC"]["elkHost"] )
     indeces = str(config["ELASTIC"]["index"])
@@ -70,8 +69,8 @@ def events(number):
     number = int(number)
 
     # Getting requirements
-    config = configparser.ConfigParser()    
-    config.read( os.path.expanduser("~/code/NorsePi/Python/config.ini") )
+    config = configparser.ConfigParser() 
+    config.read( "/usr/src/app/config.ini"  )
     fileCampi = config["CSV"]["campi"]
     filePaises = config["CSV"]["paises"]
     fileColor = config["CSV"]["color"]
