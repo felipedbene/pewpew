@@ -1,90 +1,183 @@
-# Cybersecurity Attack Map - Tecnológico de Monterrey
+
+# Stadium Map Documentation
 
 ## Overview
-
-This project is a web-based dashboard that visualizes cybersecurity attacks using an interactive world map. The interface dynamically loads external content, such as attack data and informational text, making it a useful display for monitoring global threats.
+The Stadium Map is an interactive visualization displaying stadiums around the world as bubbles on a map. When hovering over a bubble, a popup displays detailed information about the stadium.
 
 ## Features
+- Displays stadium locations using bubbles.
+- Popups show detailed information (e.g., name, location, capacity, and historical facts).
+- Easy to add or modify stadium data.
 
-- **Cybersecurity Attack Map**: Displays attack data dynamically.
-- **Customizable Map Markers**: Supports defining points (dots) to represent attack sources or targets.
-- **Dynamic Content Loading**: Loads external widgets for real-time updates.
-- **Dark Theme UI**: Styled with a custom font for a modern look.
-- **Dockerized Deployment**: Easily serve the project using an Nginx container.
+---
 
-## Requirements
+## How to Add or Modify Stadiums
 
-- **[Docker](https://docs.docker.com/get-docker/)** (for running the project)
-- A modern web browser
+### 1. **Modify the Stadium Data**
+The `stadiums` data array in the `stadium_map.html` file holds all stadium information. Each stadium entry is an object with the following structure:
 
-## Quick Start (Using Docker + Nginx)
-
-To serve the project using Docker and Nginx, run:
-
-```sh
-docker run --rm -p 8080:80 -v $(pwd):/usr/share/nginx/html:ro nginx
+```javascript
+const stadiums = [
+  {
+    name: "Stadium Name",        // Name of the stadium
+    latitude: XX.XXXX,          // Latitude of the stadium's location
+    longitude: YY.YYYY,         // Longitude of the stadium's location
+    facts: [                    // Array of interesting facts
+      "Fact 1",
+      "Fact 2",
+      "Fact 3"
+    ]
+  },
+  // Add more stadiums here
+];
 ```
 
-Then, open [http://localhost:8080/Pantalla_1.html](http://localhost:8080/Pantalla_1.html) in your browser.
-
-## How It Works
-
-### Dynamic Attack Map
-
-The main interactive element is the **attack map**, loaded dynamically from:
-
-```
-Widgets/AttackMap/AttackMap_World_C.html
-```
-
-The map can display attack points (dots) by embedding JavaScript functions in the `AttackMap_World_C.html` file. Example:
-
-```js
-function addAttackPoint(lat, lng) {
-    var point = document.createElement('div');
-    point.style.position = 'absolute';
-    point.style.width = '10px';
-    point.style.height = '10px';
-    point.style.background = 'red';
-    point.style.borderRadius = '50%';
-    point.style.top = lat + 'px';  // Adjust based on map scaling
-    point.style.left = lng + 'px';
-    document.querySelector('.map').appendChild(point);
+### Example
+To add a new stadium:
+```javascript
+{
+  name: "Allianz Arena",
+  latitude: 48.2188,
+  longitude: 11.6247,
+  facts: [
+    "Located in Munich, Germany.",
+    "Home to FC Bayern Munich.",
+    "Capacity: 75,024."
+  ]
 }
-
-// Example usage:
-addAttackPoint(200, 450); // X, Y coordinates
 ```
 
-### Loading the Map on Page Load
+Insert the new object into the `stadiums` array.
 
-The JavaScript function below dynamically embeds the map inside the `.map` div:
+### Dynamically Generating Stadium Data
+If you want to dynamically populate stadium data, you can fetch it from an external API or a local JSON file:
 
-```js
-function loadMap(mapPath) {
-    document.querySelector('.map').innerHTML =
-        '<object class="map" type="text/html" data="' + mapPath + '"></object>';
+#### Using an External API
+```javascript
+fetch("https://example.com/api/stadiums")
+  .then(response => response.json())
+  .then(data => {
+    const stadiums = data.map(stadium => ({
+      name: stadium.name,
+      latitude: stadium.latitude,
+      longitude: stadium.longitude,
+      facts: stadium.facts,
+    }));
+
+    // Initialize map with fetched stadiums
+    initializeMap(stadiums);
+  });
+```
+
+#### Using a Local JSON File
+Place a `stadiums.json` file in your project directory with the following structure:
+```json
+[
+  {
+    "name": "Stadium Name",
+    "latitude": XX.XXXX,
+    "longitude": YY.YYYY,
+    "facts": ["Fact 1", "Fact 2", "Fact 3"]
+  }
+]
+```
+Then load the file:
+```javascript
+fetch("stadiums.json")
+  .then(response => response.json())
+  .then(stadiums => {
+    // Initialize map with stadiums from JSON
+    initializeMap(stadiums);
+  });
+```
+
+---
+
+## How to Customize the Map
+
+### 1. **Change Bubble Colors**
+Modify the `bubbleFill` property in the `fills` configuration:
+```javascript
+fills: {
+  defaultFill: "#444444", // Background color of the map
+  bubbleFill: "#00ff00"   // Bubble color
+},
+```
+
+### 2. **Adjust Bubble Size**
+Update the `radius` property for each stadium:
+```javascript
+radius: 10, // Increase or decrease the bubble size
+```
+
+### 3. **Change Map Projection**
+The `setProjection` method allows customization of the map's projection, scale, and center. Example:
+```javascript
+setProjection: function (element) {
+  const projection = d3.geo
+    .mercator()               // Map projection
+    .scale(200)               // Scale of the map
+    .translate([
+      element.offsetWidth / 2,
+      element.offsetHeight / 2
+    ]);
+  return { path: d3.geo.path().projection(projection), projection };
+},
+```
+
+### 4. **Style Popups**
+Popups are styled using the `.stadium-hoverinfo` class in the `<style>` section. You can adjust its properties, such as `background`, `color`, and `border`.
+
+Example:
+```css
+.stadium-hoverinfo {
+  background: rgba(50, 50, 50, 0.95); /* Darker background */
+  border: 2px solid #00ff00;          /* Green border */
 }
-
-window.onload = function () {
-    loadMap('Widgets/AttackMap/AttackMap_World_C.html');
-};
 ```
 
-## Customizing the Attack Map
+---
 
-To define attack locations, modify `Widgets/AttackMap/AttackMap_World_C.html`:
-1. Use `addAttackPoint(lat, lng)` with coordinates.
-2. Adjust styling for better visibility.
-3. Sync real-time data sources to reflect ongoing attacks.
+## Deployment Instructions
 
-## Troubleshooting
+### Option 1: Using Python's HTTP Server
+1. Run the following command to start a local web server:
+   ```bash
+   python3 -m http.server
+   ```
 
-- If the map or widgets don't load:
-  - Ensure `Widgets/` is correctly structured.
-  - Run the project with Docker (`docker run ...`).
-  - Check for JavaScript console errors (`F12` → Console).
+2. Open your browser and navigate to: `http://localhost:8000/stadium_map.html`
 
-## License
+### Option 2: Using `start_server.sh` Script
+1. Ensure the `start_server.sh` script is executable:
+   ```bash
+   chmod +x ./start_server.sh
+   ```
 
-This project is intended for internal use at **Tecnológico de Monterrey**. Licensing terms may apply.
+2. Run the script:
+   ```bash
+   ./start_server.sh
+   ```
+
+3. Open your browser and navigate to: `http://localhost:8000/stadium_map.html`
+
+---
+
+## Final URL to Check the Result
+After deployment, the map will be accessible at the following URL (if hosted locally):
+```
+http://localhost:8000/stadium_map.html
+```
+
+If hosted on a remote server, replace `localhost` with your server's IP or domain.
+
+---
+
+## Future Enhancements
+- Add search functionality to locate specific stadiums.
+- Allow filtering by region or capacity.
+- Animate the bubbles when hovering or loading.
+
+---
+
+For questions or contributions, feel free to reach out!

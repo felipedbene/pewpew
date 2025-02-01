@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>Cyber Attack Map</title>
+    <script src="Widgets/JS/jQuery/jquery-3.3.1.min.js"></script>
+    <style>
+      @font-face {
+        font-family: 'Microplus Arial';
+        src: url('CSS/Arial.ttf');
+      }
+
+      html, body {
+        background: #212121;
+        overflow: hidden;
+        color: white;
+        font-family: 'Microplus Arial';
+        margin: 0;
+        padding: 0;
+      }
+
+      .map {
+        width: 100vw;
+        height: 90vh;
+        position: absolute;
+        top: 10vh;
+      }
+
+      .controls {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background: #333;
+      }
+
+      .controls button {
+        background: #555;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .controls button:hover {
+        background: #777;
+      }
+
+      .attack-point {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: red;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <button onclick="loadMap('World')">World</button>
+      <button onclick="loadMap('USA')">USA</button>
+      <button onclick="loadMap('Mexico')">Mexico</button>
+      <button onclick="loadMap('Brazil')">Brazil</button>
+    </div>
+    <div class="map"></div>
+
+    <script>
+      function loadMap(region) {
+        let mapFile = "Widgets/AttackMap/AttackMap_World_C.html";
+        if (region === "USA") mapFile = "Widgets/AttackMap/AttackMap_USA.html";
+        if (region === "Mexico") mapFile = "Widgets/AttackMap/AttackMap_MX_C.html";
+        if (region === "Brazil") mapFile = "Widgets/AttackMap/AttackMap_Brazil.html";
+
+        document.querySelector(".map").innerHTML = 
+          '<object class="map" type="text/html" data="' + mapFile + '"></object>';
+        
+        loadAttackData(region);
+      }
+
+      function loadAttackData(region) {
+        let jsonFile = "docs/JSON/1000.json";
+
+        fetch(jsonFile)
+          .then(response => response.json())
+          .then(data => {
+            document.querySelector(".map").innerHTML = "";
+            data.attacks.forEach(attack => {
+              if (attack.region === region || region === "World") {
+                addAttackPoint(attack.lat, attack.lng);
+              }
+            });
+          })
+          .catch(error => console.error("Error loading attack data:", error));
+      }
+
+      function addAttackPoint(lat, lng) {
+        const point = document.createElement("div");
+        point.className = "attack-point";
+        point.style.top = `${lat}px`; 
+        point.style.left = `${lng}px`;
+        document.querySelector(".map").appendChild(point);
+      }
+
+      window.onload = () => loadMap("World");
+    </script>
+  </body>
+</html>
