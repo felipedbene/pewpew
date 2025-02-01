@@ -162,7 +162,7 @@ You can use platforms like **Vercel**, **Netlify**, or any static site hosting s
 
 ## Screenshot
 
-![Screenshot of Stadium Map](src/assets/screen1.png)
+![Screenshot of Stadium Map](screen1.png)
 
 ---
 
