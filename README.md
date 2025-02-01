@@ -50,46 +50,17 @@ To add a new stadium:
 Insert the new object into the `stadiums` array.
 
 ### Dynamically Generating Stadium Data
-If you want to dynamically populate stadium data, you can fetch it from an external API or a local JSON file:
+If you want to dynamically populate stadium data, you can fetch it from an external API or a local JSON file.
 
-#### Using an External API
-```javascript
-fetch("https://example.com/api/stadiums")
-  .then(response => response.json())
-  .then(data => {
-    const stadiums = data.map(stadium => ({
-      name: stadium.name,
-      latitude: stadium.latitude,
-      longitude: stadium.longitude,
-      facts: stadium.facts,
-    }));
+---
 
-    // Initialize map with fetched stadiums
-    initializeMap(stadiums);
-  });
-```
+## Screenshots
 
-#### Using a Local JSON File
-Place a `stadiums.json` file in your project directory with the following structure:
-```json
-[
-  {
-    "name": "Stadium Name",
-    "latitude": XX.XXXX,
-    "longitude": YY.YYYY,
-    "facts": ["Fact 1", "Fact 2", "Fact 3"]
-  }
-]
-```
-Then load the file:
-```javascript
-fetch("stadiums.json")
-  .then(response => response.json())
-  .then(stadiums => {
-    // Initialize map with stadiums from JSON
-    initializeMap(stadiums);
-  });
-```
+### Stadium Map Overview
+![Stadium Map Overview](img/demo1.png)
+
+### Popup Example
+![Popup Example](img/demo2.png)
 
 ---
 
@@ -123,17 +94,6 @@ setProjection: function (element) {
     ]);
   return { path: d3.geo.path().projection(projection), projection };
 },
-```
-
-### 4. **Style Popups**
-Popups are styled using the `.stadium-hoverinfo` class in the `<style>` section. You can adjust its properties, such as `background`, `color`, and `border`.
-
-Example:
-```css
-.stadium-hoverinfo {
-  background: rgba(50, 50, 50, 0.95); /* Darker background */
-  border: 2px solid #00ff00;          /* Green border */
-}
 ```
 
 ---
